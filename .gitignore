@@ -1,0 +1,10 @@
+UnityProjects/UntilTheEnd/Builds
+UnityProjects/UntilTheEnd/Library
+UnityProjects/UntilTheEnd/Temp
+UnityProjects/UntilTheEnd/Logs
+UnityProjects/UntilTheEnd/*.sln
+UnityProjects/UntilTheEnd/*.csproj
+UnityProjects/UntilTheEnd/.vs
+UnityProjects/UntilTheEnd/obj
+UnityProjects/UntilTheEnd/.vsconfig
+UnityProjects/UntilTheEnd/UserSettings
