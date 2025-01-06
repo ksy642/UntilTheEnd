@@ -1,19 +1,117 @@
+using System.Collections;
 using UnityEngine;
 
 public class DreamManager : DontDestroySingleton<DreamManager>
 {
-    void Start() // 이건 돈디스트로이로 소환돼서 스타트함수가 동작안하는거 같음
-    {
-        Debug.Log("테스트2");
-    }
+    public bool dreaming = false; // 꿈 관련된 중요한 bool 변수
+    public Material skybox_Awake;
+    public Material skybox_Dream;
 
-    void Update()
-    {
-        
-    }
+    private float _fogTime = 4.0f;    // 안개 차오르는 시간
+    private float _fogDensity = 0.013f; // 안개 밀도
+
+    [Header("----Timer----")]
+    public float timer = 10; // 제한 시간 ..테스트용으로 10초라 해둠
 
     public void DreamTest1()
     {
         Debug.Log("테스트1");
     }
+
+    private void Update()
+    {
+        timer -= Time.deltaTime;
+
+        // 로그 추가: 현재 타이머 상태
+        Debug.Log($"[DreamManager] Timer: {timer}");
+
+        if (timer <= 0)
+        {
+            timer = 0;
+            Debug.Log("[DreamManager] Timer reached 0. Starting DreamLayer...");
+            DreamLayer();
+        }
+    }
+
+    #region 꿈 속
+    public void DreamLayer()
+    {
+        dreaming = true;
+        Debug.Log("[DreamManager] Entering DreamLayer. Dreaming state set to true.");
+        Dreaming();
+    }
+
+    public void Dreaming()
+    {
+        Debug.Log("동작하지?");
+        StartCoroutine(_FogOn(_fogDensity));
+    }
+
+    private IEnumerator _FogOn(float fogDensity)
+    {
+        Debug.Log($"안개 확인좀 : {fogDensity}");
+        float theTime = 0f;
+        float startDensity = RenderSettings.fogDensity;
+
+        if (dreaming)
+        {
+            Debug.Log("됨?");
+
+            while (theTime < _fogTime)
+            {
+                theTime += Time.deltaTime;
+                RenderSettings.fogDensity = Mathf.Lerp(startDensity, fogDensity, theTime / _fogTime);
+                yield return null;
+            }
+
+            RenderSettings.fog = true;
+            // 전환 완료 후 안개 밀도를 최종 목표 값으로 설정
+            RenderSettings.fogDensity = fogDensity;
+            RenderSettings.skybox = skybox_Dream;
+        }
+        else
+        {
+            Debug.LogWarning("[DreamManager] Dreaming aborted. 'dreaming' state is false.");
+        }
+    }
+    #endregion
+
+    #region 일어나
+
+
+    public void Awaking()
+    {
+        if (!dreaming)
+        {
+            Debug.Log("[DreamManager] Starting Awaking sequence...");
+            StartCoroutine(_FogOff(0.001f));
+        }
+    }
+
+    private IEnumerator _FogOff(float fogDensity)
+    {
+        Debug.Log($"[DreamManager] FogOff Coroutine started. Target fog density: {fogDensity}");
+        yield return new WaitForSeconds(_fogTime);
+
+        RenderSettings.fog = false;
+        RenderSettings.fogDensity = fogDensity;
+        RenderSettings.skybox = skybox_Awake;
+        Debug.Log("[DreamManager] Awaking complete. Fog density set and skybox changed.");
+    }
+
+
+
+    public void AwakeLayer()
+    {
+        dreaming = false;
+        Awaking();
+    }
+
+    public void ForAdrenaline()
+    {
+        AwakeLayer();
+        timer = 10;
+    }
+
+    #endregion
 }

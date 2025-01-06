@@ -44,3 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 921202a0a44afa44fa2f65c3bb2174fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dreaming: 0
+  skybox_Awake: {fileID: 2100000, guid: 59a88fc8ae11a27458e80af4e6f9b99e, type: 2}
+  skybox_Dream: {fileID: 2100000, guid: 653a4b2554fe4d24cb6eac498c81aa5e, type: 2}
