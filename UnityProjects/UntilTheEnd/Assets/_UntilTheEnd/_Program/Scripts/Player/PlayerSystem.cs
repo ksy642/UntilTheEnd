@@ -5,20 +5,27 @@ using UnityEngine;
 public class PlayerSystem : MonoBehaviour
 {
     [Header("Spawn Player")]
-    public Transform spawnPoint; // 플레이어가 생성될 위치
-    [SerializeField] private GameObject _playerPrefab; // 프리팹
-    private GameObject _spawnedPlayer; // 생성된 플레이어를 참조할 변수
+    public Transform spawnPoint;
+    [SerializeField] private GameObject _playerPrefab;
+    private GameObject _spawnedPlayer;
 
     [Header("Camera")]
-    public CinemachineCamera cinemachineCamera; // 시네머신 카메라
-    //public Vector3 targetAddOffset; // 카메라 오프셋
+    public CinemachineCamera cinemachineCamera;
+    private Transform _firstPersonView; // 1인칭
+    private Transform _thirdPersonView; // 3인칭
+    private bool _isFirstPerson = false; // 현재 시점이 1인칭인지 여부
 
     private void Start()
     {
-        Debug.LogWarning("SpawnPlayer 함수 실행");
-
-        // 플레이어 스폰
         SpawnPlayer();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.T)) // 시점 전환
+        {
+            ToggleView();
+        }
     }
 
     public void SpawnPlayer()
@@ -30,7 +37,6 @@ public class PlayerSystem : MonoBehaviour
         }
         else
         {
-
             Debug.LogWarning("플레이어를 생성합니다.");
 
             // 1. 프리팹 로드 (필요 시 Resources에서 로드)
@@ -47,13 +53,37 @@ public class PlayerSystem : MonoBehaviour
             // 3. 카메라 타겟 설정
             if (cinemachineCamera != null)
             {
-                cinemachineCamera.Follow = _spawnedPlayer.transform; // 생성된 플레이어를 카메라가 따라가도록 설정
-                cinemachineCamera.LookAt = _spawnedPlayer.transform; // 카메라가 플레이어를 바라보도록 설정
+                // 1인칭 및 3인칭 카메라 위치 설정
+                _thirdPersonView = _spawnedPlayer.transform.GetChild(0);
+                _firstPersonView = _spawnedPlayer.transform;
+
+                // 초기 카메라 설정
+                cinemachineCamera.Follow = _thirdPersonView; // 3인칭 시점으로 시작
             }
             else
             {
                 Debug.LogWarning("CinemachineCamera가 설정되지 않았습니다.");
             }
+        }
+    }
+
+    private void ToggleView()
+    {
+        if (_spawnedPlayer == null) 
+            return;
+
+        // 시점 전환
+        _isFirstPerson = !_isFirstPerson;
+
+        if (_isFirstPerson)
+        {
+            cinemachineCamera.Follow = _firstPersonView;
+            Debug.Log("1인칭 시점으로 전환되었습니다.");
+        }
+        else
+        {
+            cinemachineCamera.Follow = _thirdPersonView;
+            Debug.Log("3인칭 시점으로 전환되었습니다.");
         }
     }
 }
