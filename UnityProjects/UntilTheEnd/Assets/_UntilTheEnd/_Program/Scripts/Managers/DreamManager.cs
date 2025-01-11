@@ -3,26 +3,30 @@ using UnityEngine;
 
 public class DreamManager : DontDestroySingleton<DreamManager>
 {
-    public bool dreaming = false; // ²Ş °ü·ÃµÈ Áß¿äÇÑ bool º¯¼ö
+    public bool dreaming = false; // ê¿ˆ ê´€ë ¨ëœ ì¤‘ìš”í•œ bool ë³€ìˆ˜
     public Material skybox_Awake;
     public Material skybox_Dream;
 
-    private float _fogTime = 4.0f;    // ¾È°³ Â÷¿À¸£´Â ½Ã°£
-    private float _fogDensity = 0.013f; // ¾È°³ ¹Ğµµ
+    private float _fogTime = 4.0f;    // ì•ˆê°œ ì°¨ì˜¤ë¥´ëŠ” ì‹œê°„
+    private float _fogDensity = 0.013f; // ì•ˆê°œ ë°€ë„
 
     [Header("----Timer----")]
-    public float timer = 10; // Á¦ÇÑ ½Ã°£ ..Å×½ºÆ®¿ëÀ¸·Î 10ÃÊ¶ó ÇØµÒ
+    public float timer = 10; // ì œí•œ ì‹œê°„ ..í…ŒìŠ¤íŠ¸ìš©ìœ¼ë¡œ 10ì´ˆë¼ í•´ë‘ 
+
+    [SerializeField] private float skyBox_RotationSpeed = 1.3f; // íšŒì „ ì†ë„ (ì´ˆë‹¹ ê°ë„)
 
     public void DreamTest1()
     {
-        Debug.Log("Å×½ºÆ®1");
+        Debug.Log("í…ŒìŠ¤íŠ¸1");
     }
 
     private void Update()
     {
+        _SkyboxRotation();
+
         timer -= Time.deltaTime;
 
-        // ·Î±× Ãß°¡: ÇöÀç Å¸ÀÌ¸Ó »óÅÂ
+        // ë¡œê·¸ ì¶”ê°€: í˜„ì¬ íƒ€ì´ë¨¸ ìƒíƒœ
         Debug.Log($"[DreamManager] Timer: {timer}");
 
         if (timer <= 0)
@@ -33,7 +37,16 @@ public class DreamManager : DontDestroySingleton<DreamManager>
         }
     }
 
-    #region ²Ş ¼Ó
+    private void _SkyboxRotation()
+    {
+        float degree = Time.time * skyBox_RotationSpeed; // í˜„ì¬ ì‹œê°„ì— ë”°ë¥¸ íšŒì „ ê°ë„ ê³„ì‚°
+        degree %= 360; // ê°ë„ë¥¼ 360ë„ ë²”ìœ„ ë‚´ë¡œ ìœ ì§€
+        RenderSettings.skybox.SetFloat("_Rotation", degree); // Skyboxì˜ _Rotation ì†ì„± ì„¤ì •
+    }
+
+
+
+    #region ê¿ˆ ì†
     public void DreamLayer()
     {
         dreaming = true;
@@ -43,19 +56,19 @@ public class DreamManager : DontDestroySingleton<DreamManager>
 
     public void Dreaming()
     {
-        Debug.Log("µ¿ÀÛÇÏÁö?");
+        Debug.Log("ë™ì‘í•˜ì§€?");
         StartCoroutine(_FogOn(_fogDensity));
     }
 
     private IEnumerator _FogOn(float fogDensity)
     {
-        Debug.Log($"¾È°³ È®ÀÎÁ» : {fogDensity}");
+        Debug.Log($"ì•ˆê°œ í™•ì¸ì¢€ : {fogDensity}");
         float theTime = 0f;
         float startDensity = RenderSettings.fogDensity;
 
         if (dreaming)
         {
-            Debug.Log("µÊ?");
+            Debug.Log("ë¨?");
 
             while (theTime < _fogTime)
             {
@@ -65,7 +78,7 @@ public class DreamManager : DontDestroySingleton<DreamManager>
             }
 
             RenderSettings.fog = true;
-            // ÀüÈ¯ ¿Ï·á ÈÄ ¾È°³ ¹Ğµµ¸¦ ÃÖÁ¾ ¸ñÇ¥ °ªÀ¸·Î ¼³Á¤
+            // ì „í™˜ ì™„ë£Œ í›„ ì•ˆê°œ ë°€ë„ë¥¼ ìµœì¢… ëª©í‘œ ê°’ìœ¼ë¡œ ì„¤ì •
             RenderSettings.fogDensity = fogDensity;
             RenderSettings.skybox = skybox_Dream;
         }
@@ -76,7 +89,7 @@ public class DreamManager : DontDestroySingleton<DreamManager>
     }
     #endregion
 
-    #region ÀÏ¾î³ª
+    #region ì¼ì–´ë‚˜
 
 
     public void Awaking()
