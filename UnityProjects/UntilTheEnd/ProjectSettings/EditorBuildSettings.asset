@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/_UntilTheEnd/__Scenes/Preload.unity
+    guid: 005ad5fd26be9df4986ed2411e0f81be
+  - enabled: 1
     path: Assets/_UntilTheEnd/__Scenes/Lobby.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
@@ -14,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_UntilTheEnd/__Scenes/_Temp/MainTest.unity
     guid: 3433c21c0951bdd45a0523bd73fc035c
+  - enabled: 1
+    path: Assets/_UntilTheEnd/__Scenes/_Temp/DreamTest.unity
+    guid: 7192dcedde75cdc4ab22938975245a5b
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
