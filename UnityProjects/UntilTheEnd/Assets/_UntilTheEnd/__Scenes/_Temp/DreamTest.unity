@@ -397,6 +397,7 @@ MonoBehaviour:
   skybox_Awake: {fileID: 2100000, guid: 51b74d7bad397457d883c5940f7664d8, type: 2}
   skybox_Dream: {fileID: 2100000, guid: 656058fe318eb48558d21d66d1a79a2b, type: 2}
   timer: 10
+  skyBox_RotationSpeed: 1.3
 --- !u!1 &1953029215
 GameObject:
   m_ObjectHideFlags: 0
