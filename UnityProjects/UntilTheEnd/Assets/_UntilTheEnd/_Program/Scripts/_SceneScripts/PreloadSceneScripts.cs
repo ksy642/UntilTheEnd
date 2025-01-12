@@ -1,7 +1,9 @@
+using UnityEditor.Search;
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LobbySceneScript : MonoBehaviour
+public class PreloadSceneScripts : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -17,10 +19,8 @@ public class LobbySceneScript : MonoBehaviour
 
 
 
-    // 테스트용
-    public void OnClick_ToMainScene()
+    public void OnClick_ToLobbyScene()
     {
-        Debug.LogWarning("클릭됨");
-        UIManager.instance.FadeToScene(StringValues.Scene.main);
+        SceneManager.LoadScene(StringValues.Scene.lobby);
     }
 }

@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc4532e3c0bbd164ebd84f2b57c5806d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeManager: {fileID: 885900885356839737, guid: 3cd6943888114454db39e6716252e8ac, type: 3}
-  dreamManager: {fileID: 4703059208277195006, guid: d82db33558b99cc448a1e561aa9fdbf9, type: 3}
-  uiManager: {fileID: 1323701945848827764, guid: f551e75437e920a4e9e6340206bb5b4f, type: 3}
+  dreamManagerPrefab: {fileID: 4703059208277195006, guid: d82db33558b99cc448a1e561aa9fdbf9, type: 3}
+  uiManagerPrefab: {fileID: 1323701945848827764, guid: f551e75437e920a4e9e6340206bb5b4f, type: 3}
+  spawnedDreamManager: {fileID: 0}
+  spawnedUIManager: {fileID: 0}

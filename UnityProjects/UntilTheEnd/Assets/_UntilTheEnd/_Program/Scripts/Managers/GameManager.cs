@@ -6,9 +6,28 @@ using UnityEngine;
 /// </summary>
 public class GameManager : DontDestroySingleton<GameManager>
 {
-    public GameObject fadeManager;
-    public GameObject dreamManager;
-    public GameObject uiManager;
+    [Header("Prefab")]
+    public GameObject dreamManagerPrefab;
+    public GameObject uiManagerPrefab;
+
+    [Header("소환된 Clone")]
+    [SerializeField] private GameObject spawnedDreamManager;
+    [SerializeField] private GameObject spawnedUIManager;
+
+
+    // 매니저들이 있으면 삭제시키고 재소환 혹은 대기
+    // 없으면 소환시키고
+
+    private void Start()
+    {
+        Debug.Log("동작 할까요?");
+
+        // UIManager가 존재하지 않으면 새로 생성
+        if (spawnedUIManager == null)
+        {
+            Debug.Log("동작 할까요?22");
+            spawnedUIManager = Instantiate(uiManagerPrefab);
+        }
 
 
 
@@ -16,9 +35,5 @@ public class GameManager : DontDestroySingleton<GameManager>
 
 
 
-
-
-
-
-
+    }
 }
