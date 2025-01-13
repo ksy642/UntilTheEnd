@@ -222,7 +222,7 @@ GameObject:
   - component: {fileID: 437040118}
   - component: {fileID: 437040119}
   m_Layer: 0
-  m_Name: PreloadSceneScripts
+  m_Name: PreloadSceneScript
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,9 +1,6 @@
-using UnityEditor.Search;
-
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class PreloadSceneScripts : MonoBehaviour
+public class SpringSceneScript : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -15,12 +12,5 @@ public class PreloadSceneScripts : MonoBehaviour
     void Update()
     {
         
-    }
-
-
-
-    public void OnClick_ToLobbyScene()
-    {
-        SceneManager.LoadScene(StringValues.Scene.lobby);
     }
 }
