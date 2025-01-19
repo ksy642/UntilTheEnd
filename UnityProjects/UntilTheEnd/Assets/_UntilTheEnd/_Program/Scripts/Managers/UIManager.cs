@@ -6,9 +6,13 @@ public class UIManager : DontDestroySingleton<UIManager>
 {
     private bool _isTransitioning = false; // 씬 전환 중 상태 플래그
 
-    [Header("ESC")]
+    [Header("1번 : ESC")]
     [SerializeField] private GameObject _escMenuPanel; // 메뉴판 UI
-    [SerializeField] private bool _isMenuOpen = false;
+    [SerializeField] private bool _isESCMenuOpen = false; // ESC 메뉴 상태
+
+    [Header("2번 : EquipmentPanel")]
+    [SerializeField] private GameObject _equipmentPanel; // 장비창 UI
+    [SerializeField] private bool _isEquipmentMenuOpen = false; // 장비창 상태
 
     [Header("Fade")]
     [SerializeField] private CanvasGroup _fadeCanvasGroup;
@@ -17,7 +21,13 @@ public class UIManager : DontDestroySingleton<UIManager>
     [Header("FPS")]
     private float _deltaTime = 0.0f;
 
-    
+
+    private void Start()
+    {
+        Debug.LogWarning("[테스트용] 첫 시작은 메뉴판 다 꺼버리고 시작");
+        _ToggleMenu(0);
+    }
+
     // Fade In - Fade Out 효과 주는 함수
     public void FadeToScene(string sceneName)
     {
@@ -29,7 +39,7 @@ public class UIManager : DontDestroySingleton<UIManager>
         {
             if (_escMenuPanel.activeSelf) // 메뉴가 활성화된 경우 닫음
             {
-                _ToggleMenu();
+                _ToggleMenu(0);
             }
         }
         _isTransitioning = true; // 씬 전환 시작
@@ -79,22 +89,75 @@ public class UIManager : DontDestroySingleton<UIManager>
         {
             return; // 씬 전환 중에는 ESC 입력을 무시
         }
-        else
+
+        // ESC 키 처리
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (_isEquipmentMenuOpen)
             {
-                _ToggleMenu();
+                // 장비창이 열려있으면 ESC로 장비창을 닫음
+                _ToggleMenu(2);
+            }
+            else
+            {
+                // ESC 메뉴를 열거나 닫음
+                _ToggleMenu(1);
+            }
+        }
+
+        // E 키 처리
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (!_isESCMenuOpen) // ESC 메뉴가 열려있을 때는 무시
+            {
+                _ToggleMenu(2); // 장비창 열기/닫기
             }
         }
     }
 
-    private void _ToggleMenu()
+    private void _ToggleMenu(int menuCount)
     {
-        _isMenuOpen = !_isMenuOpen;
-        _escMenuPanel.SetActive(_isMenuOpen);
+        switch (menuCount)
+        {
+            case 0:  //모든 메뉴판을 다 닫음
+                _isESCMenuOpen = false;
+                _escMenuPanel.SetActive(false);
 
-        // 게임 일시정지 처리 (옵션)
-        //Time.timeScale = _isMenuOpen ? 0 : 1;
+                _isEquipmentMenuOpen = false;
+                _equipmentPanel.SetActive(false);
+
+                Debug.Log("모든 메뉴가 닫혔습니다.");
+                break;
+            case 1: // ESC 메뉴
+                _isESCMenuOpen = !_isESCMenuOpen;
+                _escMenuPanel.SetActive(_isESCMenuOpen);
+
+                if (_isESCMenuOpen)
+                {
+                    // ESC 메뉴가 열리면 장비창을 닫음
+                    _isEquipmentMenuOpen = false;
+                    _equipmentPanel.SetActive(false);
+                }
+                break;
+            case 2: // 장비창
+                _isEquipmentMenuOpen = !_isEquipmentMenuOpen;
+                _equipmentPanel.SetActive(_isEquipmentMenuOpen);
+
+                if (_isEquipmentMenuOpen)
+                {
+                    // 장비창이 열리면 ESC 메뉴를 닫음
+                    _isESCMenuOpen = false;
+                    _escMenuPanel.SetActive(false);
+                }
+                break;
+            default:
+                Debug.LogWarning($"menuCount 번호를 알려줘 : {menuCount}");
+                break;
+
+
+                // 게임 일시정지 처리 (옵션), 아직 결정못함 ESC판 열렸을 때 게임 멈추게 할지
+                //Time.timeScale = _isMenuOpen ? 0 : 1;
+        }
     }
 
     private void OnGUI()
