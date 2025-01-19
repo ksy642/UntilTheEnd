@@ -6,4 +6,9 @@ public static class StringValues
         public const string lobby = "Lobby";
         public const string main = "Main";
     }
+
+    public static class Tag
+    {
+        public const string player = "Player";
+    }
 }

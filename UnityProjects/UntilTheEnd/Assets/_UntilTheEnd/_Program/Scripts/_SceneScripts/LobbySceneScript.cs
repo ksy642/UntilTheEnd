@@ -1,26 +1,28 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class LobbySceneScript : MonoBehaviour
+namespace UntilTheEnd
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class LobbySceneScript : MonoBehaviour
     {
-        
-    }
+        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        void Start()
+        {
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
 
 
 
-    // 테스트용
-    public void OnClick_ToMainScene()
-    {
-        Debug.LogWarning("클릭됨");
-        UIManager.instance.FadeToScene(StringValues.Scene.main);
+        // 테스트용
+        public void OnClick_ToMainScene()
+        {
+            Debug.LogWarning("클릭됨");
+            UIManager.instance.FadeToScene(StringValues.Scene.main);
+        }
     }
 }

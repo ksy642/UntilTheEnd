@@ -1,16 +1,18 @@
 using UnityEngine;
 
-public class SceneChanger : MonoBehaviour
+namespace UntilTheEnd
 {
-    [SerializeField] private string _targetSceneName = "MainTest";
-    [SerializeField] private string _targetTag = "Player";
-
-    private void OnTriggerEnter(Collider other)
+    public class SceneChanger : MonoBehaviour
     {
-        if (other.CompareTag(_targetTag))
+        [SerializeField] private string _targetSceneName = "MainTest";
+
+        private void OnTriggerEnter(Collider other)
         {
-            Debug.Log($"'{_targetTag}'가 트리거를 밟았습니다. 페이드 효과와 함께 씬 '{_targetSceneName}'으로 이동합니다.");
-            UIManager.instance.FadeToScene(_targetSceneName);
+            if (other.CompareTag(StringValues.Tag.player))
+            {
+                Debug.Log($"'{StringValues.Tag.player}'가 트리거를 밟았습니다. 페이드 효과와 함께 씬 '{_targetSceneName}'으로 이동합니다.");
+                UIManager.instance.FadeToScene(_targetSceneName);
+            }
         }
     }
 }
