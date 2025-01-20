@@ -1,0 +1,7 @@
+﻿SceneName,Number,NPC,Answer,Dialog
+MainTest,1,Test1,TRUE,What? Hello? Welcome to my World!!
+MainTest,2,Test3,FALSE,nono
+MainTest,3,Test2,,nono2
+Main,4,Test4,,nono3
+MainTest,3,Test1,FALSE,Second Talking
+MainTest,2,Test1,,Last Talking ^_^ byebye~!
