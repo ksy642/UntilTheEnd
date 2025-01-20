@@ -2,17 +2,38 @@ using UnityEngine;
 
 public class Test1 : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        Debug.Log("테스트3");
-        //DreamManager.instance.DreamTest1();
-        Debug.Log("테스트4");
-    }
 
-    // Update is called once per frame
+
     public void OnClick_ToMainScene()
     {
         //UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
+    }
+
+
+    public string npcName = "Test1";  // NPC 이름
+    public string sceneName = "MainTest"; // 현재 씬 이름
+    public DialogManager dialogManager;
+
+
+    void OnMouseDown() // NPC 클릭 시 대화 시작
+    {
+        if (dialogManager != null)
+        {
+            dialogManager.StartDialogue(sceneName, npcName);
+        }
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Debug.Log($"Starting dialogue for Scene: {sceneName}, NPC: {npcName}"); // 확인용 로그
+            OnMouseDown();
+        }
+
+        if (dialogManager != null && dialogManager.isTalking && Input.GetKeyDown(KeyCode.Space)) // 스페이스바로 대화 진행
+        {
+            dialogManager.DisplayNextDialogue();
+        }
     }
 }
