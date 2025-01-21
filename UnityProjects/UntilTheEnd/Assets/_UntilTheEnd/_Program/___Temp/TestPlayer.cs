@@ -2,15 +2,16 @@ using UnityEngine;
 
 public class TestPlayer : MonoBehaviour
 {
-    [Header("ÀÌµ¿±â ¼¼ÆÃ")]
-    public float moveSpeed = 5.0f; // ÇÃ·¹ÀÌ¾î ÀÌµ¿ ¼Óµµ
-    public float mouseSensitivity = 100.0f; // ¸¶¿ì½º °¨µµ
-    public Transform cameraTransform; // ¸ŞÀÎ Ä«¸Ş¶ó Æ®·£½ºÆû (ÀÚµ¿À¸·Î Ã£À½)
-    public float jumpHeight = 1.3f; // Á¡ÇÁ ³ôÀÌ
+    [Header("ì´ë™ê¸° ì„¸íŒ…")]
+    public float moveSpeed = 5.0f; // í”Œë ˆì´ì–´ ì´ë™ ì†ë„
+    public float mouseSensitivity = 100.0f; // ë§ˆìš°ìŠ¤ ê°ë„
+    public Transform cameraTransform; // ë©”ì¸ ì¹´ë©”ë¼ íŠ¸ëœìŠ¤í¼ (ìë™ìœ¼ë¡œ ì°¾ìŒ)
+    //public float jumpHeight = 1.3f; // ì í”„ ë†’ì´
+    public GameObject playerCameraRoot;
 
     private CharacterController _characterController;
-    private float _cameraPitch = 0f; // Ä«¸Ş¶óÀÇ ¼öÁ÷ È¸Àü °ª
-    private Vector3 _velocity; // Áß·Â º¤ÅÍ
+    private float _cameraPitch = 0f; // ì¹´ë©”ë¼ì˜ ìˆ˜ì§ íšŒì „ ê°’
+    private Vector3 _velocity; // ì¤‘ë ¥ ë²¡í„°
     private float _gravity = -10.0f;
 
     private void Start()
@@ -19,28 +20,28 @@ public class TestPlayer : MonoBehaviour
 
         if (cameraTransform == null)
         {
-            Camera mainCamera = Camera.main; // Main Camera¸¦ Ã£À½
+            Camera mainCamera = Camera.main; // Main Cameraë¥¼ ì°¾ìŒ
 
             if (mainCamera != null)
             {
                 cameraTransform = mainCamera.transform;
-                Debug.Log("Main Camera ¼³Á¤ ¿Ï·á");
+                Debug.Log("Main Camera ì„¤ì • ì™„ë£Œ");
             }
             else
             {
-                Debug.LogWarning("Main Camera ¸øÃ£À½");
+                Debug.LogWarning("Main Camera ëª»ì°¾ìŒ");
             }
         }
 
-        // ¸¶¿ì½º Ä¿¼­ Àá±İ
+        // ë§ˆìš°ìŠ¤ ì»¤ì„œ ì ê¸ˆ
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
     private void Update()
     {
-        _HandleMovement(); // ÇÃ·¹ÀÌ¾î ¿òÁ÷ÀÓ Ã³¸®
-        _HandleMouseLook(); // ¸¶¿ì½º ÀÔ·Â Ã³¸® (Ä«¸Ş¶ó È¸Àü)
+        _HandleMovement(); // í”Œë ˆì´ì–´ ì›€ì§ì„ ì²˜ë¦¬
+        _HandleMouseLook(); // ë§ˆìš°ìŠ¤ ì…ë ¥ ì²˜ë¦¬ (ì¹´ë©”ë¼ íšŒì „)
     }
 
     private void _HandleMovement()
@@ -48,47 +49,51 @@ public class TestPlayer : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
-        // ÀÌµ¿ ¹æÇâ °è»ê
+        // ì´ë™ ë°©í–¥ ê³„ì‚°
         Vector3 moveDirection = transform.right * horizontal + transform.forward * vertical;
 
-        // Áö¸é¿¡ ´ê¾Æ ÀÖ´ÂÁö È®ÀÎ
+        // ì§€ë©´ì— ë‹¿ì•„ ìˆëŠ”ì§€ í™•ì¸
         if (_characterController.isGrounded)
         {
-            // Áö¸é¿¡ ÀÖÀ» ¶§, YÃà ¼Óµµ ÃÊ±âÈ­
+            // ì§€ë©´ì— ìˆì„ ë•Œ, Yì¶• ì†ë„ ì´ˆê¸°í™”
             _velocity.y = 0f;
 
-            // Space Å° ÀÔ·Â ½Ã Á¡ÇÁ
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                _velocity.y = Mathf.Sqrt(jumpHeight * -2f * _gravity); // Á¡ÇÁ ¼Óµµ °è»ê (ºÎµå·¯¿î Á¡ÇÁ¸¦ À§ÇØ ·çÆ® °è»ê »ç¿ë)
-            }
+            // Space í‚¤ ì…ë ¥ ì‹œ ì í”„
+            //if (Input.GetKeyDown(KeyCode.Space))
+            //{
+            //    _velocity.y = Mathf.Sqrt(jumpHeight * -2f * _gravity); // ì í”„ ì†ë„ ê³„ì‚° (ë¶€ë“œëŸ¬ìš´ ì í”„ë¥¼ ìœ„í•´ ë£¨íŠ¸ ê³„ì‚° ì‚¬ìš©)
+            //}
         }
         else
         {
-            // °øÁß¿¡¼­´Â Áß·Â Áö¼Ó Àû¿ë + ³«ÇÏ °¡¼Óµµ Ãß°¡
-            float fallMultiplier = 2.0f; // ³«ÇÏ ¼Óµµ ¹è¼ö (°ªÀÌ Å¬¼ö·Ï ´õ ºü¸£°Ô ³«ÇÏ)
+            // ê³µì¤‘ì—ì„œëŠ” ì¤‘ë ¥ ì§€ì† ì ìš© + ë‚™í•˜ ê°€ì†ë„ ì¶”ê°€
+            float fallMultiplier = 2.0f; // ë‚™í•˜ ì†ë„ ë°°ìˆ˜ (ê°’ì´ í´ìˆ˜ë¡ ë” ë¹ ë¥´ê²Œ ë‚™í•˜)
             _velocity.y += _gravity * fallMultiplier * Time.deltaTime;
         }
 
-        // ÀÌµ¿ + Áß·Â Àû¿ëÇÏ¿© Ä³¸¯ÅÍ ÀÌµ¿
+        // ì´ë™ + ì¤‘ë ¥ ì ìš©í•˜ì—¬ ìºë¦­í„° ì´ë™
         _characterController.Move((moveDirection * moveSpeed + _velocity) * Time.deltaTime);
     }
 
+
+    // cinemachine
     private void _HandleMouseLook()
     {
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-        // Ä«¸Ş¶ó ÇÇÄ¡(¼öÁ÷ È¸Àü) Á¦ÇÑ (90µµ ÀÌ»ó È¸Àü ¹æÁö)
-        _cameraPitch -= mouseY;
-        _cameraPitch = Mathf.Clamp(_cameraPitch, -90.0f, 90.0f);
 
-        // Ä«¸Ş¶ó¿Í ÇÃ·¹ÀÌ¾îÀÇ È¸Àü Ã³¸®
-        if (cameraTransform != null)
+        // ìˆ˜ì§ ê°ë„ ì œí•œì„ ìœ„í•œ ë³€ìˆ˜ (_cameraPitch)
+        _cameraPitch -= mouseY;
+        _cameraPitch = Mathf.Clamp(_cameraPitch, -30f, 30f); // ë‚´ë ¤ê°€ëŠ”ê±°, ì˜¬ë¼ê°€ëŠ”ê±°
+
+        // playerCameraRootì˜ ë¡œì»¬ íšŒì „ ì„¤ì • (x: ìƒí•˜, y: ì¢Œìš°)
+        if (playerCameraRoot != null)
         {
-            cameraTransform.localRotation = Quaternion.Euler(_cameraPitch, 0f, 0f); // Ä«¸Ş¶ó ¼öÁ÷ È¸Àü
+            playerCameraRoot.transform.localRotation = Quaternion.Euler(_cameraPitch, 0f, 0f);
         }
 
-        transform.Rotate(Vector3.up * mouseX); // ÇÃ·¹ÀÌ¾î ¼öÆò È¸Àü
+        // í”Œë ˆì´ì–´ ì˜¤ë¸Œì íŠ¸ ìì²´ì˜ ì¢Œìš° íšŒì „ (yì¶•)
+        transform.Rotate(Vector3.up * mouseX);
     }
 }

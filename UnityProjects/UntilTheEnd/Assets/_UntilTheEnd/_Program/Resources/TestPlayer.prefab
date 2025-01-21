@@ -129,7 +129,7 @@ MonoBehaviour:
   moveSpeed: 5
   mouseSensitivity: 100
   cameraTransform: {fileID: 0}
-  jumpHeight: 1.3
+  playerCameraRoot: {fileID: 7736644575050175093}
 --- !u!143 &7095316440715267860
 CharacterController:
   m_ObjectHideFlags: 0
