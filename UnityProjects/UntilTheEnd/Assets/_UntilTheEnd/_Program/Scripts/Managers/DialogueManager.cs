@@ -1,13 +1,17 @@
+using System.Collections;
 using System.Collections.Generic;
+
 using TMPro;
+
 using UnityEngine;
 
-public class DialogManager : MonoBehaviour
+public class DialogueManager : MonoBehaviour
 {
     public TextAsset csvFile;
     public TextMeshProUGUI dialogueText;
     public GameObject dialogueUI; // 대화상자 백그라운드
     public bool isTalking = false; // 대화 중인지 확인
+    public float typingSpeed = 0.05f; // 글자 출력 속도 (초 단위)
 
     private List<Dialogue> _dialogues; // CSV에서 불러온 대화 데이터를 저장
     private Queue<Dialogue> _currentDialogue; // 현재 대화
@@ -89,7 +93,21 @@ public class DialogManager : MonoBehaviour
 
         Dialogue nextDialogue = _currentDialogue.Dequeue();
         dialogueText.text = nextDialogue.dialogueCSV;
+        StartCoroutine(_TypeDialogue(nextDialogue.dialogueCSV));
     }
+
+    // 글자 타이핑 효과 코루틴
+    private IEnumerator _TypeDialogue(string dialogue)
+    {
+        dialogueText.text = ""; // 기존 텍스트 초기화
+
+        foreach (char letter in dialogue)
+        {
+            dialogueText.text += letter; // 한 글자씩 추가
+            yield return new WaitForSeconds(typingSpeed); // 일정 시간 대기
+        }
+    }
+
 
 
     // 대화 종료

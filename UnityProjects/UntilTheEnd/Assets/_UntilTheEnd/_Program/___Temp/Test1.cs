@@ -10,16 +10,16 @@ public class Test1 : MonoBehaviour
     }
 
 
-    public string npcName = "Test1";  // NPC 이름
-    public string sceneName = "MainTest"; // 현재 씬 이름
-    public DialogManager dialogManager;
+    public string npcName;  // NPC 이름
+    public string sceneName; // 현재 씬 이름
+    public DialogueManager dialogueManager;
 
 
     void OnMouseDown() // NPC 클릭 시 대화 시작
     {
-        if (dialogManager != null)
+        if (dialogueManager != null)
         {
-            dialogManager.StartDialogue(sceneName, npcName);
+            dialogueManager.StartDialogue(sceneName, npcName);
         }
     }
 
@@ -27,13 +27,13 @@ public class Test1 : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            Debug.Log($"Starting dialogue for Scene: {sceneName}, NPC: {npcName}"); // 확인용 로그
+            Debug.Log($"씬 이름 : {sceneName}, NPC 이름 : {npcName}"); // 확인용 로그
             OnMouseDown();
         }
 
-        if (dialogManager != null && dialogManager.isTalking && Input.GetKeyDown(KeyCode.Space)) // 스페이스바로 대화 진행
+        if (dialogueManager != null && dialogueManager.isTalking && Input.GetKeyDown(KeyCode.Space)) // 스페이스바로 대화 진행
         {
-            dialogManager.DisplayNextDialogue();
+            dialogueManager.DisplayNextDialogue();
         }
     }
 }
