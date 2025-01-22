@@ -11,15 +11,21 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI dialogueText;
     public GameObject dialogueUI; // 대화상자 백그라운드
     public bool isTalking = false; // 대화 중인지 확인
+    public bool isTyping = false;
     public float typingSpeed = 0.05f; // 글자 출력 속도 (초 단위)
 
     private List<Dialogue> _dialogues; // CSV에서 불러온 대화 데이터를 저장
     private Queue<Dialogue> _currentDialogue; // 현재 대화
+    private Dialogue _nextDialogue;
 
     private void Start()
     {
+        dialogueText.text = ""; // 기존 텍스트 초기화
         dialogueUI.SetActive(false); // 대화상자 백그라운드 비활성화
         _LoadDialogueData();
+
+        //  Peek()는 대화 큐에서 다음 대화 데이터를 확인할 뿐, 제거하지 않습니다.
+        //  Dequeue()는 큐에서 데이터를 가져오고 이후 큐에서 제거
     }
 
     private void _LoadDialogueData()
@@ -91,9 +97,29 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        Dialogue nextDialogue = _currentDialogue.Dequeue();
-        dialogueText.text = nextDialogue.dialogueCSV;
-        StartCoroutine(_TypeDialogue(nextDialogue.dialogueCSV));
+        _nextDialogue = _currentDialogue.Dequeue();
+        dialogueText.text = _nextDialogue.dialogueCSV;
+        StartCoroutine(_TypeDialogue(_nextDialogue.dialogueCSV));
+    }
+
+    // 문장 적히는 도중에 스페이스바 눌렀을 때 실행되는 함수
+    public void FinishCurrentTyping()
+    {
+        if (_currentDialogue == null || _currentDialogue.Count == 0)
+        {
+            Debug.LogWarning("마무리출력");
+            EndDialogue();
+            return;
+        }
+
+        if (isTyping)
+        {
+            StopCoroutine(_TypeDialogue(_nextDialogue.dialogueCSV));
+            isTyping = false;
+
+            // 현재 대화 문장을 모두 출력
+            dialogueText.text = _currentDialogue.Peek().dialogueCSV;
+        }
     }
 
     // 글자 타이핑 효과 코루틴
@@ -113,6 +139,9 @@ public class DialogueManager : MonoBehaviour
     // 대화 종료
     public void EndDialogue()
     {
+        Debug.LogWarning("대화종료");
+        dialogueText.text = ""; // 기존 텍스트 초기화
+        _currentDialogue = null;
         isTalking = false;
         dialogueUI.SetActive(false);
     }

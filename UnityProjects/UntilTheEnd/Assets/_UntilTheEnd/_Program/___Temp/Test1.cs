@@ -2,38 +2,38 @@ using UnityEngine;
 
 public class Test1 : MonoBehaviour
 {
-
-
     public void OnClick_ToMainScene()
     {
         //UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
     }
 
-
     public string npcName;  // NPC 이름
     public string sceneName; // 현재 씬 이름
     public DialogueManager dialogueManager;
 
-
-    void OnMouseDown() // NPC 클릭 시 대화 시작
+    private void Update()
     {
-        if (dialogueManager != null)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            dialogueManager.StartDialogue(sceneName, npcName);
-        }
-    }
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            Debug.Log($"씬 이름 : {sceneName}, NPC 이름 : {npcName}"); // 확인용 로그
-            OnMouseDown();
-        }
-
-        if (dialogueManager != null && dialogueManager.isTalking && Input.GetKeyDown(KeyCode.Space)) // 스페이스바로 대화 진행
-        {
-            dialogueManager.DisplayNextDialogue();
+            if (!dialogueManager.isTalking) 
+            {
+                // 대화 중이 아니면 시작
+                dialogueManager.StartDialogue(sceneName, npcName);
+            }
+            else 
+            {
+                // 대화 중이라면 현재 상태 확인
+                if (!dialogueManager.isTyping)
+                {
+                    // 글자 출력이 끝났으면 다음 대화로 진행
+                    dialogueManager.DisplayNextDialogue();
+                }
+                else
+                {
+                    // 글자 출력 중이면 전체 문장을 즉시 보여줌
+                    dialogueManager.FinishCurrentTyping();
+                }
+            }
         }
     }
 }
