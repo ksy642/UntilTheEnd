@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b0666c669cc56aa4694c4213d6340e56
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 294657
+  packageName: Realistic Essentials VFX Pack
+  packageVersion: 2.2
+  assetPath: Assets/Realistic VFX Pack/URP/Demo/Demo Source/Materials/Skybox.mat
+  uploadId: 709053

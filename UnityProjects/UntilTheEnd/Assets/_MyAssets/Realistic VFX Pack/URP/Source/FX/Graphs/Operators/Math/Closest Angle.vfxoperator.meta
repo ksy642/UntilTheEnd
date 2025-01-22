@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a39bc5436b2479c49af8f999f8a481d2
+VisualEffectImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 294657
+  packageName: Realistic Essentials VFX Pack
+  packageVersion: 2.2
+  assetPath: Assets/Realistic VFX Pack/URP/Source/FX/Graphs/Operators/Math/Closest
+    Angle.vfxoperator
+  uploadId: 709053

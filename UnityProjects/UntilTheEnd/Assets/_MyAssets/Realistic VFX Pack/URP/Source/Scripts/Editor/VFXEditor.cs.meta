@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: c39d6fde70b2e36438b58433a79453a1
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 294657
+  packageName: Realistic Essentials VFX Pack
+  packageVersion: 2.2
+  assetPath: Assets/Realistic VFX Pack/URP/Source/Scripts/Editor/VFXEditor.cs
+  uploadId: 709053

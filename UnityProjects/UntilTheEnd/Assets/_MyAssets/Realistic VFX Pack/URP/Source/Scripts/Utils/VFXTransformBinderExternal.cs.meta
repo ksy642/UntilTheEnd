@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 4c2e52cb883bac940b242910b73d51b1
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 294657
+  packageName: Realistic Essentials VFX Pack
+  packageVersion: 2.2
+  assetPath: Assets/Realistic VFX Pack/URP/Source/Scripts/Utils/VFXTransformBinderExternal.cs
+  uploadId: 709053

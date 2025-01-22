@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: c4375d7e9ea92cc48a160fe52122b3e5
+VisualEffectImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 294657
+  packageName: Realistic Essentials VFX Pack
+  packageVersion: 2.2
+  assetPath: Assets/Realistic VFX Pack/URP/Source/FX/Graphs/Operators/Sub/Advanced
+    Perlin Sampling.vfxoperator
+  uploadId: 709053

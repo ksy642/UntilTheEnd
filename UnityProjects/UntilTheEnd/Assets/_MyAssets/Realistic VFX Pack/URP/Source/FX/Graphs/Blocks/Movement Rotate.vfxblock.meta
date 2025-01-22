@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 84491b76dd2c24243afeb8d453988b25
+VisualEffectImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 294657
+  packageName: Realistic Essentials VFX Pack
+  packageVersion: 2.2
+  assetPath: Assets/Realistic VFX Pack/URP/Source/FX/Graphs/Blocks/Movement Rotate.vfxblock
+  uploadId: 709053
