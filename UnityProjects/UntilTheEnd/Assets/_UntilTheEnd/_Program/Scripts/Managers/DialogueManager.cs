@@ -1,22 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
-
 using TMPro;
-
 using UnityEngine;
 
 public class DialogueManager : MonoBehaviour
 {
     public TextAsset csvFile;
     public TextMeshProUGUI dialogueText;
-    public GameObject dialogueUI; // 대화상자 백그라운드
+    public GameObject dialogueUI;   // 대화상자 백그라운드
     public bool isTalking = false; // 대화 중인지 확인
-    public bool isTyping = false;
-    public float typingSpeed = 0.05f; // 글자 출력 속도 (초 단위)
+    public bool isTyping = false; // 타이핑 중일 때
+    public float typingSpeed = 0.05f;
 
     private List<Dialogue> _dialogues; // CSV에서 불러온 대화 데이터를 저장
     private Queue<Dialogue> _currentDialogue; // 현재 대화
     private Dialogue _nextDialogue;
+    private Coroutine _nextDialogueCoroutine;
+
+    private List<Dialogue> _GetDialoguesForNPC(string sceneName, string npcName)
+    {
+        // 특정 NPC와의 대화 데이터 찾기, ToLower를 통해 대소문자 안가림.
+        return _dialogues.FindAll(d => d.sceneNameCSV.Trim().ToLower() == sceneName.Trim().ToLower() && d.npcCSV.Trim().ToLower() == npcName.Trim().ToLower());
+    }
 
     private void Start()
     {
@@ -68,10 +73,9 @@ public class DialogueManager : MonoBehaviour
     // 특정 NPC와 대화 시작
     public void StartDialogue(string sceneName, string npcName)
     {
-        List<Dialogue> npcDialogues = GetDialoguesForNPC(sceneName, npcName);
+        List<Dialogue> npcDialogues = _GetDialoguesForNPC(sceneName, npcName);
 
-        // 대화가 없다면 종료
-        if (npcDialogues.Count == 0)
+        if (npcDialogues.Count == 0) // 대화가 없다면 종료
         {
             Debug.LogWarning($"대화가 없어서 종료, NPC: {npcName} Scene: {sceneName}");
             return;
@@ -84,47 +88,50 @@ public class DialogueManager : MonoBehaviour
         dialogueUI.SetActive(true);
         _currentDialogue = new Queue<Dialogue>(npcDialogues);
 
+        Debug.Log("처음 시작");
         DisplayNextDialogue();
     }
-
 
     // 다음 대화 표시
     public void DisplayNextDialogue()
     {
         if (_currentDialogue == null || _currentDialogue.Count == 0)
         {
+            // 문장 끄트머리 도착했을 때 실행
             EndDialogue();
             return;
         }
 
         _nextDialogue = _currentDialogue.Dequeue();
         dialogueText.text = _nextDialogue.dialogueCSV;
-        StartCoroutine(_TypeDialogue(_nextDialogue.dialogueCSV));
+        _nextDialogueCoroutine = StartCoroutine(_TypeDialogue(dialogueText.text));
     }
 
     // 문장 적히는 도중에 스페이스바 눌렀을 때 실행되는 함수
     public void FinishCurrentTyping()
     {
-        if (_currentDialogue == null || _currentDialogue.Count == 0)
+        if (_nextDialogueCoroutine != null)
         {
-            Debug.LogWarning("마무리출력");
-            EndDialogue();
-            return;
+            // 현재 대화 문장을 모두 출력
+            StopCoroutine(_nextDialogueCoroutine);
+            dialogueText.text = _nextDialogue.dialogueCSV;//_currentDialogue.Peek().dialogueCSV;
         }
 
-        if (isTyping)
-        {
-            StopCoroutine(_TypeDialogue(_nextDialogue.dialogueCSV));
-            isTyping = false;
+        isTyping = false;
 
-            // 현재 대화 문장을 모두 출력
-            dialogueText.text = _currentDialogue.Peek().dialogueCSV;
+        if (_currentDialogue == null || _currentDialogue.Count == 0)
+        {
+            // 마지막 문장이 출력되는 도중에 FinishCurrentTyping() 함수를 실행 시켰을 때
+            StopCoroutine(_nextDialogueCoroutine);
+            return;
         }
     }
 
     // 글자 타이핑 효과 코루틴
     private IEnumerator _TypeDialogue(string dialogue)
     {
+        isTyping = true;
+
         dialogueText.text = ""; // 기존 텍스트 초기화
 
         foreach (char letter in dialogue)
@@ -132,25 +139,21 @@ public class DialogueManager : MonoBehaviour
             dialogueText.text += letter; // 한 글자씩 추가
             yield return new WaitForSeconds(typingSpeed); // 일정 시간 대기
         }
+
+        isTyping = false; //모든 문자가 출력되면 타이핑 상태를 종료"
     }
-
-
 
     // 대화 종료
     public void EndDialogue()
     {
-        Debug.LogWarning("대화종료");
-        dialogueText.text = ""; // 기존 텍스트 초기화
+        if (_nextDialogueCoroutine != null)
+        {
+            StopCoroutine(_nextDialogueCoroutine);
+        }
+
         _currentDialogue = null;
         isTalking = false;
         dialogueUI.SetActive(false);
+        dialogueText.text = ""; // 기존 텍스트 초기화
     }
-
-
-    // 특정 NPC와의 대화 데이터 찾기, ToLower를 통해 대소문자 안가림.
-    public List<Dialogue> GetDialoguesForNPC(string sceneName, string npcName)
-    {
-        return _dialogues.FindAll(d => d.sceneNameCSV.Trim().ToLower() == sceneName.Trim().ToLower() && d.npcCSV.Trim().ToLower() == npcName.Trim().ToLower());
-    }
-
 }
