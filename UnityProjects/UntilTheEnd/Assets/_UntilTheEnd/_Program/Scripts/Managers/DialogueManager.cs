@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class DialogueManager : MonoBehaviour
+public class DialogueManager : Singleton<DialogueManager>
 {
     public TextAsset csvFile;
     public TextMeshProUGUI dialogueText;
-    public GameObject dialogueUI;   // 대화상자 백그라운드
-    public bool isTalking = false; // 대화 중인지 확인
-    public bool isTyping = false; // 타이핑 중일 때
+    public GameObject dialogueBackGroundImage;// 대화상자 백그라운드
+    public bool isTalking = false;   // 대화 중인지 확인
+    public bool isTyping = false;   // 타이핑 중일 때
     public float typingSpeed = 0.05f;
 
     private List<Dialogue> _dialogues; // CSV에서 불러온 대화 데이터를 저장
@@ -26,7 +26,7 @@ public class DialogueManager : MonoBehaviour
     private void Start()
     {
         dialogueText.text = ""; // 기존 텍스트 초기화
-        dialogueUI.SetActive(false); // 대화상자 백그라운드 비활성화
+        dialogueBackGroundImage.SetActive(false); // 대화상자 백그라운드 비활성화
         _LoadDialogueData();
 
         //  Peek()는 대화 큐에서 다음 대화 데이터를 확인할 뿐, 제거하지 않습니다.
@@ -85,10 +85,9 @@ public class DialogueManager : MonoBehaviour
         npcDialogues.Sort((d1, d2) => d1.numberCSV.CompareTo(d2.numberCSV));
 
         isTalking = true;
-        dialogueUI.SetActive(true);
+        dialogueBackGroundImage.SetActive(true);
         _currentDialogue = new Queue<Dialogue>(npcDialogues);
 
-        Debug.Log("처음 시작");
         DisplayNextDialogue();
     }
 
@@ -153,7 +152,7 @@ public class DialogueManager : MonoBehaviour
 
         _currentDialogue = null;
         isTalking = false;
-        dialogueUI.SetActive(false);
+        dialogueBackGroundImage.SetActive(false);
         dialogueText.text = ""; // 기존 텍스트 초기화
     }
 }
