@@ -7,7 +7,7 @@
 
 [개발환경]
 
-Project Version : Unity 6000.0.32f1 (25.01.01 기준 TLS 가장 최신 버전)
+Project Version : Unity 6000.0.32f1 (25.01.01 기준 LTS 가장 최신 버전)
 
 [파트]
 
