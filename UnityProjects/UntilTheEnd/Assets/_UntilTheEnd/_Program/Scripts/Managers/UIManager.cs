@@ -277,17 +277,17 @@ namespace UntilTheEnd
 
             GUIStyle style = new GUIStyle
             {
-                fontSize = 30,
+                fontSize = 24,
                 normal = { textColor = Color.red }
             };
 
-            GUI.Label(new Rect(10, 10, 300, 100), $"FPS: {Mathf.Min(fps, 144):0.}", style);
-        }
+            // 화면 크기를 가져와 우측 상단으로 위치 조정
+            float screenWidth = Screen.width;
+            float xPos = screenWidth - 125; // 화면 오른쪽에서 150px 떨어짐
+            float yPos = 10; // 화면 상단에서 10px 떨어짐
 
-        // 테스트용
-        public void OnClick_Test1()
-        {
-            Debug.Log("테스트용111");
+            // FPS 표시
+            GUI.Label(new Rect(xPos, yPos, 300, 100), $"FPS: {Mathf.Min(fps, 144):0.}", style);
         }
     }
 }

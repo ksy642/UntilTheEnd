@@ -18,11 +18,11 @@ namespace UntilTheEnd
 
 
 
-        // 테스트용
-        public void OnClick_ToMainScene()
-        {
-            Debug.LogWarning("클릭됨");
-            UIManager.instance.FadeToScene(StringValues.Scene.main);
-        }
+        //// 테스트용
+        //public void OnClick_ToMainScene()
+        //{
+        //    Debug.LogWarning("클릭됨");
+        //    UIManager.instance.FadeToScene(StringValues.Scene.main);
+        //}
     }
 }
