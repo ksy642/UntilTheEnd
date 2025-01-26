@@ -1,5 +1,7 @@
 using UnityEngine;
 
+using UntilTheEnd;
+
 public class TestPlayer : MonoBehaviour
 {
     [Header("이동기 세팅")]
@@ -42,6 +44,30 @@ public class TestPlayer : MonoBehaviour
     {
         _HandleMovement(); // 플레이어 움직임 처리
         _HandleMouseLook(); // 마우스 입력 처리 (카메라 회전)
+
+        _InputSpaceBar();
+    }
+
+    private void _InputSpaceBar()
+    {
+        if (Input.GetKeyDown(KeyCode.Space)) // 일단 SpaceBar 누르면...?!
+        {
+            if (EquipmentManager.instance.isInteractedObject)
+            {
+                // 아이템에 가까이 갔을 때 SpaceBar 문구 떠서 상호작용 할 때
+
+                Debug.Log("상호작용 캐릭터에서 스페이스바 누른거임");
+
+
+
+                // 여기서 SpaceBar UI가 떠있는 상태에서 스페이스바 연타 가능하잖아?
+                // 한번 눌렀을 때 1. 아이템이 사라지던가, 2. 아이템이 고정형으로 설명해주던가
+                // 이거 처리 잘 해야될거임
+                // 그렇지 않으면 오브젝트의 OnTrigger쪽에 EquipmentManager.instance.isInteractedObject 값을
+                // 바꿔주는곳에서 충돌나면 답없어진다 !!
+
+            }
+        }
     }
 
     private void _HandleMovement()

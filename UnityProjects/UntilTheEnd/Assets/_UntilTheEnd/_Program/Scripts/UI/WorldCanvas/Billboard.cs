@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace UntilTheEnd
 {
+    /// <summary>
+    /// SpaceBar 문구가 플레이어 카메라를 바라보도록 회전
+    /// </summary>
     public class Billboard : MonoBehaviour
     {
         private static Transform _mainCam;
@@ -22,7 +25,6 @@ namespace UntilTheEnd
             var targetPosition = transform.position + _mainCam.forward;
             var upDirection = _mainCam.rotation * Vector3.up;
 
-            // 오브젝트가 카메라를 바라보도록 회전
             transform.LookAt(targetPosition, upDirection);
         }
     }

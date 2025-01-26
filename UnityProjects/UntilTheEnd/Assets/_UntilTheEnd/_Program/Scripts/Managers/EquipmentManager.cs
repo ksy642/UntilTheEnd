@@ -1,15 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 namespace UntilTheEnd
 {
     public class EquipmentManager : DontDestroySingleton<EquipmentManager>
     {
+        public bool isInteractedObject = false;
+
         // 왼손엔 후레시, 오른손엔 그 외 모든것?
-
-
-        private Dictionary<string, Item> equippedItems = new Dictionary<string, Item>();
+        private Dictionary<string, Item> _equippedItems = new Dictionary<string, Item>();
 
 
         // 장비 장착
@@ -21,6 +20,7 @@ namespace UntilTheEnd
                 return;
             }
 
+
             // 아이템이 장착 가능한지 확인
             if (!item.isEquipable)
             {
@@ -28,23 +28,23 @@ namespace UntilTheEnd
                 //return;
             }
 
+
             // 기존 슬롯에 아이템이 있으면 로그를 출력
-            if (equippedItems.ContainsKey(slot))
+            if (_equippedItems.ContainsKey(slot))
             {
-                Debug.Log($"슬롯 '{slot}'의 기존 아이템 '{equippedItems[slot].name}'을(를) 제거하고 '{item.name}'을(를) 장착합니다.");
+                Debug.Log($"슬롯 '{slot}'의 기존 아이템 '{_equippedItems[slot].name}'을(를) 제거하고 '{item.name}'을(를) 장착합니다.");
             }
             else
             { 
                 Debug.Log($"'{item.name}'을(를) '{slot}' 슬롯에 처음으로 장착합니다.");
             }
 
-            // 슬롯에 새로운 아이템을 추가 또는 업데이트
-            equippedItems[slot] = item;
-
-            // UI 갱신 호출
-            UIManager.instance.UpdateEquipmentUI(slot, item);
+            _equippedItems[slot] = item; // 슬롯에 새로운 아이템을 추가 또는 업데이트
+            UIManager.instance.UpdateEquipmentUI(slot, item); // UI 갱신 호출
         }
 
+
+        /*
         // 장비 해제
         public void UnequipItem(string slot)
         {
@@ -63,5 +63,6 @@ namespace UntilTheEnd
         {
             return equippedItems.ContainsKey(slot) ? equippedItems[slot] : null;
         }
+        */
     }
 }

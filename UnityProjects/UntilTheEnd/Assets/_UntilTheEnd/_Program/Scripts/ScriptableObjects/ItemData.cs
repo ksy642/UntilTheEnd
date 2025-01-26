@@ -19,13 +19,16 @@ namespace UntilTheEnd
     [Serializable]
     public class Item
     {
+        public SphereCollider sphereCollider;
+
         public bool isCollect = false; // 수집여부
+        public bool isEquipable = false;   // 장착 가능 여부
+        public bool isConsumable = false; // 소모품 여부
 
         public Sprite iconSprite;
         public string name = "아이템";
         public string description = "간략한 설명";
 
-        public bool isEquipable = false;   // 장착 가능 여부
-        public bool isConsumable = false; // 소모품 여부
+        
     }
 }
