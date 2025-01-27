@@ -4,11 +4,34 @@ using UnityEngine.UI;
 
 namespace UntilTheEnd
 {
-    public class ButtonNavigation : MonoBehaviour
+    /// <summary>
+    /// UI를 켰을 때 키보드만으로 UI를 작동시킬 수 있게 하려는 코드
+    /// 따라서 특정 씬과 관게없이 모든 씬에서 다 사용할 수 있게 만드는게 목적!!
+    /// </summary>
+    public class UIButtonNavigation : MonoBehaviour
     {
-        public List<Button> sceneButtons;
-        public List<GameObject> hoverImages; // 각 버튼과 매칭되는 Hover 이미지 리스트
+        [SerializeField] private List<Button> sceneButtons;
+        [SerializeField] private List<GameObject> hoverImages; // 각 버튼과 매칭되는 Hover 이미지 리스트
+
+        private bool _isNavigationLocked = false; // 버튼 네비게이션 잠금 여부
         private int _currentIndex = 0;
+
+        public bool IsNavigationLocked
+        {
+            // 읽기 전용 속성 추가 IsNavigationLocked 이걸통해서 현재 값 볼 수 있음
+            get
+            {
+                return _isNavigationLocked;
+            }
+        }
+
+        public bool SetNavigationLock(bool isLocked)
+        {
+            // 옵션 네비게이션 활성화/비활성화 메서드
+            _isNavigationLocked = isLocked;
+
+            return _isNavigationLocked;
+        }
 
         private void Start()
         {
@@ -20,6 +43,17 @@ namespace UntilTheEnd
         }
 
         private void Update()
+        {
+            if (_isNavigationLocked)
+            {
+                // 네비게이션 잠겨있으면 동작하지 않음
+                return;
+            }
+
+            KeyBoardNavigation();
+        }
+
+        public void KeyBoardNavigation()
         {
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
