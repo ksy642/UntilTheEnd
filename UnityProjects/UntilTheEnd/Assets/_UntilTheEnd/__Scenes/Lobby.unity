@@ -1345,17 +1345,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96bb02a3adac68a4ca71377fb818d949, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneButtons:
+  _navigateButtons:
   - {fileID: 522793347}
   - {fileID: 2061615535}
   - {fileID: 799598079}
   - {fileID: 908340820}
-  hoverImages:
+  _hoverImages:
   - {fileID: 74176019}
   - {fileID: 1917484660}
   - {fileID: 17684944}
   - {fileID: 1701590971}
   isOptionsNavigationLocked: 0
+  check: 0
 --- !u!1 &721225443
 GameObject:
   m_ObjectHideFlags: 0
@@ -1832,12 +1833,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60c686ac7371d7e4fb6c9e55a5694594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneButtons:
+  _navigateButtons:
   - {fileID: 1453319250}
   - {fileID: 2056980042}
   - {fileID: 36276919}
   - {fileID: 1500077043}
-  hoverImages:
+  _hoverImages:
   - {fileID: 409892664}
   - {fileID: 2021226508}
   - {fileID: 1492985802}
@@ -3926,9 +3927,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59a7504c38a38be42bff8c36ff3ee80d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonNavigation: {fileID: 806169642}
-  panel_Options: {fileID: 576420504}
-  panel_DevelopmentTeam: {fileID: 1428398751}
+  uiButtonNavigation: {fileID: 806169642}
+  panel_UILobbyOptions: {fileID: 576420504}
+  panel_UILobbyDevelopmentTeam: {fileID: 1428398751}
 --- !u!1 &2004887048
 GameObject:
   m_ObjectHideFlags: 0

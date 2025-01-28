@@ -8,14 +8,6 @@ namespace UntilTheEnd
         public bool isOptionsNavigationLocked = false;
         public bool check;
 
-        private void Start()
-        {
-            Debug.Log($"Navigation Lock State (After): {IsNavigationLocked}");
-
-            SetNavigationLock(true);
-
-        }
-
         private void Update()
         {
             if (isOptionsNavigationLocked)

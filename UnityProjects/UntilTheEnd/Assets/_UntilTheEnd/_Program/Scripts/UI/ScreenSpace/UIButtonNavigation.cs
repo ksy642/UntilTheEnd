@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,15 +11,15 @@ namespace UntilTheEnd
     /// </summary>
     public class UIButtonNavigation : MonoBehaviour
     {
-        [SerializeField] private List<Button> sceneButtons;
-        [SerializeField] private List<GameObject> hoverImages; // 각 버튼과 매칭되는 Hover 이미지 리스트
+        [SerializeField] private List<Button> _navigateButtons;
+        [SerializeField] private List<GameObject> _hoverImages; // 각 버튼과 매칭되는 Hover 이미지 리스트
 
         private bool _isNavigationLocked = false; // 버튼 네비게이션 잠금 여부
         private int _currentIndex = 0;
 
         public bool IsNavigationLocked
         {
-            // 읽기 전용 속성 추가 IsNavigationLocked 이걸통해서 현재 값 볼 수 있음
+            // 읽기 전용, IsNavigationLocked 이걸 통해서 현재 값 볼 수 있음
             get
             {
                 return _isNavigationLocked;
@@ -33,10 +34,23 @@ namespace UntilTheEnd
             return _isNavigationLocked;
         }
 
+        public Button NavigateFirstButton(int index)
+        {
+            // 이걸 통해서 UI 켜지면 해당 UI버튼으로 이동 포커스 줌
+            if (_navigateButtons != null && _navigateButtons.Count > 0
+                 && index < _navigateButtons.Count)
+            {
+                return _navigateButtons[index];
+            }
+
+            return _navigateButtons[0];
+        }
+
+
         private void Start()
         {
             //시작하자마자 첫번째 버튼 선택되어있게 설정
-            if (sceneButtons.Count > 0)
+            if (_navigateButtons.Count > 0)
             {
                 _SelectButton(_currentIndex);
             }
@@ -73,13 +87,13 @@ namespace UntilTheEnd
             _UpdateHoverImage(_currentIndex, false);
 
             // 현재 선택된 버튼의 선택 해제
-            sceneButtons[_currentIndex].OnDeselect(null);
+            _navigateButtons[_currentIndex].OnDeselect(null);
 
             // 방향에 따라 인덱스 이동
             _currentIndex += direction;
 
             // 리스트 범위를 벗어나지 않도록 클램프
-            _currentIndex = Mathf.Clamp(_currentIndex, 0, sceneButtons.Count - 1);
+            _currentIndex = Mathf.Clamp(_currentIndex, 0, _navigateButtons.Count - 1);
 
             // 새로운 버튼 선택
             _SelectButton(_currentIndex);
@@ -88,7 +102,7 @@ namespace UntilTheEnd
         private void _SelectButton(int index)
         {
             // 버튼에 포커스를 주기
-            sceneButtons[index].Select();
+            _navigateButtons[index].Select();
 
             // 현재 버튼의 Hover 이미지를 활성화
             _UpdateHoverImage(index, true);
@@ -96,10 +110,10 @@ namespace UntilTheEnd
 
         private void _UpdateHoverImage(int index, bool isActive)
         {
-            if (index >= 0 && index < hoverImages.Count)
+            if (index >= 0 && index < _hoverImages.Count)
             {
                 // Hover 이미지 활성화/비활성화
-                hoverImages[index].SetActive(isActive);
+                _hoverImages[index].SetActive(isActive);
             }
         }
     }

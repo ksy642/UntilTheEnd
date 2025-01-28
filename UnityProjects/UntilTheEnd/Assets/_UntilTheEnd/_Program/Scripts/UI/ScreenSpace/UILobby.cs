@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace UntilTheEnd
 {
@@ -7,9 +9,9 @@ namespace UntilTheEnd
     /// </summary>
     public class UILobby : MonoBehaviour
     {
-        public UIButtonNavigation buttonNavigation;
-        public UILobbyOptions panel_Options;
-        public GameObject panel_DevelopmentTeam;
+        public UIButtonNavigation uiButtonNavigation;
+        public UILobbyOptions panel_UILobbyOptions;
+        public GameObject panel_UILobbyDevelopmentTeam;
 
         private void Start()
         {
@@ -27,21 +29,24 @@ namespace UntilTheEnd
         public void OnClick_Options()
         {
             Debug.LogWarning("옵션활성화");
+            
+            uiButtonNavigation.SetNavigationLock(true);
+            panel_UILobbyOptions.SetOptionsNavigationLock(false); // 옵션 네비게이션 활성화
 
-            buttonNavigation.SetNavigationLock(true);
-            panel_Options.SetOptionsNavigationLock(false); // 옵션 네비게이션 활성화
+            panel_UILobbyOptions.gameObject.SetActive(true);
 
-            panel_Options.gameObject.SetActive(true);
+            Button firstButtonUILobbyOptions = panel_UILobbyOptions.NavigateFirstButton(0);
+            firstButtonUILobbyOptions.Select();
         }
 
         public void OnClick_DevelopmentTeam()
         {
             Debug.LogWarning("제작진 정보");
 
-            buttonNavigation.SetNavigationLock(true);
+            uiButtonNavigation.SetNavigationLock(true);
 
 
-            panel_DevelopmentTeam.SetActive(true);
+            panel_UILobbyDevelopmentTeam.SetActive(true);
         }
 
         public void OnClick_EndGame()
@@ -55,14 +60,31 @@ namespace UntilTheEnd
         // 우측상단의 X 버튼 눌렀을 때
         public void OnClick_ClosePanel()
         {
-            buttonNavigation.SetNavigationLock(false);
+            Debug.Log("닫기버튼을 눌렀습니다.");
 
-            if(panel_Options.gameObject.activeSelf || panel_DevelopmentTeam.activeSelf)
+            uiButtonNavigation.SetNavigationLock(false);
+
+            if(panel_UILobbyOptions.gameObject.activeSelf)
             {
-                panel_Options.SetOptionsNavigationLock(true); // 옵션 네비게이션 비활성화
+                // 설정 창
+                panel_UILobbyOptions.SetOptionsNavigationLock(true); // 옵션 네비게이션 비활성화
 
-                panel_Options.gameObject.SetActive(false);
-                panel_DevelopmentTeam.SetActive(false);
+                panel_UILobbyOptions.gameObject.SetActive(false);
+
+                Debug.Log("여기 되돌아온거아님?");
+                Button firstButtonUIButtonNavigation = uiButtonNavigation.NavigateFirstButton(1);
+                firstButtonUIButtonNavigation.Select();
+            }
+            else if (panel_UILobbyDevelopmentTeam.activeSelf)
+            {
+                // 제작진 창
+                //panel_UILobbyOptions.SetOptionsNavigationLock(true); // 옵션 네비게이션 비활성화
+
+                panel_UILobbyDevelopmentTeam.SetActive(false);
+
+                Debug.Log("여기 되돌아온거아님?22");
+                Button firstButtonUIButtonNavigation = uiButtonNavigation.NavigateFirstButton(2);
+                firstButtonUIButtonNavigation.Select();
             }
         }
     }
