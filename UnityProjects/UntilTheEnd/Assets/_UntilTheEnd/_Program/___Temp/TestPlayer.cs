@@ -5,7 +5,7 @@ using UntilTheEnd;
 public class TestPlayer : MonoBehaviour
 {
     [Header("이동기 세팅")]
-    public float moveSpeed = 5.0f; // 플레이어 이동 속도
+    public float moveSpeed = 4.0f; // 플레이어 이동 속도
     public float mouseSensitivity = 100.0f; // 마우스 감도
     public Transform cameraTransform; // 메인 카메라 트랜스폼 (자동으로 찾음)
     //public float jumpHeight = 1.3f; // 점프 높이
@@ -75,6 +75,24 @@ public class TestPlayer : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
+        // Shift = 달리고, Ctrl = 앉아서, 디폴트 값은 4.0f
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            moveSpeed = 5.2f; // Shift: 빠르게 이동
+        }
+        else if (Input.GetKey(KeyCode.LeftControl))
+        {
+            moveSpeed = 1.8f; // Ctrl: 느리게 이동
+        }
+        else
+        {
+            moveSpeed = 4.0f; // 기본 이동 속도
+        }
+
+
+
+
+
         // 이동 방향 계산
         Vector3 moveDirection = transform.right * horizontal + transform.forward * vertical;
 
@@ -83,12 +101,6 @@ public class TestPlayer : MonoBehaviour
         {
             // 지면에 있을 때, Y축 속도 초기화
             _velocity.y = 0f;
-
-            // Space 키 입력 시 점프
-            //if (Input.GetKeyDown(KeyCode.Space))
-            //{
-            //    _velocity.y = Mathf.Sqrt(jumpHeight * -2f * _gravity); // 점프 속도 계산 (부드러운 점프를 위해 루트 계산 사용)
-            //}
         }
         else
         {
