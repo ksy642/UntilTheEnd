@@ -5,9 +5,9 @@ namespace UntilTheEnd
     public class TrainController : MonoBehaviour
     {
         public float speed = 0f;             // 현재 속도
-        public float maxSpeed = 2.0f;       // 최대 속도 (천천히 이동)
-        public float acceleration = 0.2f;  // 가속도 (서서히 증가)
-        public float deceleration = 0.3f; // 감속도 (서서히 멈춤)
+        public float maxSpeed = 2.5f;       // 최대 속도 (천천히 이동)
+        public float acceleration = 1.2f;  // 가속도 (서서히 증가)
+        public float deceleration = 1.3f; // 감속도 (서서히 멈춤)
         private bool isMoving = false;   // 기차가 움직이는지 여부
 
         private void Update()
