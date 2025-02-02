@@ -6,14 +6,17 @@ namespace UntilTheEnd
     {
         [Header("이동기 세팅")]
         public GameObject playerCameraRoot;
-        public float moveSpeed = 4.0f; // 플레이어 이동 속도
-        public float mouseSensitivity = 100.0f; // 마우스 감도
+
+        private float _mouseSensitivity = 100.0f; // 마우스 감도
+        private float _defaultMoveSpeed = 4.0f;
+        private float _runSpeed = 5.2f;
+        private float _crouchSpeed = 1.8f;
+        private float _cameraPitch = 0f; // 카메라의 수직 회전 값
+        private float _gravity = -10.0f;
 
         private CharacterController _characterController;
         private Transform _cameraTransform; // 메인 카메라 트랜스폼 (자동으로 찾음)
         private Transform _trainParent;
-        private float _cameraPitch = 0f; // 카메라의 수직 회전 값
-        private float _gravity = -10.0f;
         private Vector3 _velocity; // 중력 벡터
         private Vector3 _lastTrainPosition = Vector3.zero;
         private bool _isOnTrain = false; // 기차에 탑승했는지 여부 확인
@@ -22,8 +25,6 @@ namespace UntilTheEnd
         {
             _characterController = GetComponent<CharacterController>();
 
-            if (_cameraTransform == null)
-            {
                 Camera mainCamera = Camera.main; // Main Camera를 찾음
 
                 if (mainCamera != null)
@@ -35,7 +36,7 @@ namespace UntilTheEnd
                 {
                     Debug.LogWarning("Main Camera 못찾음");
                 }
-            }
+            
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -45,14 +46,13 @@ namespace UntilTheEnd
         {
             if (other.CompareTag("Train"))
             {
-                // 기차를 부모로 설정
+                // _lastTrainPosition을 통해서 프레임마다 기차가 얼마나 움직였는지 추적
                 _trainParent = other.transform.root;
-
-                // 처음 기차에 탑승하는 순간 현재 기차 위치를 기억
-                // 아래 코드한줄 없으면 처음 기차탈 때 플레이어가 튕기는 현상이 발생함..
                 _lastTrainPosition = _trainParent.position;
                 _isOnTrain = true;
-                transform.SetParent(_trainParent); // 부모 설정 (기차와 같이 이동)
+
+                // 캐릭터 컨트롤러를 사용하고 있어서 굳이 부모밑에다가 배치해주는게 의미가 없을 수 있음!!
+                //transform.SetParent(_trainParent); // 부모 설정 (기차와 같이 이동)
             }
         }
 
@@ -60,7 +60,7 @@ namespace UntilTheEnd
         {
             if (other.CompareTag("Train"))
             {
-                transform.SetParent(null);
+                //transform.SetParent(null);
                 _trainParent = null;
                 _isOnTrain = false;
             }
@@ -69,10 +69,8 @@ namespace UntilTheEnd
         private void Update()
         {
             _InputSpaceBar();
-
             _HandleMovement();   // 플레이어 움직임 처리
             _HandleMouseLook(); // 마우스 입력 처리 (카메라 회전)
-            _InputSpaceBar();
 
             _OnTrain();
         }
@@ -104,47 +102,38 @@ namespace UntilTheEnd
         {
             float horizontal = Input.GetAxis("Horizontal");
             float vertical = Input.GetAxis("Vertical");
+            float speed = _defaultMoveSpeed;
 
-            // Shift = 달리고, Ctrl = 앉아서, 디폴트 값은 4.0f
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                moveSpeed = 5.2f; // Shift: 빠르게 이동
-            }
-            else if (Input.GetKey(KeyCode.LeftControl))
-            {
-                moveSpeed = 1.8f; // Ctrl: 느리게 이동
-            }
-            else
-            {
-                moveSpeed = 4.0f; // 기본 이동 속도
+                speed = _runSpeed;
             }
 
+            if (Input.GetKey(KeyCode.LeftControl))
+            {
+                speed = _crouchSpeed; 
+            }
 
-            // 이동 방향 계산
             Vector3 moveDirection = transform.right * horizontal + transform.forward * vertical;
 
-            // 지면에 닿아 있는지 확인
             if (_characterController.isGrounded)
             {
-                // 지면에 있을 때, Y축 속도 초기화
-                _velocity.y = 0f;
+                // 약간의 중력을 줘서 땅에 계속 붙어있도록 유지
+                _velocity.y = -0.5f;
             }
             else
             {
-                // 공중에서는 중력 지속 적용 + 낙하 가속도 추가
-                float fallMultiplier = 2.0f; // 낙하 속도 배수 (값이 클수록 더 빠르게 낙하)
-                _velocity.y += _gravity * fallMultiplier * Time.deltaTime;
+                _velocity.y += _gravity * 2.0f * Time.deltaTime;
             }
 
-            // 이동 + 중력 적용하여 캐릭터 이동
-            _characterController.Move((moveDirection * moveSpeed + _velocity) * Time.deltaTime);
+            _characterController.Move((moveDirection * speed + _velocity) * Time.deltaTime);
         }
 
 
         private void _HandleMouseLook()
         {
-            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-            float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+            float mouseX = Input.GetAxis("Mouse X") * _mouseSensitivity * Time.deltaTime;
+            float mouseY = Input.GetAxis("Mouse Y") * _mouseSensitivity * Time.deltaTime;
 
 
             // 수직 각도 제한을 위한 변수 (_cameraPitch)
