@@ -80,9 +80,14 @@ namespace UntilTheEnd
 
                     Debug.Log("모든 메뉴가 닫혔습니다.");
                     break;
+
+
                 case 1: // ESC 메뉴
                     _isESCMenuOpen = !_isESCMenuOpen;
                     _escMenuPanel.SetActive(_isESCMenuOpen);
+
+                    // ★★★ 게임매니저한테 ESC 상태 전달 ★★★
+                    GameManager.instance.ToggleESCMenu(_isESCMenuOpen);
 
                     if (_isESCMenuOpen)
                     {
@@ -91,6 +96,8 @@ namespace UntilTheEnd
                         _equipmentPanel.SetActive(false);
                     }
                     break;
+
+
                 case 2: // 장비창
                     _isEquipmentMenuOpen = !_isEquipmentMenuOpen;
                     _equipmentPanel.SetActive(_isEquipmentMenuOpen);
@@ -102,6 +109,8 @@ namespace UntilTheEnd
                         _escMenuPanel.SetActive(false);
                     }
                     break;
+
+
                 default:
                     Debug.LogWarning($"menuCount 번호를 알려줘 : {menuCount}");
                     break;
