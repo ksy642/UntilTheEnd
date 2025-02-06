@@ -568,8 +568,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35f6324ae872995489f5839b40ae7da0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orcPrefab: {fileID: 912432922026211738, guid: ab92712df1696ad4999e81e698ffa602, type: 3}
-  goblinPrefab: {fileID: 4717993812060630660, guid: e1384c45afb344f428586919b7c97d7d, type: 3}
+  monsterPrefabs:
+  - type: 0
+    monsterPrefab: {fileID: 7501545976317524322, guid: ab92712df1696ad4999e81e698ffa602, type: 3}
+  - type: 1
+    monsterPrefab: {fileID: 5602031432245896617, guid: e1384c45afb344f428586919b7c97d7d, type: 3}
 --- !u!4 &1811997849
 Transform:
   m_ObjectHideFlags: 0
@@ -598,6 +601,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _monsterPool: {fileID: 1811997848}
+  _monsterTypes: 0000000001000000
+  _activeMonsterCount: 0
+  _maxMonsters: 5
 --- !u!1 &1953029215
 GameObject:
   m_ObjectHideFlags: 0

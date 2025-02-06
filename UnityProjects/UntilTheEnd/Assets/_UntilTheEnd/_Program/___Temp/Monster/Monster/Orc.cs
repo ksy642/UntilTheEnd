@@ -6,7 +6,7 @@ public class Orc : Monster // 테스트용 빨간색
 
     private void Awake()
     {
-        SetMonsterType("Orc");
+        SetMonsterType(MonsterType.Orc);
     }
 
     public void TakeDamage(float damage)

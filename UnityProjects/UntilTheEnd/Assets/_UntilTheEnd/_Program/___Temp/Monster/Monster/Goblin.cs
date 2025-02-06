@@ -6,7 +6,7 @@ public class Goblin : Monster // 테스트용 파란색
 
     private void Awake()
     {
-        SetMonsterType("Goblin");
+        SetMonsterType(MonsterType.Goblin);
     }
 
     public void TakeDamage(float damage)

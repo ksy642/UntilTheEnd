@@ -1,6 +1,5 @@
 using UnityEngine;
 
-// ✅ MonsterFactory: 몬스터를 Object Pool에서 가져옴
 public class MonsterFactory
 {
     private MonsterPool monsterPool;
@@ -10,7 +9,7 @@ public class MonsterFactory
         this.monsterPool = pool;
     }
 
-    public Monster CreateMonster(string type, Vector3 position)
+    public Monster CreateMonster(MonsterType type, Vector3 position)
     {
         return monsterPool.GetMonster(type, position);
     }

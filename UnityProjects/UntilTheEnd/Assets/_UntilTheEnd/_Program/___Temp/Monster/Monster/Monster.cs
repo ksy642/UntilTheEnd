@@ -3,7 +3,7 @@ using UnityEngine;
 
 public abstract class Monster : MonoBehaviour
 {
-    public string MonsterType { get; private set; } // 몬스터 타입 저장
+    public MonsterType MonsterType { get; private set; } // 몬스터 타입 저장
 
     private static MonsterPool _monsterPool;
     private bool _isDead = false;
@@ -12,9 +12,10 @@ public abstract class Monster : MonoBehaviour
     // 모든 자식 클래스는 반드시 Attack() 메서드를 구현해야한다.
     public abstract void Attack();
 
-    public void SetMonsterType(string type)
+    public void SetMonsterType(MonsterType monsterType)
     {
-        MonsterType = type;  // ✅ 몬스터 타입 설정 (Orc, Goblin 등)
+        // 몬스터 타입 설정 (Orc, Goblin 등)
+        MonsterType = monsterType;
     }
 
     public void Spawn(Vector3 position)
@@ -50,11 +51,10 @@ public abstract class Monster : MonoBehaviour
         // 2초 후 풀에 반환
         yield return new WaitForSeconds(2f);
 
-        //_monsterPool.ReturnMonster(gameObject.name.Contains("Orc") ? "Orc" : "Goblin", this);
-
         if (_monsterPool != null)
         {
-            _monsterPool.ReturnMonster(MonsterType, this); // ✅ MonsterType을 사용하여 풀에 반환
+            // MonsterType을 사용하여 풀에 반환
+            _monsterPool.ReturnMonster(MonsterType, this);
         }
         else
         {
