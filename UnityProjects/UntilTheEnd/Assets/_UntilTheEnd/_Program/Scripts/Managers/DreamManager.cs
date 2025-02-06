@@ -27,12 +27,12 @@ public class DreamManager : DontDestroySingleton<DreamManager>
         timer -= Time.deltaTime;
 
         // 로그 추가: 현재 타이머 상태
-        Debug.Log($"[DreamManager] Timer: {timer}");
+        //Debug.Log($"[DreamManager] Timer: {timer}");
 
         if (timer <= 0)
         {
             timer = 0;
-            Debug.Log("[DreamManager] Timer reached 0. Starting DreamLayer...");
+            //Debug.Log("[DreamManager] Timer reached 0. Starting DreamLayer...");
             DreamLayer();
         }
     }
@@ -50,26 +50,21 @@ public class DreamManager : DontDestroySingleton<DreamManager>
     public void DreamLayer()
     {
         dreaming = true;
-        Debug.Log("[DreamManager] Entering DreamLayer. Dreaming state set to true.");
         Dreaming();
     }
 
     public void Dreaming()
     {
-        Debug.Log("동작하지?");
         StartCoroutine(_FogOn(_fogDensity));
     }
 
     private IEnumerator _FogOn(float fogDensity)
     {
-        Debug.Log($"안개 확인좀 : {fogDensity}");
         float theTime = 0f;
         float startDensity = RenderSettings.fogDensity;
 
         if (dreaming)
         {
-            Debug.Log("됨?");
-
             while (theTime < _fogTime)
             {
                 theTime += Time.deltaTime;
