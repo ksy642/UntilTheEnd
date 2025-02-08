@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 28c3ba2c9ce65b34a93853ad8ef3aeb6
+VisualEffectImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 294657
+  packageName: Realistic Essentials VFX Pack
+  packageVersion: 2.2
+  assetPath: Assets/Realistic VFX Pack/URP/Source/FX/Graphs/Operators/Math/To Radians.vfxoperator
+  uploadId: 709053

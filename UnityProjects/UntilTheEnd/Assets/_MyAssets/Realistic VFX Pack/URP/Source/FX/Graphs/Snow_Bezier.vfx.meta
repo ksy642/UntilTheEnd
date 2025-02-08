@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 47faaf2f21ee70a4aac7f8ebcb9d556f
+VisualEffectImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 294657
+  packageName: Realistic Essentials VFX Pack
+  packageVersion: 2.2
+  assetPath: Assets/Realistic VFX Pack/URP/Source/FX/Graphs/Snow_Bezier.vfx
+  uploadId: 709053

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 34bd932a97ac8ab46bb7e0034da96f58
+VisualEffectImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 294657
+  packageName: Realistic Essentials VFX Pack
+  packageVersion: 2.2
+  assetPath: Assets/Realistic VFX Pack/URP/Source/FX/Graphs/Operators/Math/Lerp Angle.vfxoperator
+  uploadId: 709053

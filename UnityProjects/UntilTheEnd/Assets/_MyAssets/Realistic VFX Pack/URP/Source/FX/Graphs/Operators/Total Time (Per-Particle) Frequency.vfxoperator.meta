@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 48b85673dcf7384429c4932a6bccd798
+VisualEffectImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 294657
+  packageName: Realistic Essentials VFX Pack
+  packageVersion: 2.2
+  assetPath: Assets/Realistic VFX Pack/URP/Source/FX/Graphs/Operators/Total Time
+    (Per-Particle) Frequency.vfxoperator
+  uploadId: 709053

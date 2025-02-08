@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: a0f4762532158344993f24ddf27c38cc
+VisualEffectImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 294657
+  packageName: Realistic Essentials VFX Pack
+  packageVersion: 2.2
+  assetPath: Assets/Realistic VFX Pack/URP/Source/FX/Graphs/Blocks/Movement Position.vfxblock
+  uploadId: 709053

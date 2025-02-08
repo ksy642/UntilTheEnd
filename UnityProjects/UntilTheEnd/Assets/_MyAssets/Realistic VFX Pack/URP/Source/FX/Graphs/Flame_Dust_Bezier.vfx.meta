@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: e9e4a2dfad7fcfd408bd26539a32ca44
+VisualEffectImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 294657
+  packageName: Realistic Essentials VFX Pack
+  packageVersion: 2.2
+  assetPath: Assets/Realistic VFX Pack/URP/Source/FX/Graphs/Flame_Dust_Bezier.vfx
+  uploadId: 709053

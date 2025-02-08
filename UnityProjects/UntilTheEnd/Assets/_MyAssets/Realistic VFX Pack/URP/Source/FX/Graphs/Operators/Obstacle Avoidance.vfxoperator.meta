@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: f03a7a04aa969e84d8f6e9e294af1f7e
+VisualEffectImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 294657
+  packageName: Realistic Essentials VFX Pack
+  packageVersion: 2.2
+  assetPath: Assets/Realistic VFX Pack/URP/Source/FX/Graphs/Operators/Obstacle Avoidance.vfxoperator
+  uploadId: 709053

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 8e1da52275f7dd14982d99253940530e
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 294657
+  packageName: Realistic Essentials VFX Pack
+  packageVersion: 2.2
+  assetPath: Assets/Realistic VFX Pack/URP/Demo/Demo Source/3rd Party (UnityTechnologies)/Environment/Prefabs/FloorTiny.prefab
+  uploadId: 709053

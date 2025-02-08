@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 72ca3f58c67054e45af65d6485a28bf2
+VisualEffectImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 294657
+  packageName: Realistic Essentials VFX Pack
+  packageVersion: 2.2
+  assetPath: Assets/Realistic VFX Pack/URP/Source/FX/Graphs/Operators/Math/Repeat.vfxoperator
+  uploadId: 709053

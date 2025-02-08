@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 0f36f9d9910021842ba51e5a3419d8bd
+VisualEffectImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 294657
+  packageName: Realistic Essentials VFX Pack
+  packageVersion: 2.2
+  assetPath: Assets/Realistic VFX Pack/URP/Source/FX/Graphs/Operators/Sub/Tangent
+    Offset.vfxoperator
+  uploadId: 709053

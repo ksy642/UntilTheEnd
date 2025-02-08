@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: cb94a7e747b969b4a80ea7a28126c88e
+VisualEffectImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 294657
+  packageName: Realistic Essentials VFX Pack
+  packageVersion: 2.2
+  assetPath: Assets/Realistic VFX Pack/URP/Source/FX/Graphs/Blocks/Bezier Init.vfxblock
+  uploadId: 709053

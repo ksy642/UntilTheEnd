@@ -1,0 +1,237 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1959974431021514655
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7580314068642673463}
+  m_Layer: 0
+  m_Name: Leaves_Falling
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7580314068642673463
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1959974431021514655}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 710426917745665411}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3545633472052642085
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 710426917745665411}
+  - component: {fileID: 1318624491385404792}
+  - component: {fileID: 5127833095172569939}
+  m_Layer: 0
+  m_Name: Leaves_Falling
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &710426917745665411
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3545633472052642085}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7580314068642673463}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!2083052967 &1318624491385404792
+VisualEffect:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3545633472052642085}
+  m_Enabled: 1
+  m_Asset: {fileID: 8926484042661614526, guid: 013d984105ba2a04fa7a86f00c327ec9, type: 3}
+  m_InitialEventName: OnPlay
+  m_InitialEventNameOverriden: 0
+  m_StartSeed: 0
+  m_ResetSeedOnPlay: 1
+  m_ResourceVersion: 1
+  m_PropertySheet:
+    m_Float:
+      m_Array:
+      - m_Value: 1
+        m_Name: Speed
+        m_Overridden: 1
+      - m_Value: 7.5
+        m_Name: Smoothness
+        m_Overridden: 0
+      - m_Value: 1.5
+        m_Name: Offset Frequency
+        m_Overridden: 1
+      - m_Value: 0
+        m_Name: Frequency 1
+        m_Overridden: 1
+      - m_Value: 0
+        m_Name: Angle Change Power
+        m_Overridden: 1
+      - m_Value: 15
+        m_Name: Wind Force
+        m_Overridden: 0
+      - m_Value: 75
+        m_Name: Spawn Rate
+        m_Overridden: 0
+      - m_Value: 9.82
+        m_Name: Gravity
+        m_Overridden: 0
+      - m_Value: 3.19308
+        m_Name: Spawn Area_sphere_radius
+        m_Overridden: 1
+      - m_Value: 0
+        m_Name: Max Random Inner Rotation Angle
+        m_Overridden: 1
+      - m_Value: 0.36
+        m_Name: Inner Rotational Frequency
+        m_Overridden: 1
+      - m_Value: 0.705
+        m_Name: Outer Rotational Frequency
+        m_Overridden: 1
+      - m_Value: 30
+        m_Name: Follow Path Force
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: Angular Velocity
+        m_Overridden: 0
+      - m_Value: 0
+        m_Name: Random Inner Rotation Frequency
+        m_Overridden: 1
+      - m_Value: 2
+        m_Name: Random Force
+        m_Overridden: 0
+      - m_Value: 0.25
+        m_Name: Random Frequency
+        m_Overridden: 0
+      - m_Value: 15
+        m_Name: Spiral Amplitude
+        m_Overridden: 0
+      - m_Value: 4
+        m_Name: Starting Velocity
+        m_Overridden: 0
+      - m_Value: 0.4
+        m_Name: Spread
+        m_Overridden: 0
+      - m_Value: 20
+        m_Name: Dampen Force on Collision
+        m_Overridden: 0
+      - m_Value: 0.075
+        m_Name: Size
+        m_Overridden: 0
+      - m_Value: 8.5
+        m_Name: Lifetime
+        m_Overridden: 0
+    m_Vector2f:
+      m_Array:
+      - m_Value: {x: 0.5, y: 1}
+        m_Name: Movement Range
+        m_Overridden: 1
+    m_Vector3f:
+      m_Array:
+      - m_Value: {x: 0.7714888, y: -0.05289326, z: 0.6340405}
+        m_Name: Direction_direction
+        m_Overridden: 1
+      - m_Value: {x: 0, y: -6.1910625, z: 0}
+        m_Name: Plane_position
+        m_Overridden: 1
+      - m_Value: {x: 0, y: 1, z: 0}
+        m_Name: Plane_normal
+        m_Overridden: 1
+    m_Vector4f:
+      m_Array: []
+    m_Uint:
+      m_Array: []
+    m_Int:
+      m_Array: []
+    m_Matrix4x4f:
+      m_Array: []
+    m_AnimationCurve:
+      m_Array: []
+    m_Gradient:
+      m_Array: []
+    m_NamedObject:
+      m_Array:
+      - m_Value: {fileID: 2800000, guid: 402d3a58219fe6d4c8212733c7a1c803, type: 3}
+        m_Name: Leaves
+        m_Overridden: 1
+      - m_Value: {fileID: 2800000, guid: 402d3a58219fe6d4c8212733c7a1c803, type: 3}
+        m_Name: Texture
+        m_Overridden: 0
+    m_Bool:
+      m_Array:
+      - m_Value: 0
+        m_Name: Debug
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: Use Collision
+        m_Overridden: 1
+--- !u!73398921 &5127833095172569939
+VFXRenderer:
+  serializedVersion: 1
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3545633472052642085}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0

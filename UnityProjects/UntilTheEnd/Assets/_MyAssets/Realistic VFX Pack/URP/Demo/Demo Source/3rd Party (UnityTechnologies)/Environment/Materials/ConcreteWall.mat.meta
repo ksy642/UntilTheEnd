@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f9c717e11fb192c4aa958181f2ebc67a
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 294657
+  packageName: Realistic Essentials VFX Pack
+  packageVersion: 2.2
+  assetPath: Assets/Realistic VFX Pack/URP/Demo/Demo Source/3rd Party (UnityTechnologies)/Environment/Materials/ConcreteWall.mat
+  uploadId: 709053

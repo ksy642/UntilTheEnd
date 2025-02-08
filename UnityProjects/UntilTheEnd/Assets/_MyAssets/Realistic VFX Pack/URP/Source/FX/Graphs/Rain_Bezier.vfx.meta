@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: cf469c9a4646199488d4685c4a695f97
+VisualEffectImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 294657
+  packageName: Realistic Essentials VFX Pack
+  packageVersion: 2.2
+  assetPath: Assets/Realistic VFX Pack/URP/Source/FX/Graphs/Rain_Bezier.vfx
+  uploadId: 709053

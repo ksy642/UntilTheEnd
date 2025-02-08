@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 9482f74253cdc6b4a81e3bc181dd7206
+VisualEffectImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 294657
+  packageName: Realistic Essentials VFX Pack
+  packageVersion: 2.2
+  assetPath: Assets/Realistic VFX Pack/URP/Source/FX/Graphs/Operators/Randomize.vfxoperator
+  uploadId: 709053

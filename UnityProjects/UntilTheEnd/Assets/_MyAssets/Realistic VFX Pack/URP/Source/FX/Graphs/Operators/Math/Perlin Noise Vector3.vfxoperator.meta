@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 1aff6985933cbf1488c8a82340ff7996
+VisualEffectImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 294657
+  packageName: Realistic Essentials VFX Pack
+  packageVersion: 2.2
+  assetPath: Assets/Realistic VFX Pack/URP/Source/FX/Graphs/Operators/Math/Perlin
+    Noise Vector3.vfxoperator
+  uploadId: 709053
