@@ -33,13 +33,21 @@ public class MonsterPool : MonoBehaviour
         return _activeMonsterCount < _maxMonsters;
     }
 
-    private void Start()
+    private void Awake()
     {
-        foreach (var monsterData in monsterPrefabs)
+        // Start함수보다 먼저 초기화 시켜주자, MonsterSpawner.cs에서 실행하는것보다 빨라야됨
+        InitializePools();
+    }
+
+    private void InitializePools()
+    {
+        Debug.Log("Awake MonsterPool 초기화");
+
+        foreach (var prefab in monsterPrefabs)
         {
-            if (!_monsterPools.ContainsKey(monsterData.type))
+            if (!_monsterPools.ContainsKey(prefab.type))
             {
-                _monsterPools[monsterData.type] = new ObjectPool<Monster>(monsterData.monsterPrefab, _maxMonsters);
+                _monsterPools[prefab.type] = new ObjectPool<Monster>(prefab.monsterPrefab, _maxMonsters);
             }
         }
     }

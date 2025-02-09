@@ -65,5 +65,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _monsterPool: {fileID: 118605738023132234}
-  _spawnPoints: []
+  _spawnPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   _isSpawning: 0
