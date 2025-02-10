@@ -2,11 +2,19 @@ using UnityEngine;
 
 namespace UntilTheEnd
 {
-    public class NPCDialogueController : MonoBehaviour
+    public class NPCDialogueController : MonoBehaviour, IInteractable
     {
         public string npcName;    // NPC 이름
         public string sceneName; // 현재 씬 이름
         private bool _isPlayerInRange = false;
+
+        // 여기 함수는 플레이어 스크립트에서 SpaceBar를 누르면 동작하게 설정됨
+        public void Interact()
+        {
+            Debug.Log(npcName + " 와 대화 시작 !!");
+
+            DialogueManager.instance.StartDialogue(sceneName, npcName);
+        }
 
         private void OnTriggerEnter(Collider other)
         {

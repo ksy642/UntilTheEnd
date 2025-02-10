@@ -9,7 +9,7 @@ namespace UntilTheEnd
     /// 반짝이는건 파티클시스템을 이용하도록 하자!!
     /// 챗지피티는 Renderer을 받아와서 Emission을 체크해서 색상을 변경해주는걸 하라고 하더라고...흠
     /// </summary>
-    public class ItemObject : MonoBehaviour
+    public class ItemObject : MonoBehaviour, IInteractable
     {
         public Item item;
         public GameObject canvas_SpaceBarText;
@@ -30,12 +30,30 @@ namespace UntilTheEnd
         }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // 일단 인터페이스를 사용해서 상호작용을 만들면 온트리거쪽은 좀 수정이 필요함
+        // 이거대로 제대로 동작안할테니 일단 잠시 보류해둠
+
+
         #region 플레이어가 오브젝트와 상호작용 할 때 SpaceBar 누르라고 WorldCanvas Text가 나오게 하는 역할
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag(StringValues.Tag.player))
             {
-                EquipmentManager.instance.EquipItem(StringValues.MortalObjectsCSV.mainTest, item);
+                //EquipmentManager.instance.EquipItem(StringValues.MortalObjectsCSV.mainTest, item);
 
                 EquipmentManager.instance.isInteractedObject = true;
                 canvas_SpaceBarText.gameObject.SetActive(true);
@@ -51,5 +69,19 @@ namespace UntilTheEnd
             }
         }
         #endregion
+
+        public void Interact()
+        {
+            Debug.Log("아이템과 상호작용 시작 !!");
+
+
+            EquipmentManager.instance.EquipItem(StringValues.MortalObjectsCSV.mainTest, item);
+
+            
+            // 상호작용하고 난 후... 일단 보류
+            //canvas_SpaceBarText.gameObject.SetActive(false);
+            //gameObject.SetActive(false);
+        }
+        
     }
 }
