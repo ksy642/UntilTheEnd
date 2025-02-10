@@ -4,9 +4,21 @@ namespace UntilTheEnd
 {
     public class TestPlayer : MonoBehaviour
     {
+        // 상호작용 타입 Enum
+        public enum InteractionType
+        { 
+            None,
+            Item,
+            Door,
+            NPC
+        }
+        public InteractionType CurrentInteraction { get; private set; }
+        public GameObject InteractableObject { get; private set; }
+
         [Header("이동기 세팅")]
         public GameObject playerCameraRoot;
 
+              private IPlayerState _currentState;
         private float _mouseSensitivity = 100.0f; // 마우스 감도
         private float _defaultMoveSpeed = 4.0f;
         private float _runSpeed = 5.2f;
@@ -42,6 +54,16 @@ namespace UntilTheEnd
             Cursor.visible = false;
         }
 
+        public void ChangeState(IPlayerState newState)
+        {
+            Debug.Log("먼저 나가고... " + newState);
+            _currentState.ExitState(this);
+            _currentState = newState;
+
+            Debug.Log("먼저 상태진입한다. " + newState);
+            _currentState.EnterState(this);
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Train"))
@@ -54,6 +76,25 @@ namespace UntilTheEnd
                 // 캐릭터 컨트롤러를 사용하고 있어서 굳이 부모밑에다가 배치해주는게 의미가 없을 수 있음!!
                 //transform.SetParent(_trainParent); // 부모 설정 (기차와 같이 이동)
             }
+
+
+
+            // NPC, Item, Door 상호작용
+            if (other.CompareTag("NPC"))
+            {
+                CurrentInteraction = InteractionType.NPC;
+                InteractableObject = other.gameObject;
+            }
+            else if (other.CompareTag("Item"))
+            {
+                CurrentInteraction = InteractionType.Item;
+                InteractableObject = other.gameObject;
+            }
+            else if (other.CompareTag("Door"))
+            {
+                CurrentInteraction = InteractionType.Door;
+                InteractableObject = other.gameObject;
+            }
         }
 
         private void OnTriggerExit(Collider other)
@@ -63,6 +104,14 @@ namespace UntilTheEnd
                 //transform.SetParent(null);
                 _trainParent = null;
                 _isOnTrain = false;
+            }
+
+
+
+            if (InteractableObject == other.gameObject)
+            {
+                CurrentInteraction = InteractionType.None;
+                InteractableObject = null;
             }
         }
 
@@ -75,15 +124,30 @@ namespace UntilTheEnd
             _OnTrain();
         }
 
-
-
         private void _InputSpaceBar()
         {
             if (Input.GetKeyDown(KeyCode.Space)) // 일단 SpaceBar 누르면...?!
             {
+                // NPC와 Item에 관해 상호작용하는 인터페이스
+                IInteractable interactable = InteractableObject?.GetComponent<IInteractable>();
+
+                if (interactable != null)
+                {
+                    // NPC나 Item이나 둘다 작용함
+                    interactable.Interact();
+                }
+
+
+
+                /*
+                 // 잠시 여기 보류!!!
+
+
+
+                // 아이템에 가까이 갔을 때 SpaceBar 문구 떠서 상호작용 할 때
                 if (EquipmentManager.instance.isInteractedObject)
                 {
-                    // 아이템에 가까이 갔을 때 SpaceBar 문구 떠서 상호작용 할 때
+                    
 
                     Debug.Log("상호작용 캐릭터에서 스페이스바 누른거임");
 
@@ -95,6 +159,7 @@ namespace UntilTheEnd
                     // 바꿔주는곳에서 충돌나면 답없어진다 !!
 
                 }
+                */
             }
         }
 
