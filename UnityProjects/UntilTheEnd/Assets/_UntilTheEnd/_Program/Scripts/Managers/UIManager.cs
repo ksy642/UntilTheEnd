@@ -18,6 +18,12 @@ namespace UntilTheEnd
         [SerializeField] private GameObject _equipmentPanel; // 장비창 UI
         [SerializeField] private bool _isEquipmentMenuOpen = false; // 장비창 상태
 
+        [Header("3번 : Quest, Obtain")]
+        [SerializeField] private GameObject _questPanel;
+        [SerializeField] private bool _isQuestMenuOpen = false; // 퀘스트창 UI
+        [SerializeField] private GameObject _obtainPanel;
+        [SerializeField] private bool _isObtainMenuOpen = false; // 아이템획득창 UI
+
         [Header("Fade")]
         [SerializeField] private CanvasGroup _fadeCanvasGroup;
         [SerializeField] private float _fadeDuration = 3f; // 페이드 시간
@@ -78,6 +84,12 @@ namespace UntilTheEnd
                     _isEquipmentMenuOpen = false;
                     _equipmentPanel.SetActive(false);
 
+                    _isQuestMenuOpen = false;
+                    _questPanel.SetActive(false);
+
+                    _isObtainMenuOpen = false;
+                    _obtainPanel.SetActive(false);
+
                     Debug.Log("모든 메뉴가 닫혔습니다.");
                     break;
 
@@ -109,6 +121,10 @@ namespace UntilTheEnd
                         _escMenuPanel.SetActive(false);
                     }
                     break;
+
+                    /*
+                     * 퀘스트창과 아이템획득 했을 때 나오는 UI 구현해야함
+                     */
 
 
                 default:

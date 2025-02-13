@@ -718,6 +718,10 @@ MonoBehaviour:
   _isESCMenuOpen: 0
   _equipmentPanel: {fileID: 6660555312427054563}
   _isEquipmentMenuOpen: 0
+  _questPanel: {fileID: 7961433241350170851}
+  _isQuestMenuOpen: 0
+  _obtainPanel: {fileID: 8075675083917267076}
+  _isObtainMenuOpen: 0
   _fadeCanvasGroup: {fileID: 7682046130717612143}
   _fadeDuration: 3
   equipmentSlotPrefab: {fileID: 343784431820971679, guid: 4547ce680ec2ae04e971cdee071b9dc4, type: 3}
