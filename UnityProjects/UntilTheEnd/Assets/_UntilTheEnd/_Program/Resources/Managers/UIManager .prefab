@@ -714,6 +714,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f18a75505c5d4eb4393972b44ddc8fae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _uiDialogue: {fileID: 4594791686706587255}
   _escMenuPanel: {fileID: 3974748554309458062}
   _isESCMenuOpen: 0
   _equipmentPanel: {fileID: 6660555312427054563}
@@ -760,7 +761,7 @@ RectTransform:
   - {fileID: 4035915161094841031}
   - {fileID: 8370131155165462179}
   - {fileID: 2278900876739910957}
-  - {fileID: 5829134516545382200}
+  - {fileID: 3937270022204125717}
   - {fileID: 2505163855607287375}
   m_Father: {fileID: 3411306391881413572}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1874,6 +1875,98 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &4594791686706587255
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3937270022204125717}
+  - component: {fileID: 2518363894428008297}
+  - component: {fileID: 6338698518517748102}
+  - component: {fileID: 3495712195082025630}
+  m_Layer: 0
+  m_Name: Panel_UIDialogue
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &3937270022204125717
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4594791686706587255}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5829134516545382200}
+  m_Father: {fileID: 6836571016226199197}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -328.59}
+  m_SizeDelta: {x: 0, y: -657.18}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &2518363894428008297
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4594791686706587255}
+  m_CullTransparentMesh: 1
+--- !u!114 &6338698518517748102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4594791686706587255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3495712195082025630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4594791686706587255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7188b82eb31ea534a9fe41a1b06eabcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueBackGroundImage: {fileID: 7091413425961334248}
+  dialogueText: {fileID: 1033819268647970027}
+  typingSpeed: 0.05
 --- !u!1 &4790289578793828237
 GameObject:
   m_ObjectHideFlags: 0
@@ -2116,7 +2209,7 @@ GameObject:
   - component: {fileID: 3611932951210772664}
   - component: {fileID: 4530227796269944002}
   m_Layer: 5
-  m_Name: ' Panel_Equipment'
+  m_Name: Panel_Equipment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2367,17 +2460,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7091413425961334248}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2388814440700050545}
-  m_Father: {fileID: 6836571016226199197}
+  m_Father: {fileID: 3937270022204125717}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 50, y: -428}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1031.8888, y: 190.2128}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4788969479076088013
@@ -2429,7 +2522,7 @@ GameObject:
   - component: {fileID: 4356811478542485059}
   - component: {fileID: 4485278078561639347}
   m_Layer: 5
-  m_Name: ' Panel_Quest'
+  m_Name: Panel_Quest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2682,7 +2775,7 @@ GameObject:
   - component: {fileID: 7827142647357741194}
   - component: {fileID: 999508570085943934}
   m_Layer: 5
-  m_Name: ' Panel_Obtain'
+  m_Name: Panel_Obtain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3305,6 +3398,10 @@ PrefabInstance:
       propertyPath: dialogueUI
       value: 
       objectReference: {fileID: 7091413425961334248}
+    - target: {fileID: 5740512238986184611, guid: 8ab6fced924aeea46af4c4dee62bfcf4, type: 3}
+      propertyPath: uiDialogue
+      value: 
+      objectReference: {fileID: 3495712195082025630}
     - target: {fileID: 5740512238986184611, guid: 8ab6fced924aeea46af4c4dee62bfcf4, type: 3}
       propertyPath: dialogueText
       value: 

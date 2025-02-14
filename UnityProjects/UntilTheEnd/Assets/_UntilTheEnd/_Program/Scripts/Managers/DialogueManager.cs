@@ -3,6 +3,73 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+namespace UntilTheEnd
+{
+    /// <summary>
+    /// 현재 대화체 매니저가 너무 많은 책임을 가지고 있다 판단...좀 스크립트를 쪼개야겠음
+    /// 매니저 말 그대로 관리만하고 
+    /// </summary>
+    public class DialogueManager : Singleton<DialogueManager>
+    {
+        public UIDialogue uiDialogue;
+        public TextAsset csvFile;
+        public bool isTalking = false;
+
+        private DialogueLoader _dialogueLoader;
+        private DialogueProcessor _dialogueProcessor;
+        
+        
+
+        private void Start()
+        {
+            _dialogueLoader = new DialogueLoader(csvFile);
+            _dialogueProcessor = new DialogueProcessor();
+            uiDialogue = FindFirstObjectByType<UIDialogue>();
+
+            List<Dialogue> dialogues = _dialogueLoader.LoadDialogues();
+            _dialogueProcessor.SetDialogueQueue(dialogues);
+        }
+
+        public void StartDialogue(string sceneName, string npcName)
+        {
+            List<Dialogue> npcDialogues = _dialogueLoader.LoadDialogues().FindAll(d => d.sceneNameCSV == sceneName && d.npcCSV == npcName);
+
+            if (npcDialogues.Count == 0)
+            {
+                Debug.LogWarning($"대화가 없음: NPC {npcName} Scene {sceneName}");
+                return;
+            }
+
+            isTalking = true;
+            _dialogueProcessor.SetDialogueQueue(npcDialogues);
+            uiDialogue.ShowDialogueUI();
+
+            DisplayNextDialogue();
+        }
+
+        public void DisplayNextDialogue()
+        {
+            if (!_dialogueProcessor.HasNextDialogue)
+            {
+                EndDialogue();
+                return;
+            }
+
+            Dialogue nextDialogue = _dialogueProcessor.GetNextDialogue();
+            uiDialogue.DisplayDialogueText(nextDialogue.dialogueCSV);
+        }
+
+        public void EndDialogue()
+        {
+            isTalking = false;
+            _dialogueProcessor.ClearDialogue();
+            uiDialogue.HideDialogueUI();
+        }
+    }
+}
+
+
+/*
 public class DialogueManager : Singleton<DialogueManager>
 {
     public TextAsset csvFile;
@@ -156,3 +223,4 @@ public class DialogueManager : Singleton<DialogueManager>
         dialogueText.text = ""; // 기존 텍스트 초기화
     }
 }
+*/
