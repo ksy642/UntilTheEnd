@@ -19,6 +19,8 @@ namespace UntilTheEnd
     [Serializable]
     public class Item
     {
+        public Transform itemTransform; // 아이템의 위치 저장 (선택적)
+
         public SphereCollider sphereCollider;
 
         public bool isCollect = false; // 수집여부
@@ -28,7 +30,5 @@ namespace UntilTheEnd
         public Sprite iconSprite;
         public string name = "아이템";
         public string description = "간략한 설명";
-
-        
     }
 }

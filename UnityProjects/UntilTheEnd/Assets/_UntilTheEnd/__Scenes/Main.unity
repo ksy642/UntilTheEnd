@@ -980,6 +980,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item:
+    itemTransform: {fileID: 0}
     sphereCollider: {fileID: 0}
     isCollect: 0
     isEquipable: 0
@@ -987,7 +988,6 @@ MonoBehaviour:
     iconSprite: {fileID: 21300000, guid: 454c8fff79bd8fb47bad10bd2e9d0465, type: 3}
     name: "\uC544\uC774\uD15C"
     description: "\uAC04\uB7B5\uD55C \uC124\uBA85"
-  canvas_SpaceBarText: {fileID: 0}
 --- !u!65 &115658813
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6852,8 +6852,9 @@ GameObject:
   - component: {fileID: 708953619}
   - component: {fileID: 708953618}
   - component: {fileID: 708953622}
+  - component: {fileID: 708953623}
   m_Layer: 0
-  m_Name: Canvas_SpaceBarText
+  m_Name: WorldCanvas_SpaceBarText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6930,16 +6931,16 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 708953617}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.04900074}
-  m_LocalScale: {x: 0.0032530904, y: 0.0041228617, z: 0.002}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.0019999999, y: 0.002, z: 0.002}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2116208659}
-  m_Father: {fileID: 931746201}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.023747444, y: 0.96763515}
+  m_AnchoredPosition: {x: 0, y: -20}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &708953622
@@ -6952,6 +6953,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2b9bcdd435e759e4ca78974cccf98dc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &708953623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708953617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e474692b2fc5b8549aa3860b3f82ca0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &712413470
@@ -9374,6 +9387,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item:
+    itemTransform: {fileID: 931746201}
     sphereCollider: {fileID: 931746202}
     isCollect: 0
     isEquipable: 0
@@ -9381,7 +9395,6 @@ MonoBehaviour:
     iconSprite: {fileID: 21300000, guid: 454c8fff79bd8fb47bad10bd2e9d0465, type: 3}
     name: TestTest1
     description: "\uC5B4\uADF8\uB798 \uC124\uBA85\uC5B4\uCA4C\uACE0 \uC800\uCA4C"
-  canvas_SpaceBarText: {fileID: 708953617}
 --- !u!65 &931746198
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9468,8 +9481,7 @@ Transform:
   m_LocalPosition: {x: 11.5604, y: 14.5986, z: -10.761}
   m_LocalScale: {x: 0.6148, y: 0.4851, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 708953621}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &931746202
@@ -29495,3 +29507,4 @@ SceneRoots:
   - {fileID: 931746201}
   - {fileID: 1865908612}
   - {fileID: 1340586809}
+  - {fileID: 708953621}
