@@ -133,15 +133,15 @@ namespace UntilTheEnd
                 // NPC와 Item에 관해 상호작용하는 인터페이스
                 IInteractable interactable = InteractableObject?.GetComponent<IInteractable>();
 
-                if (interactable != null && !UIItemController.instance.isTalking)
+                if (interactable != null && !UIWorldCanvasController.instance.isWorldCanvasActive)
                 {
                     // NPC나 Item이나 둘다 작용함
                     interactable.Interact();
 
 
-                    UIItemController.instance.isTalking = true;
+                    UIWorldCanvasController.instance.isWorldCanvasActive = true;
 
-                    Debug.LogError("여기가 상호작용한거잖아 지금?" + UIItemController.instance.isTalking);
+                    Debug.LogError("여기가 상호작용한거잖아 지금?" + UIWorldCanvasController.instance.isWorldCanvasActive);
                 }
 
 

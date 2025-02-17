@@ -56,12 +56,12 @@ namespace UntilTheEnd
                 //EquipmentManager.instance.EquipItem(StringValues.MortalObjectsCSV.mainTest, item);
 
                 EquipmentManager.instance.isInteractedObject = true;
-                
-                
-                
+
+
+
                 //canvas_SpaceBarText.gameObject.SetActive(true);
-                // UIItemController를 이용해 UI 표시
-                UIItemController.instance.ShowUI(this.gameObject.transform.position);
+                // UIWorldCanvasController 이용해 UI 표시
+                UIWorldCanvasController.instance.ShowUI(this.gameObject.transform.position);
             }
         }
 
@@ -76,7 +76,7 @@ namespace UntilTheEnd
 
                 //canvas_SpaceBarText.gameObject.SetActive(false);
                 // UI 숨기기
-                UIItemController.instance.HideUI();
+                UIWorldCanvasController.instance.HideUI();
             }
         }
         #endregion
