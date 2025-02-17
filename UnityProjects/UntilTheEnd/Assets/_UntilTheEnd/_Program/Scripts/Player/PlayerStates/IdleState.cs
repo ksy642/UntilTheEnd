@@ -14,17 +14,23 @@ namespace UntilTheEnd
             // SpaceBar 입력 감지 후 상태 변경
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                switch (player.CurrentInteraction)
+                if (player.InteractableObject != null)
                 {
-                    case TestPlayer.InteractionType.Item:
-                        player.ChangeState(new InteractItemState());
-                        break;
-                    case TestPlayer.InteractionType.Door:
-                        player.ChangeState(new InteractDoorState());
-                        break;
-                    case TestPlayer.InteractionType.NPC:
-                        player.ChangeState(new InteractNPCState());
-                        break;
+                    switch (player.CurrentInteraction)
+                    {
+                        case TestPlayer.InteractionType.Item:
+                            Debug.LogWarning("아이템");
+                            player.ChangeState(new InteractItemState());
+                            break;
+                        case TestPlayer.InteractionType.Door:
+                            Debug.LogWarning("문");
+                            player.ChangeState(new InteractDoorState());
+                            break;
+                        case TestPlayer.InteractionType.NPC:
+                            Debug.LogWarning("NPC");
+                            player.ChangeState(new InteractNPCState());
+                            break;
+                    }
                 }
             }
         }

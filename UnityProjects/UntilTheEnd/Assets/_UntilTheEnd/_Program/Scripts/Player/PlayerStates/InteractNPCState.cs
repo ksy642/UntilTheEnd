@@ -7,9 +7,9 @@ namespace UntilTheEnd
         public void EnterState(TestPlayer player)
         {
             Debug.Log("NPC 대화 시작");
-            NPCDialogueController npcDialogueController = player.InteractableObject.GetComponent<NPCDialogueController>(); // NPC 데이터 가져오기
+            DialogueController dialogueController = player.InteractableObject.GetComponent<DialogueController>(); // NPC 데이터 가져오기
 
-            if (npcDialogueController == null)
+            if (dialogueController == null)
             {
                 Debug.LogError("NPCData가 없습니다! 대화를 시작할 수 없음.");
                 player.ChangeState(new IdleState());
@@ -17,7 +17,7 @@ namespace UntilTheEnd
             }
 
             // NPC의 sceneName과 npcName을 가져와서 StartDialogue() 호출
-            DialogueManager.instance.StartDialogue(npcDialogueController.sceneName, npcDialogueController.npcName);
+            DialogueManager.instance.StartDialogue(dialogueController.sceneName, dialogueController.npcName);
         }
 
         public void UpdateState(TestPlayer player)

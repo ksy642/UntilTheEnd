@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UntilTheEnd
 {
-    public class NPCDialogueController : MonoBehaviour, IInteractable
+    public class DialogueController : MonoBehaviour, IInteractable
     {
         public string npcName;    // NPC 이름
         public string sceneName; // 현재 씬 이름
@@ -32,6 +32,7 @@ namespace UntilTheEnd
             }
         }
 
+         // 일단 SpaceBar로 동작하는게 너무 많아서 여기 없애
         private void Update()
         {
             if (_isPlayerInRange && Input.GetKeyDown(KeyCode.Space))
