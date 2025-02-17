@@ -8,6 +8,8 @@ namespace UntilTheEnd
 {
     public class UIManager : DontDestroySingleton<UIManager>
     {
+        [SerializeField] private GameObject _uiDialogue;
+
         private bool _isTransitioning = false; // 씬 전환 중 상태 플래그
 
         [Header("1번 : ESC")]
@@ -78,6 +80,8 @@ namespace UntilTheEnd
             switch (menuCount)
             {
                 case 0:  //모든 메뉴판을 다 닫음
+                    _uiDialogue.SetActive(false);
+
                     _isESCMenuOpen = false;
                     _escMenuPanel.SetActive(false);
 

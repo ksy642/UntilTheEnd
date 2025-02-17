@@ -12,12 +12,12 @@ namespace UntilTheEnd
     public class ItemObject : MonoBehaviour, IInteractable
     {
         public Item item;
-        public GameObject canvas_SpaceBarText;
+        //public GameObject canvas_SpaceBarText;
 
         private void Start()
         {
             //혹시라도 켜져있으면 꺼둠
-            canvas_SpaceBarText.gameObject.SetActive(false);
+            //canvas_SpaceBarText.gameObject.SetActive(false);
 
 
 
@@ -56,7 +56,12 @@ namespace UntilTheEnd
                 //EquipmentManager.instance.EquipItem(StringValues.MortalObjectsCSV.mainTest, item);
 
                 EquipmentManager.instance.isInteractedObject = true;
-                canvas_SpaceBarText.gameObject.SetActive(true);
+                
+                
+                
+                //canvas_SpaceBarText.gameObject.SetActive(true);
+                // UIItemController를 이용해 UI 표시
+                UIItemController.instance.ShowUI(this.gameObject.transform.position);
             }
         }
 
@@ -65,7 +70,13 @@ namespace UntilTheEnd
             if (other.CompareTag(StringValues.Tag.player))
             {
                 EquipmentManager.instance.isInteractedObject = false;
-                canvas_SpaceBarText.gameObject.SetActive(false);
+
+
+
+
+                //canvas_SpaceBarText.gameObject.SetActive(false);
+                // UI 숨기기
+                UIItemController.instance.HideUI();
             }
         }
         #endregion
@@ -77,10 +88,13 @@ namespace UntilTheEnd
 
             EquipmentManager.instance.EquipItem(StringValues.MortalObjectsCSV.mainTest, item);
 
-            
+
             // 상호작용하고 난 후... 일단 보류
             //canvas_SpaceBarText.gameObject.SetActive(false);
             //gameObject.SetActive(false);
+            
+            // UI 숨기기
+            //UIItemController.instance.HideUI();
         }
         
     }

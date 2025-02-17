@@ -18,7 +18,9 @@ namespace UntilTheEnd
         [Header("이동기 세팅")]
         public GameObject playerCameraRoot;
 
-              private IPlayerState _currentState;
+  
+
+        private IPlayerState _currentState;
         private float _mouseSensitivity = 100.0f; // 마우스 감도
         private float _defaultMoveSpeed = 4.0f;
         private float _runSpeed = 5.2f;
@@ -131,10 +133,15 @@ namespace UntilTheEnd
                 // NPC와 Item에 관해 상호작용하는 인터페이스
                 IInteractable interactable = InteractableObject?.GetComponent<IInteractable>();
 
-                if (interactable != null)
+                if (interactable != null && !UIItemController.instance.isTalking)
                 {
                     // NPC나 Item이나 둘다 작용함
                     interactable.Interact();
+
+
+                    UIItemController.instance.isTalking = true;
+
+                    Debug.LogError("여기가 상호작용한거잖아 지금?" + UIItemController.instance.isTalking);
                 }
 
 

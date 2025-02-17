@@ -24,10 +24,10 @@ namespace UntilTheEnd
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                if (DialogueManager.instance.isTyping)
+                if (DialogueManager.instance.uiDialogue.IsTyping)
                 {
                     // 현재 문장이 타이핑 중이면 바로 전체 출력
-                    DialogueManager.instance.FinishCurrentTyping();
+                    DialogueManager.instance.uiDialogue.FinishTyping();
                 }
                 else
                 {

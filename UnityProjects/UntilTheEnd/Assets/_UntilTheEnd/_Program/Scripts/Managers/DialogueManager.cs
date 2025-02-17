@@ -24,7 +24,6 @@ namespace UntilTheEnd
         {
             _dialogueLoader = new DialogueLoader(csvFile);
             _dialogueProcessor = new DialogueProcessor();
-            uiDialogue = FindFirstObjectByType<UIDialogue>();
 
             List<Dialogue> dialogues = _dialogueLoader.LoadDialogues();
             _dialogueProcessor.SetDialogueQueue(dialogues);
@@ -42,6 +41,8 @@ namespace UntilTheEnd
 
             isTalking = true;
             _dialogueProcessor.SetDialogueQueue(npcDialogues);
+
+            uiDialogue.gameObject.SetActive(true);
             uiDialogue.ShowDialogueUI();
 
             DisplayNextDialogue();
@@ -64,6 +65,8 @@ namespace UntilTheEnd
             isTalking = false;
             _dialogueProcessor.ClearDialogue();
             uiDialogue.HideDialogueUI();
+
+            uiDialogue.gameObject.SetActive(false);
         }
     }
 }
