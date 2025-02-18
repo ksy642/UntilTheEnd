@@ -80,6 +80,7 @@ namespace UntilTheEnd
                 Debug.LogWarning("Main Camera 못찾음");
             }
 
+            // 처음에 시작할 때, 캐릭터가 생성될 때는 Idle 상태로 생성
             _currentState = new IdleState();
             _currentState.EnterState(this);
 
@@ -115,8 +116,6 @@ namespace UntilTheEnd
             // NPC, Item, Door 상호작용
             if (other.CompareTag("NPC"))
             {
-                //CurrentInteraction = InteractionType.NPC;
-                //InteractableObject = other.gameObject;
                 CurrentInteraction = new InteractionData(InteractionType.NPC, other.gameObject);
                 Debug.Log($"[TestPlayer] NPC 감지됨: {CurrentInteraction.GetType()}");
         }
@@ -140,16 +139,18 @@ namespace UntilTheEnd
             }
 
 
-
             // 현재 상호작용 중인 오브젝트에서 벗어났다면 초기화
             if (CurrentInteraction.Object == other.gameObject)
             {
                 Debug.Log($"[TestPlayer] {other.gameObject.name} 나감, 상호작용 종료.");
+
+                // 대화 도중 WASD로 벗어나면 강제로 종료
+                if (DialogueManager.instance.isTalking)
+                {
+                    DialogueManager.instance.EndDialogue();
+                }
+
                 CurrentInteraction = InteractionData.None;
-
-                // 캐릭터가 벗어나면 자동으로 대화체 초기화시키면서 대화창 꺼야함!!
-
-
             }
         }
 
@@ -166,12 +167,26 @@ namespace UntilTheEnd
         {
             if (Input.GetKeyDown(KeyCode.Space)) // 대화중인 조건문이 필요해
             {
-                if (!UIWorldCanvasController.instance.isWorldCanvasActive)
+                if (!DialogueManager.instance.isTalking)
                 {
-                    // 오직 스페이스바 상호작용은 플레이어한테서만 발동하도록 하자
+                    // 대화를 안할 때 Space를 누르면 대화를 시작해야겠지?
+                    _currentState.UpdateState(this);
+
+
+// 여기 일단 수정해야함!!
+// 대화 중에 조건문 필요함!!
+
+
+                    // 객체 is 타입
+                    //if (_currentState is InteractNPCState)
+                    //{
+                    //    _currentState.UpdateState(this);
+                    //}
+                }
+                else
+                {
                     _currentState.UpdateState(this);
                 }
-
 
                 /*
 

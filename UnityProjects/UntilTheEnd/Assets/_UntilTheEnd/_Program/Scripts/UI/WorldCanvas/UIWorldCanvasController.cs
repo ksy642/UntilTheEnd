@@ -9,9 +9,6 @@ namespace UntilTheEnd
     {
         public GameObject worldCanvas;
 
-        [Header("플레이어 대화중 !!")]
-        public bool isWorldCanvasActive = false;
-
         private void Start()
         {
             HideUI();
@@ -27,7 +24,6 @@ namespace UntilTheEnd
         // UI 숨기기
         public void HideUI()
         {
-            isWorldCanvasActive = false;
             worldCanvas.SetActive(false);
         }
     }
