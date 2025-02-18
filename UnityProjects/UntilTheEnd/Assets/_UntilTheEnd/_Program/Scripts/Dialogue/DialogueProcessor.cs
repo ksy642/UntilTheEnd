@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace UntilTheEnd
 {
@@ -7,7 +6,7 @@ namespace UntilTheEnd
     /// 대화 순서를 관리
     /// _currentDialogue 관련 로직만 떼어냄
     /// </summary>
-    public class DialogueProcessor : MonoBehaviour
+    public class DialogueProcessor
     {
         // 순차적으로 이야기를 하니 큐를 사용
         private Queue<Dialogue> _currentDialogueQueue;

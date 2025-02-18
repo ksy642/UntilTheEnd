@@ -2,55 +2,86 @@ using UnityEngine;
 
 namespace UntilTheEnd
 {
-    public class TestPlayer : MonoBehaviour
+    public class TestPlayer : MonoBehaviour//, IPlayerState
     {
         // 상호작용 타입 Enum
         public enum InteractionType
-        { 
+        {
             None,
             Item,
             Door,
             NPC
         }
-        public InteractionType CurrentInteraction { get; private set; }
-        public GameObject InteractableObject { get; private set; }
 
+        // InteractionType + 관련 GameObject를 저장하는 구조체
+        public struct InteractionData
+        {
+            public InteractionType Type { get; }
+            public GameObject Object { get; }
+
+            public InteractionData(InteractionType type, GameObject obj)
+            {
+                Type = type;
+                Object = obj;
+            }
+
+            public static InteractionData None
+            {
+                get { return new InteractionData(InteractionType.None, null); }
+            }
+        }
+
+        // 이동 관련 설정 변수 (Inspector에서 조정 가능)
         [Header("이동기 세팅")]
         public GameObject playerCameraRoot;
 
-  
-
+        // 현재 플레이어 상태
         private IPlayerState _currentState;
-        private float _mouseSensitivity = 100.0f; // 마우스 감도
+
+        // 이동 속도 관련 변수
         private float _defaultMoveSpeed = 4.0f;
         private float _runSpeed = 5.2f;
         private float _crouchSpeed = 1.8f;
-        private float _cameraPitch = 0f; // 카메라의 수직 회전 값
-        private float _gravity = -10.0f;
 
+        // 카메라 및 입력 관련 변수
+        private float _mouseSensitivity = 100.0f; // 마우스 감도
+        private float _cameraPitch = 0f; // 카메라 수직 회전 값
+
+        // 물리 관련 변수
+        private float _gravity = -10.0f;
+        private Vector3 _velocity; // 중력 벡터, 땅에 붙어있게 할라고 설정하는거
+
+        // 기차 관련 변수
+        private Transform _trainParent;
+        private Vector3 _lastTrainPosition = Vector3.zero;
+        private bool _isOnTrain = false; // 기차에 탑승 여부
+
+        // Unity 컴포넌트 변수
         private CharacterController _characterController;
         private Transform _cameraTransform; // 메인 카메라 트랜스폼 (자동으로 찾음)
-        private Transform _trainParent;
-        private Vector3 _velocity; // 중력 벡터
-        private Vector3 _lastTrainPosition = Vector3.zero;
-        private bool _isOnTrain = false; // 기차에 탑승했는지 여부 확인
+
+        // 현재 상호작용 정보 (InteractionType + GameObject)
+        public InteractionData CurrentInteraction { get; private set; } = InteractionData.None;
+
 
         private void Start()
         {
             _characterController = GetComponent<CharacterController>();
 
-                Camera mainCamera = Camera.main; // Main Camera를 찾음
+            Camera mainCamera = Camera.main; // Main Camera를 찾음
 
-                if (mainCamera != null)
-                {
-                    _cameraTransform = mainCamera.transform;
-                    Debug.Log("Main Camera 설정 완료");
-                }
-                else
-                {
-                    Debug.LogWarning("Main Camera 못찾음");
-                }
-            
+            if (mainCamera != null)
+            {
+                _cameraTransform = mainCamera.transform;
+                Debug.Log("Main Camera 설정 완료");
+            }
+            else
+            {
+                Debug.LogWarning("Main Camera 못찾음");
+            }
+
+            _currentState = new IdleState();
+            _currentState.EnterState(this);
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -58,11 +89,11 @@ namespace UntilTheEnd
 
         public void ChangeState(IPlayerState newState)
         {
-            Debug.Log("먼저 나가고... " + newState);
+            Debug.Log("현재 상태는?... " + _currentState);
             _currentState.ExitState(this);
             _currentState = newState;
 
-            Debug.Log("먼저 상태진입한다. " + newState);
+            Debug.Log("진입한 현재 상태는?... " + _currentState);
             _currentState.EnterState(this);
         }
 
@@ -84,18 +115,18 @@ namespace UntilTheEnd
             // NPC, Item, Door 상호작용
             if (other.CompareTag("NPC"))
             {
-                CurrentInteraction = InteractionType.NPC;
-                InteractableObject = other.gameObject;
-            }
+                //CurrentInteraction = InteractionType.NPC;
+                //InteractableObject = other.gameObject;
+                CurrentInteraction = new InteractionData(InteractionType.NPC, other.gameObject);
+                Debug.Log($"[TestPlayer] NPC 감지됨: {CurrentInteraction.GetType()}");
+        }
             else if (other.CompareTag("Item"))
             {
-                CurrentInteraction = InteractionType.Item;
-                InteractableObject = other.gameObject;
+                CurrentInteraction = new InteractionData(InteractionType.Item, other.gameObject);
             }
             else if (other.CompareTag("Door"))
             {
-                CurrentInteraction = InteractionType.Door;
-                InteractableObject = other.gameObject;
+                CurrentInteraction = new InteractionData(InteractionType.Door, other.gameObject);
             }
         }
 
@@ -110,10 +141,15 @@ namespace UntilTheEnd
 
 
 
-            if (InteractableObject == other.gameObject)
+            // 현재 상호작용 중인 오브젝트에서 벗어났다면 초기화
+            if (CurrentInteraction.Object == other.gameObject)
             {
-                CurrentInteraction = InteractionType.None;
-                InteractableObject = null;
+                Debug.Log($"[TestPlayer] {other.gameObject.name} 나감, 상호작용 종료.");
+                CurrentInteraction = InteractionData.None;
+
+                // 캐릭터가 벗어나면 자동으로 대화체 초기화시키면서 대화창 꺼야함!!
+
+
             }
         }
 
@@ -128,8 +164,17 @@ namespace UntilTheEnd
 
         private void _InputSpaceBar()
         {
-            if (Input.GetKeyDown(KeyCode.Space)) // 일단 SpaceBar 누르면...?!
+            if (Input.GetKeyDown(KeyCode.Space)) // 대화중인 조건문이 필요해
             {
+                if (!UIWorldCanvasController.instance.isWorldCanvasActive)
+                {
+                    // 오직 스페이스바 상호작용은 플레이어한테서만 발동하도록 하자
+                    _currentState.UpdateState(this);
+                }
+
+
+                /*
+
                 // NPC와 Item에 관해 상호작용하는 인터페이스
                 IInteractable interactable = InteractableObject?.GetComponent<IInteractable>();
 
@@ -146,7 +191,7 @@ namespace UntilTheEnd
 
 
 
-                /*
+                
                  // 잠시 여기 보류!!!
 
 
@@ -183,7 +228,7 @@ namespace UntilTheEnd
 
             if (Input.GetKey(KeyCode.LeftControl))
             {
-                speed = _crouchSpeed; 
+                speed = _crouchSpeed;
             }
 
             Vector3 moveDirection = transform.right * horizontal + transform.forward * vertical;

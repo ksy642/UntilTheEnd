@@ -6,12 +6,15 @@ namespace UntilTheEnd
     {
         public void EnterState(TestPlayer player)
         {
-            Debug.Log("NPC 대화 시작");
-            DialogueController dialogueController = player.InteractableObject.GetComponent<DialogueController>(); // NPC 데이터 가져오기
+            Debug.LogWarning("NPC 대화 시작");
 
-            if (dialogueController == null)
+            // 현재 상호작용 중인 객체 가져오기
+            GameObject npcObject = player.CurrentInteraction.Object;
+            DialogueController dialogueController = npcObject?.GetComponent<DialogueController>(); // ?를 사용하여 안전하게 가져옴
+
+            if (npcObject == null || dialogueController == null)
             {
-                Debug.LogError("NPCData가 없습니다! 대화를 시작할 수 없음.");
+                Debug.LogError("NPC 오브젝트 또는 NPC 데이터가 없습니다! 대화를 시작할 수 없음.");
                 player.ChangeState(new IdleState());
                 return;
             }
@@ -20,20 +23,18 @@ namespace UntilTheEnd
             DialogueManager.instance.StartDialogue(dialogueController.sceneName, dialogueController.npcName);
         }
 
+
         public void UpdateState(TestPlayer player)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (DialogueManager.instance.uiDialogue.IsTyping)
             {
-                if (DialogueManager.instance.uiDialogue.IsTyping)
-                {
-                    // 현재 문장이 타이핑 중이면 바로 전체 출력
-                    DialogueManager.instance.uiDialogue.FinishTyping();
-                }
-                else
-                {
-                    // 다음 문장 출력
-                    DialogueManager.instance.DisplayNextDialogue();
-                }
+                // 현재 문장이 타이핑 중이면 바로 전체 출력
+                DialogueManager.instance.uiDialogue.FinishTyping();
+            }
+            else
+            {
+                // 다음 문장 출력
+                DialogueManager.instance.DisplayNextDialogue();
             }
 
             // 대화가 종료되었는지 체크

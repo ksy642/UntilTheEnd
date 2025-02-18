@@ -6,38 +6,34 @@ namespace UntilTheEnd
     {
         public void EnterState(TestPlayer player)
         {
-            Debug.Log("▶ 플레이어: 대기 상태");
+            Debug.Log(player.CurrentInteraction + " [IdleState] : 플레이어가 대기 상태에 들어옴.");
         }
 
         public void UpdateState(TestPlayer player)
         {
-            // SpaceBar 입력 감지 후 상태 변경
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (player.CurrentInteraction.Object != null)
             {
-                if (player.InteractableObject != null)
+                switch (player.CurrentInteraction.Type)
                 {
-                    switch (player.CurrentInteraction)
-                    {
-                        case TestPlayer.InteractionType.Item:
-                            Debug.LogWarning("아이템");
-                            player.ChangeState(new InteractItemState());
-                            break;
-                        case TestPlayer.InteractionType.Door:
-                            Debug.LogWarning("문");
-                            player.ChangeState(new InteractDoorState());
-                            break;
-                        case TestPlayer.InteractionType.NPC:
-                            Debug.LogWarning("NPC");
-                            player.ChangeState(new InteractNPCState());
-                            break;
-                    }
+                    case TestPlayer.InteractionType.Item:
+                        Debug.LogWarning("[IdleState] : 아이템");
+                        player.ChangeState(new InteractItemState());
+                        break;
+                    case TestPlayer.InteractionType.Door:
+                        Debug.LogWarning("[IdleState] : 문");
+                        player.ChangeState(new InteractDoorState());
+                        break;
+                    case TestPlayer.InteractionType.NPC:
+                        Debug.LogWarning("[IdleState] : NPC");
+                        player.ChangeState(new InteractNPCState());
+                        break;
                 }
             }
         }
 
         public void ExitState(TestPlayer player)
         {
-            Debug.Log("대기 상태 종료");
+            Debug.Log("대기 상태 종료 " + player.CurrentInteraction);
         }
     }
 }
