@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: eb8e99a4e406e1945b0967ebbc54dad3
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 294657
+  packageName: Realistic Essentials VFX Pack
+  packageVersion: 2.2
+  assetPath: Assets/Realistic VFX Pack/URP/Demo/Demo Source/Scripts/Trigger.cs
+  uploadId: 709053

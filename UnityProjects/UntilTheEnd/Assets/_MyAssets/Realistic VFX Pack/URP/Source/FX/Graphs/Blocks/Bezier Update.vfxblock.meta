@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: ffabf59f2261dfa428ed9dc175330bd5
+VisualEffectImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 294657
+  packageName: Realistic Essentials VFX Pack
+  packageVersion: 2.2
+  assetPath: Assets/Realistic VFX Pack/URP/Source/FX/Graphs/Blocks/Bezier Update.vfxblock
+  uploadId: 709053

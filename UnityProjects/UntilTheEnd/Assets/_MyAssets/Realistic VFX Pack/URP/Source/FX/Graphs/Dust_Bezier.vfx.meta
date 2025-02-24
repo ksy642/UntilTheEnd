@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: eb5204b3e70423346a12eac9205e1c73
+VisualEffectImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 294657
+  packageName: Realistic Essentials VFX Pack
+  packageVersion: 2.2
+  assetPath: Assets/Realistic VFX Pack/URP/Source/FX/Graphs/Dust_Bezier.vfx
+  uploadId: 709053

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: e91c68db671ab6047970514b8dd99f42
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 294657
+  packageName: Realistic Essentials VFX Pack
+  packageVersion: 2.2
+  assetPath: Assets/Realistic VFX Pack/URP/Demo/Demo Settings/Demo Universal Render
+    Pipeline Asset_Renderer.asset
+  uploadId: 709053

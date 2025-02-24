@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 611aa59aa85ecd94887aac91e2a7ca7c
+VisualEffectImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 294657
+  packageName: Realistic Essentials VFX Pack
+  packageVersion: 2.2
+  assetPath: Assets/Realistic VFX Pack/URP/Source/FX/Graphs/Operators/Sub/Sample
+    Bezier.vfxoperator
+  uploadId: 709053

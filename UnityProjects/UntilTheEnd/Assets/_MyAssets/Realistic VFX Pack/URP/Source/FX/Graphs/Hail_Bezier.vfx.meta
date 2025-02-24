@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: b0f3083bacf119f4cb6ba99d9893d16a
+VisualEffectImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 294657
+  packageName: Realistic Essentials VFX Pack
+  packageVersion: 2.2
+  assetPath: Assets/Realistic VFX Pack/URP/Source/FX/Graphs/Hail_Bezier.vfx
+  uploadId: 709053
