@@ -60,6 +60,11 @@ namespace UntilTheEnd
             {
                 _SetManagersActivate(false);
             }
+
+            if (scene.name == "Main") // 매인으로 넘어갔을 떼
+            {
+                _SetManagersActivate(true);
+            }
         }
 
         // 모든 매니저들을 활성화/비활성화

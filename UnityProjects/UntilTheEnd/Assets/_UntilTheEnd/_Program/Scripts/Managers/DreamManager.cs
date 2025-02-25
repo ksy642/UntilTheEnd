@@ -15,11 +15,6 @@ public class DreamManager : DontDestroySingleton<DreamManager>
     [SerializeField] private float _fogTime = 4.0f;    // 안개 차오르는 시간
     [SerializeField] private float _fogDensity = 0.013f; // 안개 밀도
 
-    public void Initialize()
-    {
-        this.gameObject.SetActive(false);
-    }
-
     private void Update()
     {
         _SkyboxRotation();
