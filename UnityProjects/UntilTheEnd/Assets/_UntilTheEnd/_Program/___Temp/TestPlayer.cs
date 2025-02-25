@@ -84,8 +84,11 @@ namespace UntilTheEnd
             _currentState = new IdleState();
             _currentState.EnterState(this);
 
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+
+
+            // 근데 플레이어가 마우스 안보이게 처리하는게 맞나?
+            //Cursor.lockState = CursorLockMode.Locked;
+            //Cursor.visible = false;
         }
 
         public void ChangeState(IPlayerState newState)

@@ -161,7 +161,11 @@ namespace UntilTheEnd
             }
         }
 
-
+        public void OnClick_BackToLobby()
+        {
+            Debug.LogWarning("로비씬으로 되돌아갑니다!!");
+            SceneManager.LoadScene("Lobby");
+        }
 
 
 
