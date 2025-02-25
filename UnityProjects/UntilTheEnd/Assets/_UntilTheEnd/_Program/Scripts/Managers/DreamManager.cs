@@ -3,21 +3,21 @@ using UnityEngine;
 
 public class DreamManager : DontDestroySingleton<DreamManager>
 {
-    public bool dreaming = false; // 꿈 관련된 중요한 bool 변수
-    public Material skybox_Awake;
-    public Material skybox_Dream;
-
-    private float _fogTime = 4.0f;    // 안개 차오르는 시간
-    private float _fogDensity = 0.013f; // 안개 밀도
+    public bool isDreaming = false; // 꿈 관련된 중요한 bool 변수
 
     [Header("----Timer----")]
     public float timer = 10; // 제한 시간 ..테스트용으로 10초라 해둠
-
     [SerializeField] private float skyBox_RotationSpeed = 1.3f; // 회전 속도 (초당 각도)
 
-    public void DreamTest1()
+    [Header("안개 세팅")]
+    [SerializeField] public Material skybox_Awake;
+    [SerializeField] public Material skybox_Dream;
+    [SerializeField] private float _fogTime = 4.0f;    // 안개 차오르는 시간
+    [SerializeField] private float _fogDensity = 0.013f; // 안개 밀도
+
+    public void Initialize()
     {
-        Debug.Log("테스트1");
+        this.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -49,7 +49,7 @@ public class DreamManager : DontDestroySingleton<DreamManager>
     #region 꿈 속
     public void DreamLayer()
     {
-        dreaming = true;
+        isDreaming = true;
         Dreaming();
     }
 
@@ -63,7 +63,7 @@ public class DreamManager : DontDestroySingleton<DreamManager>
         float theTime = 0f;
         float startDensity = RenderSettings.fogDensity;
 
-        if (dreaming)
+        if (isDreaming)
         {
             while (theTime < _fogTime)
             {
@@ -89,7 +89,7 @@ public class DreamManager : DontDestroySingleton<DreamManager>
 
     public void Awaking()
     {
-        if (!dreaming)
+        if (!isDreaming)
         {
             Debug.Log("[DreamManager] Starting Awaking sequence...");
             StartCoroutine(_FogOff(0.001f));
@@ -111,7 +111,7 @@ public class DreamManager : DontDestroySingleton<DreamManager>
 
     public void AwakeLayer()
     {
-        dreaming = false;
+        isDreaming = false;
         Awaking();
     }
 
