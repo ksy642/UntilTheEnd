@@ -75,7 +75,7 @@ namespace Opsive.OmniAnimation.Packs.Shared
             m_Character = spawnedObjects.Item1;
             m_Item = spawnedObjects.Item2;
 
-            var followCam = FindObjectOfType<FollowCam>();
+            var followCam = FindFirstObjectByType<FollowCam>();
             followCam.Target = m_Character.transform;
 
             m_TitleText.text = m_PackInfo.PackName;
