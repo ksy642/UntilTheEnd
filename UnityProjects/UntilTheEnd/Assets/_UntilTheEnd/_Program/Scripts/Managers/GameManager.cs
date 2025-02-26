@@ -25,6 +25,9 @@ namespace UntilTheEnd
         [Header("ESC 메뉴")]
         public bool isESCMenuOpen = false;
 
+        [Header("플레이어 동작여부")]
+        public bool playerCanMove = false;
+
 
         // 제일 처음 로비창을 들어왔을 때 실행되는 Start함수, 그 이후 로비창으로 되돌아오면 여긴 동작안함
         private void Start()

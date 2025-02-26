@@ -159,10 +159,14 @@ namespace UntilTheEnd
 
         private void Update()
         {
-            _InputSpaceBar();
-            _HandleMovement();   // 플레이어 움직임 처리
-            _HandleMouseLook(); // 마우스 입력 처리 (카메라 회전)
+            if (GameManager.instance.playerCanMove)
+            {
+                // Lobby → Main 넘어와서 컷씬이 끝나면 bool값을 true로 변경해서 움직일 수 있게?
+                _PlayerMovement();       // 플레이어 움직임 처리
+                _PlayerCameraControl(); // 마우스 입력 처리 (카메라 회전)
+            }
 
+            _InputSpaceBar();
             _OnTrain();
         }
 
@@ -233,7 +237,7 @@ namespace UntilTheEnd
             }
         }
 
-        private void _HandleMovement()
+        private void _PlayerMovement()
         {
             float horizontal = Input.GetAxis("Horizontal");
             float vertical = Input.GetAxis("Vertical");
@@ -265,7 +269,7 @@ namespace UntilTheEnd
         }
 
 
-        private void _HandleMouseLook()
+        private void _PlayerCameraControl()
         {
             float mouseX = Input.GetAxis("Mouse X") * _mouseSensitivity * Time.deltaTime;
             float mouseY = Input.GetAxis("Mouse Y") * _mouseSensitivity * Time.deltaTime;
