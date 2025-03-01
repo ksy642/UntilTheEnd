@@ -7,26 +7,30 @@ namespace UntilTheEnd
 {
     public class UIManager : DontDestroySingleton<UIManager>
     {
+        public bool IsTransitioning
+        {
+            // 씬 전환 중 상태 플래그
+            get;
+            private set;
+        }
+
         [SerializeField] private GameObject _uiDialogue;
-        private bool _isTransitioning = false; // 씬 전환 중 상태 플래그
 
-        [Header("1번 : ESC")]
-        public GameObject escMenuPanel; // 메뉴판 UI
-        [SerializeField] private bool _isESCMenuOpen = false; // ESC 메뉴 상태
+        [Header("1번 : 메뉴창 : ESC")]
+        public bool isESCMenuOpen = false;
+        public GameObject escMenuPanel;
 
-        [Header("2번 : Equipment")]
-        [SerializeField] private GameObject _equipmentPanel; // 장비창 UI
-        [SerializeField] private bool _isEquipmentMenuOpen = false; // 장비창 상태
+        [Header("2번 : 장비창 : Equipment")]
+        public bool isEquipmentMenuOpen = false;
+        [SerializeField] private GameObject _equipmentPanel;
 
-        [Header("3번 : Quest, Obtain")]
+        [Header("3번 : 퀘스트창 : Quest")]
+        public bool isQuestMenuOpen = false;
         [SerializeField] private GameObject _questPanel;
-        [SerializeField] private bool _isQuestMenuOpen = false; // 퀘스트창 UI
+        
+        [Header("4번 : 아이템획득창 : Obtain")]
+        public bool isObtainMenuOpen = false;
         [SerializeField] private GameObject _obtainPanel;
-        [SerializeField] private bool _isObtainMenuOpen = false; // 아이템획득창 UI
-
-        [Header("Fade")]
-        [SerializeField] private CanvasGroup _fadeCanvasGroup;
-        [SerializeField] private float _fadeDuration = 3f; // 페이드 시간
 
 
         private void Start()
@@ -36,47 +40,6 @@ namespace UntilTheEnd
 
             // ESC 상태 변경 이벤트 구독
             GameManager.OnESCMenuToggled += _UpdateESCMenu;
-
-            // ✅ InputManager의 이벤트를 구독
-            InputListener.OnPressed_ESC += HandlePressed_ESC;
-            InputListener.OnPressed_E += HandlePressed_E;
-        }
-
-        private void OnDestroy()
-        {
-            // 혹시 모를 경우를 대비해...메모리 누수 방지를 위해 이벤트 해제
-            InputListener.OnPressed_ESC -= HandlePressed_ESC;
-            InputListener.OnPressed_E -= HandlePressed_E;
-        }
-
-        private void Update()
-        {
-            if (_isTransitioning)
-            {
-                return; // 씬 전환 중에는 ESC 입력을 무시
-            }
-
-            InputListener.CheckInput();
-        }
-
-        private void HandlePressed_ESC()
-        {
-            if (_isEquipmentMenuOpen)
-            {
-                ToggleMenu(2); // 장비창이 열려있으면 ESC로 장비창을 닫음
-            }
-            else
-            {
-                ToggleMenu(1); // ESC 메뉴를 열거나 닫음
-            }
-        }
-
-        private void HandlePressed_E()
-        {
-            if (!_isESCMenuOpen)  // ESC 메뉴가 열려있을 때는 무시
-            {
-                ToggleMenu(2); // 장비창 여닫기
-            }
         }
 
         public void ToggleMenu(int menuCount)
@@ -86,16 +49,16 @@ namespace UntilTheEnd
                 case 0:  //모든 메뉴판을 다 닫음
                     _uiDialogue.SetActive(false);
 
-                    _isESCMenuOpen = false;
+                    isESCMenuOpen = false;
                     escMenuPanel.SetActive(false);
 
-                    _isEquipmentMenuOpen = false;
+                    isEquipmentMenuOpen = false;
                     _equipmentPanel.SetActive(false);
 
-                    _isQuestMenuOpen = false;
+                    isQuestMenuOpen = false;
                     _questPanel.SetActive(false);
 
-                    _isObtainMenuOpen = false;
+                    isObtainMenuOpen = false;
                     _obtainPanel.SetActive(false);
 
                     Debug.Log("모든 메뉴가 닫혔습니다.");
@@ -106,29 +69,29 @@ namespace UntilTheEnd
 
                     //UICursor.instance.ChangeUI(_isESCMenuOpen);
 
-                    _isESCMenuOpen = !_isESCMenuOpen;
-                    escMenuPanel.SetActive(_isESCMenuOpen);
+                    isESCMenuOpen = !isESCMenuOpen;
+                    escMenuPanel.SetActive(isESCMenuOpen);
 
                     // ★★★ 게임매니저한테 ESC 상태 전달 ★★★
-                    GameManager.instance.ToggleESCMenu(_isESCMenuOpen);
+                    GameManager.instance.ToggleESCMenu(isESCMenuOpen);
 
-                    if (_isESCMenuOpen)
+                    if (isESCMenuOpen)
                     {
                         // ESC 메뉴가 열리면 장비창을 닫음
-                        _isEquipmentMenuOpen = false;
+                        isEquipmentMenuOpen = false;
                         _equipmentPanel.SetActive(false);
                     }
                     break;
 
 
                 case 2: // 장비창
-                    _isEquipmentMenuOpen = !_isEquipmentMenuOpen;
-                    _equipmentPanel.SetActive(_isEquipmentMenuOpen);
+                    isEquipmentMenuOpen = !isEquipmentMenuOpen;
+                    _equipmentPanel.SetActive(isEquipmentMenuOpen);
 
-                    if (_isEquipmentMenuOpen)
+                    if (isEquipmentMenuOpen)
                     {
                         // 장비창이 열리면 ESC 메뉴를 닫음
-                        _isESCMenuOpen = false;
+                        isESCMenuOpen = false;
                         escMenuPanel.SetActive(false);
                     }
                     break;
@@ -151,12 +114,12 @@ namespace UntilTheEnd
 
         private void _UpdateESCMenu(bool isOpen)
         {
-            _isESCMenuOpen = isOpen;
+            isESCMenuOpen = isOpen;
             escMenuPanel.SetActive(isOpen);
 
-            if (_isESCMenuOpen)
+            if (isESCMenuOpen)
             {
-                _isEquipmentMenuOpen = false;
+                isEquipmentMenuOpen = false;
                 _equipmentPanel.SetActive(false);
             }
         }
@@ -212,7 +175,7 @@ namespace UntilTheEnd
                 }
                 else
                 {
-                    Debug.LogError("equipmentSlotPrefab이 null입니다. 슬롯 UI 프리팹을 확인하세요.");
+                    Debug.LogError("EquipmentSlotPrefab이 null입니다. 슬롯 UI 프리팹을 확인하세요.");
                 }
             }
         }
