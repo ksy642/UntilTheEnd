@@ -22,13 +22,13 @@ namespace UntilTheEnd
         public void OnClick_NewGame()
         {
             Debug.LogWarning("새게임을 시작합니다...Main지하철씬으로 이동");
-            UIManager.instance.FadeToScene(StringValues.Scene.main);
+            SceneController.instance.LoadScene(StringValues.Scene.main);
         }
 
         public void OnClick_LoadGame()
         {
             Debug.LogWarning("저장된 곳에서 시작합니다...");
-            UIManager.instance.FadeToScene(StringValues.Scene.main);
+            SceneController.instance.LoadScene(StringValues.Scene.main);
         }
 
         public void OnClick_Options()
