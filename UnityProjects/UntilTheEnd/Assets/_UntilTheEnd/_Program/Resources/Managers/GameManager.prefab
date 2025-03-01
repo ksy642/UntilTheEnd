@@ -48,3 +48,6 @@ MonoBehaviour:
   - {fileID: 4703059208277195006, guid: d82db33558b99cc448a1e561aa9fdbf9, type: 3}
   _spawnedManagers: []
   isESCMenuOpen: 0
+  isCursorLock: 0
+  playerCanMove: 0
+  isPaused: 0

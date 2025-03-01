@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -25,17 +24,22 @@ namespace UntilTheEnd
         [Header("ESC 메뉴")]
         public bool isESCMenuOpen = false;
 
+        [Header("마우스 커서 잠금 여부")]
+        public bool isCursorLock = false;
+
         [Header("플레이어 동작여부")]
         public bool playerCanMove = false;
+        public bool isPaused = false; // 게임 일시정지 여부
 
 
         // 제일 처음 로비창을 들어왔을 때 실행되는 Start함수, 그 이후 로비창으로 되돌아오면 여긴 동작안함
         private void Start()
         {
-            Debug.Log("GameManager Start() 함수 실행 = Lobby로 완전 처음 들어왔을 때만! 실행!!");
-
             // 씬 변경 이벤트 등록
             SceneManager.sceneLoaded += _OnSceneLoaded;
+
+            // 초기값인 isCursorLock = false 전달됨 !! 커서가 풀리는 결과를 만들어냄!! Good !!
+            CursorLock(isCursorLock);
 
             // 리스트에 있는 매니저 프리팹들을 전부 생성
             foreach (GameObject prefab in managerPrefabs)
@@ -51,7 +55,36 @@ namespace UntilTheEnd
             }
         }
 
+        private void OnDestroy()
+        {
+            // GameManager가 파괴될 때 이벤트 해제 (중복 등록 방지)
+            // 아마 파괴될 일은 없지만 그래도 혹시나 싶어서 해둠
+            SceneManager.sceneLoaded -= _OnSceneLoaded;
+        }
 
+        // ESC 메뉴 상태 변경 이벤트 호출
+        public void ToggleESCMenu(bool isOpen)
+        {
+            isESCMenuOpen = isOpen;
+            OnESCMenuToggled?.Invoke(isESCMenuOpen);
+
+            SetPauseState(isESCMenuOpen);
+        }
+
+        public void CursorLock(bool lockCursor)
+        {
+            isCursorLock = lockCursor;
+            Cursor.lockState = lockCursor ? CursorLockMode.Locked : CursorLockMode.None;
+            Cursor.visible = !lockCursor;
+        }
+
+
+        // 게임 일시정지 상태 변경
+        private void SetPauseState(bool isPaused)
+        {
+            this.isPaused = isPaused;
+            Time.timeScale = isPaused ? 0 : 1;
+        }
 
 
         // 씬이 로드될 때 실행되는 메서드
@@ -84,26 +117,11 @@ namespace UntilTheEnd
             }
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // UIManager에 ESC 메뉴 상태 전달
-        public void ToggleESCMenu(bool isOpen)
+        public void OnClick_BackToLobby()
         {
-            isESCMenuOpen = isOpen;
-            OnESCMenuToggled?.Invoke(isESCMenuOpen);
-            //Debug.Log("GameManager-UImanger ESC 메뉴 상태 변경 : " + isESCMenuOpen);
+            Debug.LogWarning("로비씬으로 되돌아갑니다!!");
+            SceneController.instance.LoadScene("Lobby");
         }
+
     }
 }

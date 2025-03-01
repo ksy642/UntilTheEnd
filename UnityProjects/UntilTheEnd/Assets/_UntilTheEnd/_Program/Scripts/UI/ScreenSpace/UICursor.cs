@@ -49,17 +49,15 @@ namespace UntilTheEnd
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
 
+                //Cursor.SetCursor(_interactionCursorIconTexture, new Vector2(0, 0), CursorMode.Auto);
+
                 defaultCursorIcon.SetActive(false);
             }
         }
 
         private void Update()
         {
-            if (_isCursorLockMode)
-            {
-                //Cursor.SetCursor(null, new Vector2(0, 0), CursorMode.Auto);
-                Mouse.current.WarpCursorPosition(new Vector2(Screen.width / 2f, Screen.height / 2f));
-            }
+
         }
     }
 }

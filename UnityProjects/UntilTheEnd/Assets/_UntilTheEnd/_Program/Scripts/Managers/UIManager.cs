@@ -1,4 +1,3 @@
-using UnityEngine.SceneManagement;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,11 +8,10 @@ namespace UntilTheEnd
     public class UIManager : DontDestroySingleton<UIManager>
     {
         [SerializeField] private GameObject _uiDialogue;
-
         private bool _isTransitioning = false; // 씬 전환 중 상태 플래그
 
         [Header("1번 : ESC")]
-        [SerializeField] private GameObject _escMenuPanel; // 메뉴판 UI
+        public GameObject escMenuPanel; // 메뉴판 UI
         [SerializeField] private bool _isESCMenuOpen = false; // ESC 메뉴 상태
 
         [Header("2번 : Equipment")]
@@ -30,52 +28,58 @@ namespace UntilTheEnd
         [SerializeField] private CanvasGroup _fadeCanvasGroup;
         [SerializeField] private float _fadeDuration = 3f; // 페이드 시간
 
-        [Header("FPS")]
-        private float _deltaTime = 0.0f;
-
 
         private void Start()
         {
             Debug.LogWarning("[테스트용] 첫 시작은 메뉴판 다 꺼버리고 시작");
-            _ToggleMenu(0);
+            ToggleMenu(0);
+
+            // ESC 상태 변경 이벤트 구독
+            GameManager.OnESCMenuToggled += _UpdateESCMenu;
+
+            // ✅ InputManager의 이벤트를 구독
+            InputListener.OnPressed_ESC += HandlePressed_ESC;
+            InputListener.OnPressed_E += HandlePressed_E;
+        }
+
+        private void OnDestroy()
+        {
+            // 혹시 모를 경우를 대비해...메모리 누수 방지를 위해 이벤트 해제
+            InputListener.OnPressed_ESC -= HandlePressed_ESC;
+            InputListener.OnPressed_E -= HandlePressed_E;
         }
 
         private void Update()
         {
-            _deltaTime += (Time.deltaTime - _deltaTime) * 0.1f;
-
             if (_isTransitioning)
             {
                 return; // 씬 전환 중에는 ESC 입력을 무시
             }
 
-            // ESC 키 처리
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                if (_isEquipmentMenuOpen)
-                {
-                    // 장비창이 열려있으면 ESC로 장비창을 닫음
-                    _ToggleMenu(2);
-                }
-                else
-                {
-                    // ESC 메뉴를 열거나 닫음
-                    _ToggleMenu(1);
-                }
-            }
+            InputListener.CheckInput();
+        }
 
-            // E 키 처리
-            if (Input.GetKeyDown(KeyCode.E))
+        private void HandlePressed_ESC()
+        {
+            if (_isEquipmentMenuOpen)
             {
-                if (!_isESCMenuOpen) // ESC 메뉴가 열려있을 때는 무시
-                {
-                    _ToggleMenu(2); // 장비창 열기/닫기
-                }
+                ToggleMenu(2); // 장비창이 열려있으면 ESC로 장비창을 닫음
+            }
+            else
+            {
+                ToggleMenu(1); // ESC 메뉴를 열거나 닫음
             }
         }
 
+        private void HandlePressed_E()
+        {
+            if (!_isESCMenuOpen)  // ESC 메뉴가 열려있을 때는 무시
+            {
+                ToggleMenu(2); // 장비창 여닫기
+            }
+        }
 
-        private void _ToggleMenu(int menuCount)
+        public void ToggleMenu(int menuCount)
         {
             switch (menuCount)
             {
@@ -83,7 +87,7 @@ namespace UntilTheEnd
                     _uiDialogue.SetActive(false);
 
                     _isESCMenuOpen = false;
-                    _escMenuPanel.SetActive(false);
+                    escMenuPanel.SetActive(false);
 
                     _isEquipmentMenuOpen = false;
                     _equipmentPanel.SetActive(false);
@@ -99,8 +103,11 @@ namespace UntilTheEnd
 
 
                 case 1: // ESC 메뉴
+
+                    //UICursor.instance.ChangeUI(_isESCMenuOpen);
+
                     _isESCMenuOpen = !_isESCMenuOpen;
-                    _escMenuPanel.SetActive(_isESCMenuOpen);
+                    escMenuPanel.SetActive(_isESCMenuOpen);
 
                     // ★★★ 게임매니저한테 ESC 상태 전달 ★★★
                     GameManager.instance.ToggleESCMenu(_isESCMenuOpen);
@@ -122,13 +129,13 @@ namespace UntilTheEnd
                     {
                         // 장비창이 열리면 ESC 메뉴를 닫음
                         _isESCMenuOpen = false;
-                        _escMenuPanel.SetActive(false);
+                        escMenuPanel.SetActive(false);
                     }
                     break;
 
-                    /*
-                     * 퀘스트창과 아이템획득 했을 때 나오는 UI 구현해야함
-                     */
+                /*
+                 * 퀘스트창과 아이템획득 했을 때 나오는 UI 구현해야함
+                 */
 
 
                 default:
@@ -141,103 +148,18 @@ namespace UntilTheEnd
             }
         }
 
-        // UI장비창 관련
-        private HashSet<string> _updateEquipmentUI = new HashSet<string>();
 
-        public void OnClick_MicroScopeButton() // 12개 다 찾았을 때 현미경 앞에서 누르는 버튼!! [마지막 동작 체크용]
+        private void _UpdateESCMenu(bool isOpen)
         {
-            // 초기화하고, 기존버튼 다시 체크
-            _updateEquipmentUI.Clear();
+            _isESCMenuOpen = isOpen;
+            escMenuPanel.SetActive(isOpen);
 
-            // _equipmentPanel의 자식들 중 이미 생성된 장비이미지들을 탐색
-            foreach (Transform child in _equipmentPanel.transform)
+            if (_isESCMenuOpen)
             {
-                Image image = child.GetComponent<Image>();
-                if (image != null && image.sprite != null)
-                {
-                    _updateEquipmentUI.Add(image.sprite.name);
-                }
-
+                _isEquipmentMenuOpen = false;
+                _equipmentPanel.SetActive(false);
             }
         }
-
-        public void OnClick_BackToLobby()
-        {
-            Debug.LogWarning("로비씬으로 되돌아갑니다!!");
-            SceneManager.LoadScene("Lobby");
-        }
-
-
-
-
-
-
-
-
-
-
-
-        // Fade In - Fade Out 효과 주는 함수
-        public void FadeToScene(string sceneName)
-        {
-            if (_isTransitioning)
-            {
-                return; // 씬 전환 중이면 무시 (씬 이동 중에 메뉴판 못키게 설정)
-            }
-            else
-            {
-                if (_escMenuPanel.activeSelf) // 메뉴가 활성화된 경우 닫음
-                {
-                    _ToggleMenu(0);
-                }
-            }
-            _isTransitioning = true; // 씬 전환 시작
-            StartCoroutine(_FadeAndLoadScene(sceneName));
-        }
-
-        #region Fade In - Fade Out
-        private IEnumerator _FadeAndLoadScene(string sceneName)
-        {
-            yield return StartCoroutine(_Fade(1)); // 페이드 아웃 (화면을 어둡게)
-            SceneManager.LoadScene(sceneName);
-            yield return StartCoroutine(_Fade(0)); // 페이드 인 (화면을 밝게)
-            _isTransitioning = false; // 씬 전환 완료
-        }
-
-        private IEnumerator _Fade(float targetAlpha)
-        {
-            float startAlpha = _fadeCanvasGroup.alpha;
-            float time = 0;
-
-            if (targetAlpha == 1)
-            {
-                _fadeCanvasGroup.gameObject.SetActive(true);
-            }
-
-            while (time < _fadeDuration)
-            {
-                time += Time.deltaTime;
-                _fadeCanvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, time / _fadeDuration);
-                yield return null;
-            }
-
-            _fadeCanvasGroup.alpha = targetAlpha;
-
-            if (targetAlpha == 0)
-            {
-                _fadeCanvasGroup.gameObject.SetActive(false);
-            }
-        }
-        #endregion
-
-
-
-
-
-
-
-
-
 
 
 
@@ -293,34 +215,6 @@ namespace UntilTheEnd
                     Debug.LogError("equipmentSlotPrefab이 null입니다. 슬롯 UI 프리팹을 확인하세요.");
                 }
             }
-        }
-
-
-
-
-
-
-
-
-
-
-        private void OnGUI()
-        {
-            float fps = 1.0f / _deltaTime;
-
-            GUIStyle style = new GUIStyle
-            {
-                fontSize = 24,
-                normal = { textColor = Color.red }
-            };
-
-            // 화면 크기를 가져와 우측 상단으로 위치 조정
-            float screenWidth = Screen.width;
-            float xPos = screenWidth - 125; // 화면 오른쪽에서 150px 떨어짐
-            float yPos = 10; // 화면 상단에서 10px 떨어짐
-
-            // FPS 표시
-            GUI.Label(new Rect(xPos, yPos, 300, 100), $"FPS: {Mathf.Min(fps, 144):0.}", style);
         }
     }
 }
