@@ -15,6 +15,7 @@ namespace UntilTheEnd
             if (_isPlayerInRange)// && Input.GetKeyDown(KeyCode.Space))
             {
                 var dialogueManager = DialogueManager.instance;
+                var uiManager = UIManager.instance;
 
                 if (!dialogueManager.isTalking)
                 {
@@ -24,7 +25,7 @@ namespace UntilTheEnd
                 else
                 {
                     // 대화 중이라면 현재 상태 확인
-                    if (!dialogueManager.uiDialogue.IsTyping)
+                    if (!uiManager.uiDialogue.IsTyping)
                     {
                         // 글자 출력이 끝났으면 다음 대화로 진행
                         dialogueManager.DisplayNextDialogue();
@@ -32,7 +33,7 @@ namespace UntilTheEnd
                     else
                     {
                         // 글자 출력 중이면 전체 문장을 즉시 보여줌
-                        dialogueManager.uiDialogue.FinishTyping();
+                        uiManager.uiDialogue.FinishTyping();
                     }
                 }
             }

@@ -9,9 +9,8 @@ namespace UntilTheEnd
     /// 현재 대화체 매니저가 너무 많은 책임을 가지고 있다 판단...좀 스크립트를 쪼개야겠음
     /// 매니저 말 그대로 관리만하고 
     /// </summary>
-    public class DialogueManager : Singleton<DialogueManager>
+    public class DialogueManager : DontDestroySingleton<DialogueManager>
     {
-        public UIDialogue uiDialogue;
         public TextAsset csvFile;
         public bool isTalking = false;
 
@@ -42,8 +41,8 @@ namespace UntilTheEnd
             isTalking = true;
             _dialogueProcessor.SetDialogueQueue(npcDialogues);
 
-            uiDialogue.gameObject.SetActive(true);
-            uiDialogue.ShowDialogueUI();
+            UIManager.instance.uiDialogue.gameObject.SetActive(true);
+            UIManager.instance.uiDialogue.ShowDialogueUI();
 
             DisplayNextDialogue();
         }
@@ -57,16 +56,16 @@ namespace UntilTheEnd
             }
 
             Dialogue nextDialogue = _dialogueProcessor.GetNextDialogue();
-            uiDialogue.DisplayDialogueText(nextDialogue.dialogueCSV);
+            UIManager.instance.uiDialogue.DisplayDialogueText(nextDialogue.dialogueCSV);
         }
 
         public void EndDialogue()
         {
             isTalking = false;
             _dialogueProcessor.ClearDialogue();
-            uiDialogue.HideDialogueUI();
+            UIManager.instance.uiDialogue.HideDialogueUI();
 
-            uiDialogue.gameObject.SetActive(false);
+            UIManager.instance.uiDialogue.gameObject.SetActive(false);
         }
     }
 }
