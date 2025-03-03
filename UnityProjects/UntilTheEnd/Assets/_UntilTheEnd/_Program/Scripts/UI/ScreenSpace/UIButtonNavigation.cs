@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -83,20 +82,26 @@ namespace UntilTheEnd
 
         private void _Navigate(int direction)
         {
-            // 현재 버튼의 Hover 이미지를 비활성화
-            _UpdateHoverImage(_currentIndex, false);
+            int newIndex = _currentIndex;
 
-            // 현재 선택된 버튼의 선택 해제
-            _navigateButtons[_currentIndex].OnDeselect(null);
+            do
+            {
+                // 방향에 따라 인덱스 이동
+                newIndex += direction;
+            }
+            while (newIndex >= 0 && newIndex < _navigateButtons.Count 
+            && !_navigateButtons[newIndex].interactable);
 
-            // 방향에 따라 인덱스 이동
-            _currentIndex += direction;
 
-            // 리스트 범위를 벗어나지 않도록 클램프
-            _currentIndex = Mathf.Clamp(_currentIndex, 0, _navigateButtons.Count - 1);
+            // 리스트 범위를 벗어나지 않는 조건문
+            if (newIndex >= 0 && newIndex < _navigateButtons.Count)
+            {
+                _UpdateHoverImage(_currentIndex, false);           // 현재 버튼의 Hover 이미지를 비활성화
+                _navigateButtons[_currentIndex].OnDeselect(null); // 현재 선택된 버튼의 선택 해제
 
-            // 새로운 버튼 선택
-            _SelectButton(_currentIndex);
+                _currentIndex = newIndex;
+                _SelectButton(_currentIndex);
+            }
         }
 
         private void _SelectButton(int index)
@@ -115,6 +120,24 @@ namespace UntilTheEnd
                 // Hover 이미지 활성화/비활성화
                 _hoverImages[index].SetActive(isActive);
             }
+        }
+
+        // 마우스 Hover 시 해당 버튼으로 즉시 이동하도록 설정
+        public void SetHoveredButton(GameObject hoveredButton)
+        {
+            int index = _navigateButtons.IndexOf(hoveredButton.GetComponent<Button>());
+
+            if (index != -1 && _navigateButtons[index].interactable)
+            {
+                _NavigateToHoveredButton(index);
+            }
+        }
+
+        private void _NavigateToHoveredButton(int index)
+        {
+            _UpdateHoverImage(_currentIndex, false);
+            _currentIndex = index;  // 현재 인덱스를 Hover된 버튼으로 변경
+            _SelectButton(_currentIndex);
         }
     }
 }
