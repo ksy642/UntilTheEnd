@@ -6,14 +6,12 @@ namespace UntilTheEnd
 {
     public class SceneController : DontDestroySingleton<SceneController>
     {
-        [SerializeField] private CanvasGroup _fadeCanvasGroup;
+        public bool isTransitioning = false; // 씬 전환 중 상태
         [SerializeField] private float _fadeDuration = 1.5f;
-
-        private bool _isTransitioning = false; // 씬 전환 중 상태
 
         public void LoadScene(string sceneName)
         {
-            if (_isTransitioning)
+            if (isTransitioning)
             {
                 return; // 씬 전환 중이면 무시 (씬 이동 중에 메뉴판 못키게 설정)
             }
@@ -24,8 +22,8 @@ namespace UntilTheEnd
                     UIManager.instance.ToggleMenu(0);
                 }
             }
-            _isTransitioning = true; // 씬 전환 시작
-            
+            isTransitioning = true; // 씬 전환 시작
+
             StartCoroutine(_FadeAndLoadScene(sceneName));
         }
 
@@ -35,31 +33,31 @@ namespace UntilTheEnd
             yield return StartCoroutine(_Fade(1)); // 페이드 아웃 (화면 어둡게)
             SceneManager.LoadScene(sceneName);
             yield return StartCoroutine(_Fade(0)); // 페이드 인 (화면 밝게)
-            _isTransitioning = false;
+            isTransitioning = false;
         }
 
         private IEnumerator _Fade(float targetAlpha)
         {
-            float startAlpha = _fadeCanvasGroup.alpha;
+            float startAlpha = UIManager.instance.fadeCanvasGroup.alpha;
             float time = 0;
 
             if (targetAlpha == 1)
             {
-                _fadeCanvasGroup.gameObject.SetActive(true);
+                UIManager.instance.fadeCanvasGroup.gameObject.SetActive(true);
             }
 
             while (time < _fadeDuration)
             {
                 time += Time.deltaTime;
-                _fadeCanvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, time / _fadeDuration);
+                UIManager.instance.fadeCanvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, time / _fadeDuration);
                 yield return null;
             }
 
-            _fadeCanvasGroup.alpha = targetAlpha;
+            UIManager.instance.fadeCanvasGroup.alpha = targetAlpha;
 
             if (targetAlpha == 0)
             {
-                _fadeCanvasGroup.gameObject.SetActive(false);
+                UIManager.instance.fadeCanvasGroup.gameObject.SetActive(false);
             }
         }
     }

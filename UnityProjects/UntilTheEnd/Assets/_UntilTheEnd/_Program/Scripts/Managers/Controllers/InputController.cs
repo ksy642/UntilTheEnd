@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UntilTheEnd
 {
-    public class InputController : MonoBehaviour
+    public class InputController : DontDestroySingleton<InputController>
     {
         private void Start()
         {
@@ -12,7 +12,7 @@ namespace UntilTheEnd
 
         private void Update()
         {
-            if (UIManager.instance.IsTransitioning)
+            if (SceneController.instance.isTransitioning)
             {
                 // 씬 전환 중에는 입력을 무시
                 return;
