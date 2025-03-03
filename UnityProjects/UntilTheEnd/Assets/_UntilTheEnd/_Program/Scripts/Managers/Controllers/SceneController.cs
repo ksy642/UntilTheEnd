@@ -22,8 +22,8 @@ namespace UntilTheEnd
                     UIManager.instance.ToggleMenu(0);
                 }
             }
-            isTransitioning = true; // 씬 전환 시작
 
+            isTransitioning = true; // 씬 전환 시작
             StartCoroutine(_FadeAndLoadScene(sceneName));
         }
 
@@ -36,8 +36,15 @@ namespace UntilTheEnd
             isTransitioning = false;
         }
 
+
         private IEnumerator _Fade(float targetAlpha)
         {
+            if (Time.timeScale == 0)
+            {
+                // ESC를 눌러서 timeScale값이 0 인 상태, 따라서 1로 설정해주고 Lobby씬으로 보내면 된다.
+                Time.timeScale = 1;
+            }
+
             float startAlpha = UIManager.instance.fadeCanvasGroup.alpha;
             float time = 0;
 
@@ -49,6 +56,14 @@ namespace UntilTheEnd
             while (time < _fadeDuration)
             {
                 time += Time.deltaTime;
+
+                // 무한 루프 방지: time이 너무 작은 값이면 강제로 탈출
+                if (time >= _fadeDuration * 1.5f)
+                {
+                    Debug.LogError("_Fade() 루프 탈출! time이 예상보다 큼 = while문 break");
+                    break;
+                }
+
                 UIManager.instance.fadeCanvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, time / _fadeDuration);
                 yield return null;
             }

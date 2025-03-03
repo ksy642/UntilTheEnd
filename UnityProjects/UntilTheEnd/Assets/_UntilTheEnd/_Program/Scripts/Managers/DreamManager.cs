@@ -1,12 +1,15 @@
 using System.Collections;
 using UnityEngine;
 
+using UntilTheEnd;
+
 public class DreamManager : DontDestroySingleton<DreamManager>
 {
     public bool isDreaming = false; // 꿈 관련된 중요한 bool 변수
 
     [Header("----Timer----")]
-    public float timer = 10; // 제한 시간 ..테스트용으로 10초라 해둠
+    public float timer = 10;      // 제한 시간 ..테스트용으로 10초라 해둠
+    private float _defaultTimer; // 초기에 인스펙터에서 지정한 timer값
     [SerializeField] private float skyBox_RotationSpeed = 1.3f; // 회전 속도 (초당 각도)
 
     [Header("안개 세팅")]
@@ -15,20 +18,36 @@ public class DreamManager : DontDestroySingleton<DreamManager>
     [SerializeField] private float _fogTime = 4.0f;    // 안개 차오르는 시간
     [SerializeField] private float _fogDensity = 0.013f; // 안개 밀도
 
+    // 싱글톤에서 Awake랑 겹쳐서 싱글톤 Awake실행 후 여길 실행하게 설정
+    protected override void Awake()
+    {
+        _defaultTimer = timer;
+        Debug.Log($" [DreamManager] 초기 Timer 값 저장됨: {_defaultTimer}");
+    }
+
+    public void InitializeDreamManager()
+    {
+        GameManager.instance.isLobby = true;
+        timer = _defaultTimer;
+    }
+
     private void Update()
     {
-        _SkyboxRotation();
-
-        timer -= Time.deltaTime;
-
-        // 로그 추가: 현재 타이머 상태
-        //Debug.Log($"[DreamManager] Timer: {timer}");
-
-        if (timer <= 0)
+        if (!GameManager.instance.isLobby)
         {
-            timer = 0;
-            //Debug.Log("[DreamManager] Timer reached 0. Starting DreamLayer...");
-            DreamLayer();
+            _SkyboxRotation();
+
+            timer -= Time.deltaTime;
+
+            // 로그 추가: 현재 타이머 상태
+            //Debug.Log($"[DreamManager] Timer: {timer}");
+
+            if (timer <= 0)
+            {
+                timer = 0;
+                //Debug.Log("[DreamManager] Timer reached 0. Starting DreamLayer...");
+                DreamLayer();
+            }
         }
     }
 
