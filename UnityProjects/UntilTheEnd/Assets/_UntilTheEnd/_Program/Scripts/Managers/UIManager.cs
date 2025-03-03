@@ -1,20 +1,11 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.UI;
 
 namespace UntilTheEnd
 {
     public class UIManager : DontDestroySingleton<UIManager>
     {
-        public bool IsTransitioning
-        {
-            // 씬 전환 중 상태 플래그
-            get;
-            private set;
-        }
-
-        [SerializeField] private GameObject _uiDialogue;
+        public UIDialogue uiDialogue;
+        public CanvasGroup fadeCanvasGroup;
 
         [Header("1번 : 메뉴창 : ESC")]
         public bool isESCMenuOpen = false;
@@ -27,19 +18,28 @@ namespace UntilTheEnd
         [Header("3번 : 퀘스트창 : Quest")]
         public bool isQuestMenuOpen = false;
         [SerializeField] private GameObject _questPanel;
-        
+
         [Header("4번 : 아이템획득창 : Obtain")]
         public bool isObtainMenuOpen = false;
         [SerializeField] private GameObject _obtainPanel;
 
 
-        private void Start()
+        public void InitializeUIManager()
         {
-            Debug.LogWarning("[테스트용] 첫 시작은 메뉴판 다 꺼버리고 시작");
-            ToggleMenu(0);
-
-            // ESC 상태 변경 이벤트 구독
+            ToggleMenu(0); // 메뉴 다 끔
             GameManager.OnESCMenuToggled += _UpdateESCMenu;
+        }
+
+        private void _UpdateESCMenu(bool isOpen)
+        {
+            isESCMenuOpen = isOpen;
+            escMenuPanel.SetActive(isOpen);
+
+            if (isESCMenuOpen)
+            {
+                isEquipmentMenuOpen = false;
+                _equipmentPanel.SetActive(false);
+            }
         }
 
         public void ToggleMenu(int menuCount)
@@ -47,7 +47,7 @@ namespace UntilTheEnd
             switch (menuCount)
             {
                 case 0:  //모든 메뉴판을 다 닫음
-                    _uiDialogue.SetActive(false);
+                    uiDialogue.gameObject.SetActive(false);
 
                     isESCMenuOpen = false;
                     escMenuPanel.SetActive(false);
@@ -111,73 +111,9 @@ namespace UntilTheEnd
             }
         }
 
-
-        private void _UpdateESCMenu(bool isOpen)
+        public void OnClick_BackToLobby()
         {
-            isESCMenuOpen = isOpen;
-            escMenuPanel.SetActive(isOpen);
-
-            if (isESCMenuOpen)
-            {
-                isEquipmentMenuOpen = false;
-                _equipmentPanel.SetActive(false);
-            }
-        }
-
-
-
-
-        // UI 슬롯 오브젝트
-        [SerializeField] private Dictionary<string, GameObject> _equipmentSlots = new Dictionary<string, GameObject>(); // UI 슬롯 오브젝트
-
-        public GameObject equipmentSlotPrefab;
-
-        //// UI 갱신 (EquipmentManager에서 호출)
-        public void UpdateEquipmentUI(string slot, Item item)
-        {
-            Debug.LogWarning("아이템 닿은 후 UIManger에서 불러옴");
-
-
-            if (_equipmentSlots.ContainsKey(slot))
-            {
-                GameObject slotUI = _equipmentSlots[slot];
-
-                if (item != null)
-                {
-                    Debug.LogWarning("1 : " + slot);
-
-                    // 아이템을 슬롯 UI에 표시
-                    slotUI.GetComponentInChildren<UnityEngine.UI.Image>().sprite = item.iconSprite;
-
-
-                }
-                else
-                {
-                    Debug.LogWarning("2");
-
-                    // 슬롯 UI 초기화 (아이템이 제거됨)
-                    slotUI.GetComponentInChildren<UnityEngine.UI.Image>().sprite = null;
-                }
-            }
-            else
-            {
-                // 슬롯 UI가 없다면 새로운 슬롯을 생성
-                if (equipmentSlotPrefab != null)
-                {
-                    GameObject newSlotUI = Instantiate(equipmentSlotPrefab, _equipmentPanel.transform);
-                    _equipmentSlots[slot] = newSlotUI;
-
-                    if (item != null)
-                    {
-                        // 아이템을 설정
-                        newSlotUI.GetComponentInChildren<UnityEngine.UI.Image>().sprite = item.iconSprite;
-                    }
-                }
-                else
-                {
-                    Debug.LogError("EquipmentSlotPrefab이 null입니다. 슬롯 UI 프리팹을 확인하세요.");
-                }
-            }
+            GameManager.instance.OnClick_BackToLobby();
         }
     }
 }

@@ -31,76 +31,34 @@ namespace UntilTheEnd
         public bool playerCanMove = false;
         public bool isPaused = false; // 게임 일시정지 여부
 
+        [Header("Preload, Lobby에선 업데이트문 막기위한 Bool 값")]
+        public bool isLobby = false;
+
 
         // 제일 처음 로비창을 들어왔을 때 실행되는 Start함수, 그 이후 로비창으로 되돌아오면 여긴 동작안함
         private void Start()
         {
-            // 씬 변경 이벤트 등록
             SceneManager.sceneLoaded += _OnSceneLoaded;
-
-            // 초기값인 isCursorLock = false 전달됨 !! 커서가 풀리는 결과를 만들어냄!! Good !!
-            CursorLock(isCursorLock);
-
-            // 리스트에 있는 매니저 프리팹들을 전부 생성
-            foreach (GameObject prefab in managerPrefabs)
-            {
-                if (prefab != null)
-                {
-                    GameObject manager = Instantiate(prefab);
-                    manager.SetActive(false);
-                    _spawnedManagers.Add(manager);
-
-                    Debug.Log($"{manager.name} 생성 완료! 및 바로 비활성화o");
-                }
-            }
+            CursorLock(isCursorLock); // 초기값이라 isCursorLock = false, 커서풀림
         }
-
-        private void OnDestroy()
-        {
-            // GameManager가 파괴될 때 이벤트 해제 (중복 등록 방지)
-            // 아마 파괴될 일은 없지만 그래도 혹시나 싶어서 해둠
-            SceneManager.sceneLoaded -= _OnSceneLoaded;
-        }
-
-        // ESC 메뉴 상태 변경 이벤트 호출
-        public void ToggleESCMenu(bool isOpen)
-        {
-            isESCMenuOpen = isOpen;
-            OnESCMenuToggled?.Invoke(isESCMenuOpen);
-
-            SetPauseState(isESCMenuOpen);
-        }
-
-        public void CursorLock(bool lockCursor)
-        {
-            isCursorLock = lockCursor;
-            Cursor.lockState = lockCursor ? CursorLockMode.Locked : CursorLockMode.None;
-            Cursor.visible = !lockCursor;
-        }
-
-
-        // 게임 일시정지 상태 변경
-        private void SetPauseState(bool isPaused)
-        {
-            this.isPaused = isPaused;
-            Time.timeScale = isPaused ? 0 : 1;
-        }
-
 
         // 씬이 로드될 때 실행되는 메서드
         private void _OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             Debug.LogWarning("로비씬으로 돌아왔을 때 동작하는 이벤트");
 
-            if (scene.name == "Lobby") // 로비로 돌아왔을 때
+            if (scene.name == StringValues.Scene.lobby
+                || scene.name == StringValues.Scene.preload)
             {
-                _SetManagersActivate(false);
+                _spawnManagers();
+                _InitializeManagers();
+                //_SetManagersActivate(false);
             }
 
-            if (scene.name == "Main") // 매인으로 넘어갔을 떼
-            {
-                _SetManagersActivate(true);
-            }
+            //if (scene.name == "Main") // 매인으로 넘어갔을 떼
+            //{
+            //    _SetManagersActivate(true);
+            //}
         }
 
         // 모든 매니저들을 활성화/비활성화
@@ -117,10 +75,65 @@ namespace UntilTheEnd
             }
         }
 
+        // 리스트에 있는 매니저 프리팹들을 전부 생성
+        private void _spawnManagers() 
+        {
+            foreach (GameObject prefab in managerPrefabs)
+            {
+                if (prefab != null)
+                {
+                    GameObject manager = Instantiate(prefab);
+                    _spawnedManagers.Add(manager);
+
+                    Debug.Log($"{manager.name} 생성 완료!");
+                }
+            }
+        }
+
+        private void _InitializeManagers()
+        {
+            UIManager.instance.InitializeUIManager();
+            DreamManager.instance.InitializeDreamManager();
+        }
+
+        public void CursorLock(bool lockCursor)
+        {
+            isCursorLock = lockCursor;
+            Cursor.lockState = lockCursor ? CursorLockMode.Locked : CursorLockMode.None;
+            Cursor.visible = !lockCursor;
+        }
+
+        // ESC 메뉴 상태 변경 이벤트 호출
+        public void ToggleESCMenu(bool isOpen)
+        {
+            isESCMenuOpen = isOpen;
+            OnESCMenuToggled?.Invoke(isESCMenuOpen);
+
+            _SetPauseState(isESCMenuOpen);
+        }
+
+        // 게임 일시정지 상태 변경
+        private void _SetPauseState(bool isPaused)
+        {
+            this.isPaused = isPaused;
+            Time.timeScale = isPaused ? 0 : 1;
+        }
+
+
+
+
         public void OnClick_BackToLobby()
         {
             Debug.LogWarning("로비씬으로 되돌아갑니다!!");
-            SceneController.instance.LoadScene("Lobby");
+            SceneController.instance.LoadScene(StringValues.Scene.lobby);
+        }
+
+
+        private void OnDestroy()
+        {
+            // GameManager가 파괴될 때 이벤트 해제 (중복 등록 방지)
+            // 아마 파괴될 일은 없지만 그래도 혹시나 싶어서 해둠
+            SceneManager.sceneLoaded -= _OnSceneLoaded;
         }
 
     }
