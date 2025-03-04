@@ -26,10 +26,10 @@ namespace UntilTheEnd
 
         public void UpdateState(TestPlayer player)
         {
-            if (DialogueManager.instance.uiDialogue.IsTyping)
+            if (UIManager.instance.uiDialogue.IsTyping)
             {
                 // 현재 문장이 타이핑 중이면 바로 전체 출력
-                DialogueManager.instance.uiDialogue.FinishTyping();
+                UIManager.instance.uiDialogue.FinishTyping();
             }
             else
             {
