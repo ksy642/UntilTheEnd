@@ -49,8 +49,8 @@ MonoBehaviour:
   - {fileID: 1323701945848827764, guid: f551e75437e920a4e9e6340206bb5b4f, type: 3}
   - {fileID: 4296845089740096451, guid: 914b5177dec3d0e4d8612641604ee6a4, type: 3}
   - {fileID: 7942732117959313469, guid: bfb2c605aa0183848b1af77f03b7831c, type: 3}
-  _spawnedManagers: []
+  - {fileID: 8696290316258265843, guid: 8ab6fced924aeea46af4c4dee62bfcf4, type: 3}
   isESCMenuOpen: 0
-  isCursorLock: 0
   playerCanMove: 0
   isPaused: 0
+  isLobby: 0
