@@ -26,7 +26,7 @@ public class PlayerSystem2 : MonoBehaviour
         }
         else
         {
-            Cursor.lockState = CursorLockMode.None;
+            Cursor.lockState = CursorLockMode.Confined;
         }
 
         if (Input.GetKeyDown(KeyCode.R))

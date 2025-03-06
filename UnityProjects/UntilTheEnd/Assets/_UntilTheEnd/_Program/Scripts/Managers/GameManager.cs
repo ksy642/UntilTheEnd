@@ -15,11 +15,9 @@ namespace UntilTheEnd
         // 그리고 게임매니저에서 UI매니저를 소환하는것보다 이미 생성시켜놓고 이벤트로 주는게 더 괜찮은 방법같음
         public static event Action<bool> OnESCMenuToggled;
 
-        [Header("매니저 프리팹들")]
+        [Header("매니저들")]
         public List<GameObject> managerPrefabs;
-
-        [Header("소환된 매니저들")]
-        [SerializeField] private List<GameObject> _spawnedManagers = new List<GameObject>();
+        private List<GameObject> _spawnedManagers = new List<GameObject>();
 
         [Header("ESC 메뉴")]
         public bool isESCMenuOpen = false;
@@ -49,16 +47,14 @@ namespace UntilTheEnd
                 _spawnManagers();
                 _InitializeManagers();
 
-                CursorLock(false);
                 //_SetManagersActivate(false);
+                UICursor.instance.CursorLock(false);
             }
 
             if (scene.name == "Main") // 매인으로 넘어갔을 떼
             {
-                _SetManagersActivate(true);
-
-                
-                CursorLock(true);
+                //_SetManagersActivate(true);
+                UICursor.instance.CursorLock(true);
             }
         }
 
@@ -97,11 +93,12 @@ namespace UntilTheEnd
             DreamManager.instance.InitializeDreamManager();
         }
 
-        public void CursorLock(bool lockCursor)
-        {
-            Cursor.lockState = lockCursor ? CursorLockMode.Locked : CursorLockMode.None;
-            Cursor.visible = !lockCursor;
-        }
+
+
+
+
+
+
 
         // ESC 메뉴 상태 변경 이벤트 호출
         public void ToggleESCMenu(bool isOpen)
@@ -109,18 +106,10 @@ namespace UntilTheEnd
             isESCMenuOpen = isOpen;
             OnESCMenuToggled?.Invoke(isESCMenuOpen);
 
-            _SetPauseState(isESCMenuOpen);
+            // 게임 일시정지 상태 변경
+            this.isPaused = isESCMenuOpen;
+            Time.timeScale = isESCMenuOpen ? 0 : 1;
         }
-
-        // 게임 일시정지 상태 변경
-        private void _SetPauseState(bool isPaused)
-        {
-            this.isPaused = isPaused;
-            Time.timeScale = isPaused ? 0 : 1;
-        }
-
-
-
 
         public void OnClick_BackToLobby()
         {

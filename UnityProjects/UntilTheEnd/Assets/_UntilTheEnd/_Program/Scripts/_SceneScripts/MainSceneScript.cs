@@ -10,6 +10,9 @@ namespace UntilTheEnd
 
         private void Start()
         {
+            // 처음 들어오면 마우스 커서 중앙에 이미지 켜주자
+            UICursor.instance.defaultCursorIcon.SetActive(true);
+
             // 컷씬이 들어올 자리인데 일단 테스트용으로 코루틴으로 딜레이 줘보자
             StartCoroutine(CutSceneTest());
         }
