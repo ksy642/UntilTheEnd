@@ -9,6 +9,12 @@ namespace UntilTheEnd
         public bool isTransitioning = false; // 씬 전환 중 상태
         [SerializeField] private float _fadeDuration = 1.5f;
 
+        public string SceneName()
+        {
+            // 현재 씬이 어디에 있는지 if문으로 제시할 때 대비해서 만들어둠
+            return SceneManager.GetActiveScene().name;
+        }
+
         public void LoadScene(string sceneName)
         {
             if (isTransitioning)

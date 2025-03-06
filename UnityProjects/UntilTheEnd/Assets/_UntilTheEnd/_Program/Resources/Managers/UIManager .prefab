@@ -721,7 +721,7 @@ GameObject:
   - component: {fileID: 8886932584166766181}
   - component: {fileID: 318421582995286319}
   m_Layer: 0
-  m_Name: CanvasTest
+  m_Name: Canvas_UICursor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
