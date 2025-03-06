@@ -24,9 +24,6 @@ namespace UntilTheEnd
         [Header("ESC 메뉴")]
         public bool isESCMenuOpen = false;
 
-        [Header("마우스 커서 잠금 여부")]
-        public bool isCursorLock = false;
-
         [Header("플레이어 동작여부")]
         public bool playerCanMove = false;
         public bool isPaused = false; // 게임 일시정지 여부
@@ -39,7 +36,6 @@ namespace UntilTheEnd
         private void Start()
         {
             SceneManager.sceneLoaded += _OnSceneLoaded;
-            CursorLock(isCursorLock); // 초기값이라 isCursorLock = false, 커서풀림
         }
 
         // 씬이 로드될 때 실행되는 메서드
@@ -52,13 +48,18 @@ namespace UntilTheEnd
             {
                 _spawnManagers();
                 _InitializeManagers();
+
+                CursorLock(false);
                 //_SetManagersActivate(false);
             }
 
-            //if (scene.name == "Main") // 매인으로 넘어갔을 떼
-            //{
-            //    _SetManagersActivate(true);
-            //}
+            if (scene.name == "Main") // 매인으로 넘어갔을 떼
+            {
+                _SetManagersActivate(true);
+
+                
+                CursorLock(true);
+            }
         }
 
         // 모든 매니저들을 활성화/비활성화
@@ -98,7 +99,6 @@ namespace UntilTheEnd
 
         public void CursorLock(bool lockCursor)
         {
-            isCursorLock = lockCursor;
             Cursor.lockState = lockCursor ? CursorLockMode.Locked : CursorLockMode.None;
             Cursor.visible = !lockCursor;
         }

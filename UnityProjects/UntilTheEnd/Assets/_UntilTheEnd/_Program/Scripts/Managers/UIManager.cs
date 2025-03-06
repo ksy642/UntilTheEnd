@@ -66,9 +66,6 @@ namespace UntilTheEnd
 
 
                 case 1: // ESC 메뉴
-
-                    //UICursor.instance.ChangeUI(_isESCMenuOpen);
-
                     isESCMenuOpen = !isESCMenuOpen;
                     escMenuPanel.SetActive(isESCMenuOpen);
 
@@ -80,7 +77,15 @@ namespace UntilTheEnd
                         // ESC 메뉴가 열리면 장비창을 닫음
                         isEquipmentMenuOpen = false;
                         _equipmentPanel.SetActive(false);
+                        UICursor.instance.ChangeUI(false);
                     }
+                    else
+                    {
+                        Debug.LogError("ESC메뉴창을 닫습니다.");
+                        UICursor.instance.ChangeUI(true);
+                    }
+
+
                     break;
 
 

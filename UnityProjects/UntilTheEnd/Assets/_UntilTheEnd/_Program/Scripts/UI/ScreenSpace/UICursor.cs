@@ -28,9 +28,14 @@ namespace UntilTheEnd
         {
             if (_isCursorLockMode)
             {
-                Debug.LogWarning("마우스 커서 Stop Middle !!");
+                Debug.LogError("마우스 커서 Stop Middle !!");
 
-                firstPersonCam.trueMoveFalseStop = true;
+                if (firstPersonCam != null)
+                {
+                    Debug.LogError("1");
+                    firstPersonCam.trueMoveFalseStop = true;
+                }
+                Debug.LogError("2");
 
                 // 커서를 숨기고 화면 중앙에 고정
                 Cursor.visible = false;
@@ -41,9 +46,12 @@ namespace UntilTheEnd
             }
             else
             {
-                Debug.LogWarning("마우스 커서 Moving !!");
+                Debug.LogError("마우스 커서 Moving !!");
 
-                firstPersonCam.trueMoveFalseStop = false;
+                if (firstPersonCam != null)
+                {
+                    firstPersonCam.trueMoveFalseStop = false;
+                }
 
                 // 커서를 보이고 락 해제
                 Cursor.visible = true;
