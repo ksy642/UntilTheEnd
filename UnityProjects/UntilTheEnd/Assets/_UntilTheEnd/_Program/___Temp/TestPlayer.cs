@@ -40,11 +40,11 @@ namespace UntilTheEnd
 
         // 이동 속도 관련 변수
         private float _defaultMoveSpeed = 4.0f;
-        private float _runSpeed = 5.2f;
+        private float _runSpeed = 5.6f;
         private float _crouchSpeed = 1.8f;
 
         // 카메라 및 입력 관련 변수
-        private float _mouseSensitivity = 100.0f; // 마우스 감도
+        public float mouseSensitivity = 4.0f; // 마우스 감도
         private float _cameraPitch = 0f; // 카메라 수직 회전 값
 
         // 물리 관련 변수
@@ -56,9 +56,7 @@ namespace UntilTheEnd
         private Vector3 _lastTrainPosition = Vector3.zero;
         private bool _isOnTrain = false; // 기차에 탑승 여부
 
-        // Unity 컴포넌트 변수
         private CharacterController _characterController;
-        private Transform _cameraTransform; // 메인 카메라 트랜스폼 (자동으로 찾음)
 
         // 현재 상호작용 정보 (InteractionType + GameObject)
         public InteractionData CurrentInteraction { get; private set; } = InteractionData.None;
@@ -67,37 +65,14 @@ namespace UntilTheEnd
         private void Start()
         {
             _characterController = GetComponent<CharacterController>();
-
-            Camera mainCamera = Camera.main; // Main Camera를 찾음
-
-            if (mainCamera != null)
-            {
-                _cameraTransform = mainCamera.transform;
-                Debug.Log("Main Camera 설정 완료");
-            }
-            else
-            {
-                Debug.LogWarning("Main Camera 못찾음");
-            }
-
-            // 처음에 시작할 때, 캐릭터가 생성될 때는 Idle 상태로 생성
             _currentState = new IdleState();
             _currentState.EnterState(this);
-
-
-
-            // 근데 플레이어가 마우스 안보이게 처리하는게 맞나?
-            //Cursor.lockState = CursorLockMode.Locked;
-            //Cursor.visible = false;
         }
 
         public void ChangeState(IPlayerState newState)
         {
-            Debug.Log("현재 상태는?... " + _currentState);
             _currentState.ExitState(this);
             _currentState = newState;
-
-            Debug.Log("진입한 현재 상태는?... " + _currentState);
             _currentState.EnterState(this);
         }
 
@@ -121,7 +96,7 @@ namespace UntilTheEnd
             {
                 CurrentInteraction = new InteractionData(InteractionType.NPC, other.gameObject);
                 Debug.Log($"[TestPlayer] NPC 감지됨: {CurrentInteraction.GetType()}");
-        }
+            }
             else if (other.CompareTag("Item"))
             {
                 CurrentInteraction = new InteractionData(InteractionType.Item, other.gameObject);
@@ -162,12 +137,19 @@ namespace UntilTheEnd
             if (GameManager.instance.playerCanMove)
             {
                 // Lobby → Main 넘어와서 컷씬이 끝나면 bool값을 true로 변경해서 움직일 수 있게?
-                _PlayerMovement();       // 플레이어 움직임 처리
                 _PlayerCameraControl(); // 마우스 입력 처리 (카메라 회전)
             }
 
             _InputSpaceBar();
             _OnTrain();
+        }
+
+        private void FixedUpdate()
+        {
+            if (GameManager.instance.playerCanMove)
+            {
+                _PlayerMovement();
+            }
         }
 
         private void _InputSpaceBar()
@@ -180,8 +162,8 @@ namespace UntilTheEnd
                     _currentState.UpdateState(this);
 
 
-// 여기 일단 수정해야함!!
-// 대화 중에 조건문 필요함!!
+                    // 여기 일단 수정해야함!!
+                    // 대화 중에 조건문 필요함!!
 
 
                     // 객체 is 타입
@@ -271,8 +253,8 @@ namespace UntilTheEnd
 
         private void _PlayerCameraControl()
         {
-            float mouseX = Input.GetAxis("Mouse X") * _mouseSensitivity * Time.deltaTime;
-            float mouseY = Input.GetAxis("Mouse Y") * _mouseSensitivity * Time.deltaTime;
+            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;// * Time.deltaTime;
+            float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;// * Time.deltaTime;
 
 
             // 수직 각도 제한을 위한 변수 (_cameraPitch)
@@ -293,10 +275,18 @@ namespace UntilTheEnd
         {
             if (_trainParent != null && _isOnTrain)
             {
-                Vector3 trainMovement = _trainParent.position - _lastTrainPosition; // 기차의 이동 거리 계산
-                _characterController.Move(trainMovement);    // 이동량을 플레이어에 적용
-                _lastTrainPosition = _trainParent.position; // 최신 기차 위치 저장
+                Vector3 trainMovement = _trainParent.position - _lastTrainPosition;
+
+                if (trainMovement.magnitude > 0.1f)
+                {
+                    // 너무 큰 값이면 제한
+                    Debug.LogWarning($"[Train Movement] 이동량이 너무 큼: {trainMovement.magnitude}");
+                }
+
+                _characterController.Move(trainMovement);
+                _lastTrainPosition = _trainParent.position;
             }
         }
+
     }
 }

@@ -103,8 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCameraRoot: {fileID: 7736644575050175093}
-  moveSpeed: 4
-  mouseSensitivity: 100
+  _mouseSensitivity: 4
 --- !u!143 &7095316440715267860
 CharacterController:
   m_ObjectHideFlags: 0
