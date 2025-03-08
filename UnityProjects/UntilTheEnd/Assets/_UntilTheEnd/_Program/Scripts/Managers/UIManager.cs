@@ -27,19 +27,6 @@ namespace UntilTheEnd
         public void InitializeUIManager()
         {
             ToggleMenu(0); // 메뉴 다 끔
-            GameManager.OnESCMenuToggled += _UpdateESCMenu;
-        }
-
-        private void _UpdateESCMenu(bool isOpen)
-        {
-            isESCMenuOpen = isOpen;
-            escMenuPanel.SetActive(isOpen);
-
-            if (isESCMenuOpen)
-            {
-                isEquipmentMenuOpen = false;
-                _equipmentPanel.SetActive(false);
-            }
         }
 
         public void ToggleMenu(int menuCount)
@@ -69,8 +56,6 @@ namespace UntilTheEnd
                     isESCMenuOpen = !isESCMenuOpen;
                     escMenuPanel.SetActive(isESCMenuOpen);
 
-                    // ★★★ 게임매니저한테 ESC 상태 전달 ★★★
-                    GameManager.instance.ToggleESCMenu(isESCMenuOpen);
 
                     if (isESCMenuOpen)
                     {
@@ -84,8 +69,6 @@ namespace UntilTheEnd
                         Debug.LogError("ESC메뉴창을 닫습니다.");
                         UICursor.instance.ChangeUI(true);
                     }
-
-
                     break;
 
 

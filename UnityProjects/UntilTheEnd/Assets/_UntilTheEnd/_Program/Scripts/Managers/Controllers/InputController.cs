@@ -26,13 +26,18 @@ namespace UntilTheEnd
         {
             Debug.LogError("ESC 눌렀음");
 
+
             if (UIManager.instance.isEquipmentMenuOpen)
             {
                 UIManager.instance.ToggleMenu(2); // 장비창이 열려있으면 ESC로 닫기
             }
             else
             {
-                UIManager.instance.ToggleMenu(1); // ESC 메뉴 열기/닫기
+                // timeScale 값이 0이면 false, 1이면 true를 반환
+                bool isPaused = Time.timeScale == 1;
+
+                GameManager.instance.TimeStop(isPaused); // 0값이면 1로변환, 1값이면 0으로 변환
+                UIManager.instance.ToggleMenu(1);       // ESC 메뉴 열기/닫기
             }
         }
 
