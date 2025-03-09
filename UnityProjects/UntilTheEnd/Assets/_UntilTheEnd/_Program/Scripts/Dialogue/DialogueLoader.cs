@@ -16,9 +16,9 @@ namespace UntilTheEnd
             _csvFile = csvFile;
         }
 
-        public List<Dialogue> LoadDialogues()
+        public List<DialogueData> LoadDialogues()
         {
-            List<Dialogue> dialogues = new List<Dialogue>();
+            List<DialogueData> dialogues = new List<DialogueData>();
 
             if (_csvFile == null)
             {
@@ -45,7 +45,7 @@ namespace UntilTheEnd
                 }
                 bool dialogueAnswer = answerStr.ToUpper() == "TRUE"; // Answer 파싱 (True/False 외 값 방지 가능)
 
-                dialogues.Add(new Dialogue(sceneName, number, npc, dialogueAnswer, dialog));
+                dialogues.Add(new DialogueData(sceneName, number, npc, dialogueAnswer, dialog));
             }
 
             return dialogues;

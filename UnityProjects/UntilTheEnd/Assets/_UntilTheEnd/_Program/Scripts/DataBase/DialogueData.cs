@@ -1,4 +1,4 @@
-public class Dialogue
+public class DialogueData
 {
     public string sceneNameCSV;
     public int numberCSV;
@@ -6,7 +6,7 @@ public class Dialogue
     public bool answerCSV;
     public string dialogueCSV;
 
-    public Dialogue(string sceneName, int number, string npc, bool answer, string dialogue)
+    public DialogueData(string sceneName, int number, string npc, bool answer, string dialogue)
     {
         sceneNameCSV = sceneName;
         numberCSV = number;

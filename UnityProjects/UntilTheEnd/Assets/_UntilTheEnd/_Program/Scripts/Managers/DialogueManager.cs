@@ -24,13 +24,13 @@ namespace UntilTheEnd
             _dialogueLoader = new DialogueLoader(csvFile);
             _dialogueProcessor = new DialogueProcessor();
 
-            List<Dialogue> dialogues = _dialogueLoader.LoadDialogues();
+            List<DialogueData> dialogues = _dialogueLoader.LoadDialogues();
             _dialogueProcessor.SetDialogueQueue(dialogues);
         }
 
         public void StartDialogue(string sceneName, string npcName)
         {
-            List<Dialogue> npcDialogues = _dialogueLoader.LoadDialogues().FindAll(d => d.sceneNameCSV == sceneName && d.npcCSV == npcName);
+            List<DialogueData> npcDialogues = _dialogueLoader.LoadDialogues().FindAll(d => d.sceneNameCSV == sceneName && d.npcCSV == npcName);
 
             if (npcDialogues.Count == 0)
             {
@@ -55,7 +55,7 @@ namespace UntilTheEnd
                 return;
             }
 
-            Dialogue nextDialogue = _dialogueProcessor.GetNextDialogue();
+            DialogueData nextDialogue = _dialogueProcessor.GetNextDialogue();
             UIManager.instance.uiDialogue.DisplayDialogueText(nextDialogue.dialogueCSV);
         }
 
