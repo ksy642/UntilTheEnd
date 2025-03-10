@@ -10,7 +10,8 @@ namespace UntilTheEnd
             None,
             Item,
             Door,
-            NPC
+            NPC,
+            HintNPC
         }
 
         // InteractionType + 관련 GameObject를 저장하는 구조체
@@ -29,6 +30,12 @@ namespace UntilTheEnd
             {
                 get { return new InteractionData(InteractionType.None, null); }
             }
+
+            public override string ToString()
+            {
+                string objName = Object != null ? Object.name : "null";
+                return $"데이터타입 감지 => [InteractionData] Type: {Type}, Object: {objName}";
+            }
         }
 
         // 이동 관련 설정 변수 (Inspector에서 조정 가능)
@@ -36,7 +43,7 @@ namespace UntilTheEnd
         public GameObject playerCameraRoot;
 
         // 현재 플레이어 상태
-        private IPlayerState _currentState;
+        public IPlayerState _currentState;
 
         // 이동 속도 관련 변수
         private float _defaultMoveSpeed = 4.0f;
@@ -95,15 +102,24 @@ namespace UntilTheEnd
             if (other.CompareTag("NPC"))
             {
                 CurrentInteraction = new InteractionData(InteractionType.NPC, other.gameObject);
-                Debug.Log($"[TestPlayer] NPC 감지됨: {CurrentInteraction.GetType()}");
+                Debug.LogError(CurrentInteraction);
             }
             else if (other.CompareTag("Item"))
             {
                 CurrentInteraction = new InteractionData(InteractionType.Item, other.gameObject);
+                Debug.LogError(CurrentInteraction);
             }
             else if (other.CompareTag("Door"))
             {
                 CurrentInteraction = new InteractionData(InteractionType.Door, other.gameObject);
+                Debug.LogError(CurrentInteraction);
+            }
+            else if (other.CompareTag("HintNPC"))
+            {
+                // 여기 제대로 동작한거 맞음 !!
+                CurrentInteraction = new InteractionData(InteractionType.HintNPC, other.gameObject);
+                Debug.LogError(CurrentInteraction);
+                _currentState.UpdateState(this);
             }
         }
 
@@ -160,7 +176,7 @@ namespace UntilTheEnd
                 {
                     // 대화를 안할 때 Space를 누르면 대화를 시작해야겠지?
                     _currentState.UpdateState(this);
-
+                    Debug.LogError("현재 플레이어 상태" + _currentState);
 
                     // 여기 일단 수정해야함!!
                     // 대화 중에 조건문 필요함!!
